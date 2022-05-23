@@ -12,6 +12,15 @@ require("dotenv").config({
 
 exports.createUser = CatchAsyncError(async (req, res, next) => {
   try {
+    const user = await User.findOne({ name: req.body.name });
+    if (user) {
+      res.status(401).json("Username already exist");
+    }
+    const emailid = await User.findOne({ emailid: req.body.emailid });
+    if (emailid) {
+      res.status(401).json("Email already exist");
+    }
+
     const result = await cloudinary.uploader.upload(req.file.path);
     const newuser = new User({
       name: req.body.name,
@@ -40,7 +49,7 @@ exports.LoginUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ emailid: req.body.emailid });
     if (!user) {
-      res.status(401).json("Wrong User Name");
+      res.status(401).json("Wrong Email id");
     }
     const hashedpassword = crypto.AES.decrypt(
       user.password,
@@ -50,7 +59,7 @@ exports.LoginUser = async (req, res, next) => {
     const originalpassword = hashedpassword.toString(crypto.enc.Utf8);
     const inputpassword = req.body.password;
     if (originalpassword != inputpassword) {
-      console.log(";gjfjf");
+      console.log("Invalid Password");
     }
 
     const accesToken = jwt.sign(

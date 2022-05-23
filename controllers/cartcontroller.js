@@ -61,7 +61,10 @@ exports.Usercart = CatchAsyncError(async (req, res, next) => {
 
 exports.allusercart = CatchAsyncError(async (req, res,) => {
   try {
-    res.status(200).json('uyhvjvjhc');
+    const cart = await Cart.find(req.body);
+    console.log(cart);
+
+    res.status(200).json(cart);
   } catch (error) {
     res.status(500).json(error);
   }

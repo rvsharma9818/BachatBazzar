@@ -37,7 +37,7 @@ router.route("/alluser").get(verifyTokenAndAdmin, getAllUsers);
 //route for delete a user
 //Admin Feature
 
-router.route("/userdelete/:id").delete(verifyTokenAndAuthorization, deleteUser);
+router.route("/userdelete/:id").delete(verifyTokenAndAdmin, deleteUser);
 
 // Route for update user
 // Login user feature

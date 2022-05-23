@@ -15,10 +15,10 @@ require("dotenv").config({
 app.use(express.json());
 app.use(cors());
 
-app.use("/api", user);
-app.use("/api/", product);
+app.use("/api/user", user);
+app.use("/api/product", product);
 app.use("/api/cart", cart);
-app.use("/api/", category);
-app.use("/api/", order);
+app.use("/api/category", category);
+app.use("/api/order", order);
 
 module.exports = app;

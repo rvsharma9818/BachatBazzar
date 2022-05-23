@@ -24,7 +24,7 @@ router.route("/ordercart").post(verifyToken, orderCreate);
 // Route for display userorder
 // Login user Feature
 
-router.route("/orderdetails/:userId").get(verifyToken, getuserorder);
+router.route("/orderdetails/:userId").get(verifyTokenAndAuthorization, getuserorder);
 
 // Route for delete a order by admin
 // Admin user Feature
@@ -34,7 +34,7 @@ router.route("/deleteorder/:id").delete(verifyTokenAndAdmin, deleteOrder);
 // Route for delete a user order
 // Login user Feature
 
-router.route("/userdeleteorder/:id").delete(verifyToken, userdeleteOrder);
+router.route("/userdeleteorder/:id").delete(verifyTokenAndAuthorization, userdeleteOrder);
 
 // Route for display all userorder
 // Admin features

@@ -19,7 +19,7 @@ router
 // Route for display a category
 // public Feature
 
-router.route("/categories").get(verifyToken,displaycategory);
+router.route("/categories").get(displaycategory);
 
 // Route for update a category
 // Admin Feature

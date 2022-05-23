@@ -23,7 +23,7 @@ router.route("/addcart").post(verifyToken, cartcreate);
 // Route for display user Details
 // Login user Feature
 
-router.route("/cartdetails/:userId").get(verifyToken, Usercart);
+router.route("/cartdetails/:userId").get(verifyTokenAndAuthorization, Usercart);
 
 // Route for delete a cart item
 // Login user Feature
