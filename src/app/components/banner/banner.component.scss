@@ -1,0 +1,183 @@
+.con{
+  position:relative;
+  height: 500px;
+  width: 100%;
+  display: flex;
+  position: relative;
+  top: 60px;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+}
+.banner{
+  display: flex;
+  position: relative;
+  height: 500px;
+  width: 100%;
+  margin-top: 0px;
+cursor: pointer;
+  justify-content: space-evenly;
+   align-items: center;
+  margin: auto;
+}
+.main{
+  width: 60%;
+  height: 450px;
+display: flex;
+flex-direction: column;
+}
+.main2
+{
+  width: 25%;
+  position: relative;
+  top: 20px;
+  left: -35px;
+  height: 450px;
+display: flex;
+}
+.one{
+display: flex;
+
+width: 100%;
+height: 250px;
+flex-direction: row;
+}
+.two{
+width: 400px;
+height: 240px;
+margin-right: 40px;
+}
+.three{
+  width: 400px;
+height: 240px;
+}
+.four{
+position: relative;
+top: 20px;
+  width: 100%;
+height: 240px;
+}
+.src1{
+  width: 105%;
+}
+.src2{
+  width: 105%;
+
+}
+.src3{
+  position: relative;
+  width: 102%;
+  top: 20px;
+}
+
+.src4{
+  position: relative;
+  top: -20px;
+  height: 121%;
+
+}
+.two .text{
+  position: relative;
+  top:-220px;
+  right: -30px;
+  color: black;
+  z-index: 1;
+}
+.text3{
+  position: relative;
+  top:-180px;
+  right: -80px;
+  color: black;
+  z-index: 1;
+}
+.text4{
+  position: relative;
+  top:280px;
+  left: -290px;
+  color: black;
+  z-index: 1;
+}
+h5{
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.748);
+  font-weight: lighter;
+}
+.es{
+  color: white;
+  font-size: 30px;
+  font-weight: bolder;
+}
+.text4 h5{
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.748);
+  font-weight: lighter;
+}
+.text4 .es{
+  color: white;
+  letter-spacing: 3px;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.two h5{
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.748);
+  font-weight: lighter;
+}
+.two .es{
+  color: black;
+  font-size: 30px;
+  font-weight: bolder;
+}
+.two button{
+  position: relative;
+  top: 35px;
+outline: none;
+background: none;
+padding: 7px 20px 7px 20px;
+color: black;
+border: 1px solid black;
+border-radius:30px;
+transition: 0.3s ease-in-out;
+}
+
+
+button{
+  position: relative;
+  top: 20px;
+outline: none;
+background: none;
+padding: 7px 20px 7px 20px;
+color: white;
+border: 1px solid white;
+border-radius:30px;
+transition: 0.3s ease-in-out;
+}
+.two button:hover{
+  background: rgb(69, 96, 132);
+  border: none;
+  color: white;
+}
+
+
+button:hover{
+  background: rgb(69, 96, 132);
+  border: none;
+}
+
+.three .text1{
+  position: relative;
+  top:-190px;
+  right: -180px;
+  color: white;
+  z-index: 1;
+
+}
+
+.src1{
+  opacity: 0.8;
+  transition: 0.2s ease-in-out;
+}
+.src1:hover{
+  opacity: 1;
+}

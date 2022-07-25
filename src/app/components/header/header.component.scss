@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+.header {
+  width: 100%;
+  position: relative;
+  left: 0px;
+  height: fit-content;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.firstheader {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 80px;
+}
+.src {
+  position: relative;
+  top: -5px;
+  left: -40px;
+  width: 150px;
+  height: 120px;
+}
+
+.search {
+  position: relative;
+  padding: 6px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  left: 45px;
+  width: 700px;
+  height: 50px;
+  border: 2px solid rgb(252, 172, 52);
+}
+#cars {
+  background: none;
+  outline: none;
+  border: none;
+  font-family: "Merriweather", serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+.search input {
+  width: 500px;
+  padding: 6px;
+  border: none;
+  padding-left: 20px;
+  outline: none;
+  background: none;
+  font-family: "Merriweather", serif;
+  font-size: 15px;
+  font-weight: bolder;
+  border-left: 2px solid black;
+}
+
+.secondheader {
+  background: black; /* fallback for old browsers */
+
+  width: 100%;
+  height: 60px;
+  display: flex;
+  color: beige;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: hidden;
+}
+
+.browse {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  left: 10px;
+  background-color: rgb(252, 172, 52);
+  height: 70px;
+  font-weight: bolder;
+  font-size: 22px;
+  width: 280px;
+  padding-top: 15px;
+  padding-left: -15px;
+}
+.browse p {
+  position: relative;
+  left: -8px;
+}
+.navi {
+  position: relative;
+  left: 80px;
+}
+
+.tagline {
+  position: relative;
+  left: 10px;
+  font-size: 17px;
+  font-weight: 900;
+  width: fit-content;
+  height: 30px;
+  padding: 5px;
+  padding-left: 45px;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  border-left: 1px solid white;
+  overflow: hidden;
+}
+
+.bi-lightbulb-fill {
+  color: rgb(252, 172, 52);
+}
+
+.tagline p {
+  z-index: 2;
+  font-family: "Cormorant SC", serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-image: linear-gradient(
+    90deg,
+    rgb(250, 171, 52),
+    rgb(220, 231, 249)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: 0.4s ease-in-out;
+  animation: rightToLeft 5.5s linear infinite;
+}
+
+@keyframes rightToLeft {
+  0% {
+    transform: translateX(250px);
+  }
+  100% {
+    transform: translateX(-370px);
+  }
+}
+.iconsx {
+  position: relative;
+  top: 5px;
+  right: -45px;
+  display: flex;
+  font-family: "Cormorant SC", serif;
+}
+.iconsx li {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s ease-in-out;
+}
+.iconsx li:hover {
+  color: rgb(252, 172, 52);
+}
+.iconsx li a i {
+  font-size: 20px;
+  color: #000;
+}
+.iconsx li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.iconsx li p {
+  text-transform: capitalize;
+  font-size: 16px;
+}
+
+.list {
+  width: 700px;
+  display: flex;
+  padding: 10px;
+}
+.list li {
+  list-style: none;
+  margin: 22px;
+  margin-top: 38px;
+}
+
+.list li a {
+  font-size: 20px;
+  font-family: "Merriweather", serif;
+  color: white;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: 0.2s ease-in-out;
+  transition: 0.4s ease-in-out;
+  transform-origin: left;
+}
+
+.list li a:hover {
+  color: rgb(252, 170, 50);
+}

@@ -1,0 +1,350 @@
+
+@import "~swiper/css";
+// @import "~swiper/css/pagination";
+
+.swiper {
+  width: 100%;
+  height: 550px;
+background:  url('/assets/images/c7.jpg') center/cover no-repeat fixed;
+
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: none;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide .sli {
+  margin-top: 10px;
+  position: relative;
+  top: 0px;
+  display: block;
+  width: 90%;
+  height: 520px;
+  object-fit: cover;
+}
+
+
+.box{
+  position: absolute;
+  width: fit-content;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: flex-start;
+}
+.box1{
+  position: absolute;
+  left: 100px;
+
+  width: 500px;
+overflow: hidden;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.new1{
+  position: relative;
+  font-size: 26px;
+  text-transform: uppercase;
+left: -90px;
+color: rgba(255, 255, 255, 0.637);
+}
+.womensc{
+  color: white;
+  position: relative;
+  font-size: 46px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 5px;
+left: -26px;
+-webkit-animation-duration: 1s;
+animation-duration: 1s;
+-webkit-animation-fill-mode: both;
+animation-fill-mode: both;
+-webkit-animation-name: fadeInDown;
+animation-name: fadeInDown;
+
+-webkit-animation-delay: 1.5s;
+-moz-animation-delay: 1.5s;
+animation-delay: 1.5s;
+
+}
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+h2{
+  color: white;
+  position: relative;
+  font-size: 39px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 5px;
+left: 4px;
+}
+
+.shop{
+  color: white;
+background-color: rgba(252, 171, 51, 0.9);
+  position: relative;
+  font-size: 20px;
+  width: fit-content;
+  font-weight: lighter;
+  text-transform: uppercase;
+  top: 65px;
+left: 65px;
+transition: 0.2s ease-in-out;
+outline: none;
+border: none;
+padding: 10px 25px 10px 25px;
+}
+.box1{
+  position: absolute;
+  left: 100px;
+  padding-top: 170px;
+  width: 500px;
+overflow: hidden;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.new2{
+  position: relative;
+  font-size: 26px;
+  text-transform: uppercase;
+left: -90px;
+color: rgba(0, 0, 0, 0.637);
+}
+.womensc2{
+  color: black;
+  position: relative;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 10px;
+left: -39px;
+}
+h1{
+  color: black;
+  position: relative;
+  font-size: 44px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 20px;
+left: -13px;
+}
+
+.shop2{
+  color: white;
+background-color: rgba(252, 171, 51, 0.9);
+  position: relative;
+  font-size: 20px;
+  width: fit-content;
+  font-weight: lighter;
+  text-transform: uppercase;
+  top: 65px;
+left: 65px;
+transition: 0.2s ease-in-out;
+outline: none;
+border: none;
+padding: 10px 25px 10px 25px;
+}
+.womensc3{
+  color: black;
+  position: relative;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 10px;
+  letter-spacing: 1px;
+left: -93px;
+}
+h4{
+  color: black;
+  letter-spacing: 1px;
+  position: relative;
+  font-size: 44px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 20px;
+left: -87px;
+}
+.new{
+  position: relative;
+  font-size: 36px;
+  text-transform: uppercase;
+left: -180px;
+top:60px;
+color: white;
+-webkit-animation-duration: 1s;
+animation-duration: 1s;
+-webkit-animation-fill-mode: both;
+animation-fill-mode: both;
+
+-webkit-animation-delay: 0.5s;
+-moz-animation-delay: 0.5s;
+animation-delay: 0.5s;
+
+-webkit-animation-name: fadeInLeft;
+animation-name: fadeInLeft;
+
+}
+.womens{
+  color:white;
+  position: relative;
+  font-size: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 70px;
+  letter-spacing: 7.5px;
+left: -180px;
+-webkit-animation-duration: 1s;
+animation-duration: 1s;
+-webkit-animation-fill-mode: both;
+animation-fill-mode: both;
+-webkit-animation-name: fadeInUp;
+animation-name: fadeInUp;
+
+-webkit-animation-delay: 0.5s;
+-moz-animation-delay: 0.5s;
+animation-delay: 0.5s;
+
+}
+h3{
+  color: white;
+  position: relative;
+  font-size: 44px;
+  font-weight: bold;
+  text-transform: uppercase;
+  top: 90px;
+left: -180px;
+-webkit-animation-duration: 1s;
+animation-duration: 1s;
+-webkit-animation-fill-mode: both;
+animation-fill-mode: both;
+-webkit-animation-name: fadeInUp;
+animation-name: fadeInUp;
+
+-webkit-animation-delay: 1.5s;
+-moz-animation-delay: 1.5s;
+animation-delay: 1.5s;
+
+}
+
+.expolre{
+  color: white;
+background-color: rgb(28, 192, 160,0.9);
+  position: relative;
+  font-size: 20px;
+  width: fit-content;
+  font-weight: lighter;
+  text-transform: uppercase;
+  top:135px;
+transition: 0.2s ease-in-out;
+  left: -180px;
+outline: none;
+border: none;
+padding: 10px 25px 10px 25px;
+-webkit-animation-duration: 1s;
+animation-duration: 1s;
+-webkit-animation-fill-mode: both;
+animation-fill-mode: both;
+-webkit-animation-name: fadeInUp;
+animation-name: fadeInUp;
+
+-webkit-animation-delay: 2.5s;
+-moz-animation-delay: 2.5s;
+animation-delay: 2.5s;
+
+}
+
+.shop:hover{
+  background-color: rgb(255, 202, 39);
+}
+.shop2{
+  background-color: rgb(255, 202, 39);
+}
+.expolre:hover{
+  background-color: rgb(28, 192, 160,);
+}
+
+@-webkit-keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+   outline: none;
+   size: 10px;
+}
+
+
+div.swiper-button-next, div.swiper-button-prev {
+  top: 30%;
+  border:1px solid white;
+  border-radius: 50%;
+  background-color: rgb(255, 202, 39);
+  color: white;
+}

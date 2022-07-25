@@ -1,0 +1,119 @@
+.container-fluid {
+  width: 100%;
+  margin: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.row {
+  width: 90%;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.col {
+  width: 300px;
+  height: 400px;
+  background-image: url("/assets/images/offer1.jpeg");
+  margin-left: 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.one {
+  position: relative;
+  color: rgb(239, 142, 135);
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Cormorant SC", serif;
+  top: 35px;
+  left: 20px;
+  letter-spacing: 1px;
+}
+.one span {
+  color: rgb(137, 138, 138);
+  font-size: 16px;
+  letter-spacing: 0;
+  font-weight: 100;
+}
+h3 {
+  position: relative;
+  color: black;
+  font-size: 18px;
+  top: 80px;
+  left: 20px;
+  font-family: "Cormorant SC", serif;
+
+  letter-spacing: 1px;
+}
+.price {
+  position: relative;
+  top: 75px;
+  left: 20px;
+  color: rgb(239, 142, 135);
+  font-size: 24px;
+  font-family: "Cormorant SC", serif;
+
+  letter-spacing: 1px;
+}
+.price span {
+  color: rgb(137, 138, 138);
+  font-size: 22px;
+  letter-spacing: 0;
+}
+.cli {
+  position: relative;
+  top: 80px;
+  left: 20px;
+  text-transform: capitalize;
+  color: rgb(23, 139, 255);
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-family: "Roboto", sans-serif;
+  transition: 0.4s ease-in;
+  padding-bottom: 5px;
+}
+.cli:hover {
+  cursor: pointer;
+  color: blue;
+  border-bottom: 1px solid rgb(23, 139, 255);
+}
+.second {
+  background-image: url("/assets/images/offer2.jpeg");
+}
+.shopnow {
+  background-color: rgb(62, 163, 255);
+  color: white;
+  position: relative;
+  top: -100px;
+  left: 400px;
+  border-radius: 100px;
+  text-decoration: none;
+  font-size: 19px;
+  outline: none;
+  padding: 13px 24px 13px 24px;
+  font-family: "Ibarra Real Nova", serif;
+  transition: 0.5s ease-in-out;
+}
+.shopnow:hover {
+  background-color: rgb(48, 48, 250);
+  cursor: pointer;
+}
+
+.deals {
+  color: black;
+  font-size: 28px;
+  font-weight: 800;
+  text-transform: capitalize;
+  font-family: "Ibarra Real Nova", serif;
+}
+h4 {
+  font-size: 17px;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  color: rgb(137, 138, 138);
+  font-weight: 500;
+}
