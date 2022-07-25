@@ -9,7 +9,6 @@ const {
   isValidEmail,
   isValidPhone,
   isValidPincode,
-  validString,
   isValidScripts,
   isValidPassword,
 } = require("../validators/validate");
@@ -418,7 +417,7 @@ const updateUserDetails = async function (req, res) {
         .status(400)
         .send({ status: false, message: "phone is not valid" });
     } else if (phone) {
-      if (!isValidMobile(phone))
+      if (!isValidPhone(phone))
         return res
           .status(400)
           .send({ status: false, msg: "phone is not valid" });
@@ -430,7 +429,7 @@ const updateUserDetails = async function (req, res) {
         .status(400)
         .send({ status: false, message: "password is not valid" });
     } else if (password) {
-      if (!isValid(password))
+      if (!isValidPassword(password))
         return res
           .status(400)
           .send({ status: false, msg: "password is not valid" });
@@ -471,7 +470,7 @@ const updateUserDetails = async function (req, res) {
           findAddress.address.shipping.city = city;
         }
         if (pincode) {
-          if (!isValid(pincode))
+          if (!isValidPincode(pincode))
             return res
               .status(400)
               .send({ status: false, msg: "shipping pincode is not valid " });
@@ -497,7 +496,7 @@ const updateUserDetails = async function (req, res) {
           findAddress.address.billing.city = city;
         }
         if (pincode) {
-          if (!isValid(pincode))
+          if (!isValidPincode(pincode))
             return res
               .status(400)
               .send({ status: false, msg: "billing pincode is not valid " });
