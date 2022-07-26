@@ -11,7 +11,7 @@ router.post("/login", userController.loginUser)
 
 router.get("/user/:userId/profile",verifyToken, userController.userProfile)
 
-router.put("/user/:userId/profile", verifyTokenAndAuthorization,upload.single('profileImage'),userController.updateUserDetails)
+router.route("/user/:userId/profile").put(verifyTokenAndAuthorization,userController.updateUserDetails)
 
 
 //if api is invalid OR wrong URL

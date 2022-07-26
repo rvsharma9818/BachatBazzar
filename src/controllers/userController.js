@@ -74,9 +74,15 @@ const createUser = async function (req, res) {
         .status(400)
         .send({ status: false, message: "Password is required" });
     }
-     if(!isValidPassword(password)){
-         return res.status(400).send({status:false , messsage: "password is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $], and the length should be between 8 to 15"})
-     }
+    if (!isValidPassword(password)) {
+      return res
+        .status(400)
+        .send({
+          status: false,
+          messsage:
+            "password is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $], and the length should be between 8 to 15",
+        });
+    }
 
     if (!address || typeof address != "object") {
       return res
@@ -85,83 +91,65 @@ const createUser = async function (req, res) {
     }
 
     if (!address.shipping || typeof address.shipping != "object") {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Object shipping address is required...",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Object shipping address is required...",
+      });
     }
     if (!address.billing || typeof address.billing != "object") {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Object billing address is required...",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Object billing address is required...",
+      });
     }
 
     if (!isValid(address.shipping.street)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Street of shipping address is required...",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Street of shipping address is required...",
+      });
     }
     if (!isValidScripts(address.shipping.street)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message:
-            "street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $].",
-        });
+      return res.status(400).send({
+        status: false,
+        message:
+          "street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $].",
+      });
     }
 
     if (!isValid(address.shipping.city)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "City of shipping address is required...",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "City of shipping address is required...",
+      });
     }
 
     if (!isValidPincode(address.shipping.pincode)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Shipping address pincode must be 6 digit number",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Shipping address pincode must be 6 digit number",
+      });
     }
 
     if (!isValid(address.billing.street)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Street of billing address is required...",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Street of billing address is required...",
+      });
     }
 
     if (!isValid(address.billing.city)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "City of billing address is required...",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "City of billing address is required...",
+      });
     }
 
     if (!isValidPincode(address.billing.pincode)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Billing address pincode must be 6 digit number",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Billing address pincode must be 6 digit number",
+      });
     }
 
     //============================================= Validations for email and password ===============================
@@ -192,7 +180,7 @@ const createUser = async function (req, res) {
         .send({ status: false, message: "Please enter a valid Email" });
     }
 
-    const isRegisteredEmail = await userModel.findOne({ email }).lean();
+    const isRegisteredEmail = await userModel.findOne({ email });
     if (isRegisteredEmail) {
       return res
         .status(400)
@@ -200,21 +188,17 @@ const createUser = async function (req, res) {
     }
 
     if (password == "" || password.toString().trim().length < 8) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Your password must be at least 8 characters",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Your password must be at least 8 characters",
+      });
     }
 
     if (password.toString().trim().length > 15) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Password cannot be more than 15 characters",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Password cannot be more than 15 characters",
+      });
     }
 
     const bcryptPassword = await bcrypt.hash(password, 6);
@@ -255,12 +239,10 @@ const loginUser = async (req, res) => {
     }
 
     if (!isValidEmail(email)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: `Email should be a valid email address`,
-        });
+      return res.status(400).send({
+        status: false,
+        message: `Email should be a valid email address`,
+      });
     }
 
     if (!isValid(password)) {
@@ -269,23 +251,19 @@ const loginUser = async (req, res) => {
     }
 
     if (!(password.length >= 8 && password.length <= 15)) {
-      return res
-        .status(400)
-        .send({
-          status: false,
-          message: "Password should be Valid min 8 and max 15 ",
-        });
+      return res.status(400).send({
+        status: false,
+        message: "Password should be Valid min 8 and max 15 ",
+      });
     }
     // ===============================================Encrypting the password && create Token=============================
 
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res
-        .status(401)
-        .send({
-          status: false,
-          message: `Invalid login credentials, email id doesn't exist`,
-        });
+      return res.status(401).send({
+        status: false,
+        message: `Invalid login credentials, email id doesn't exist`,
+      });
     }
 
     let hashedPassword = user.password;
@@ -293,29 +271,25 @@ const loginUser = async (req, res) => {
     const checkPassword = await bcrypt.compare(password, hashedPassword);
 
     if (!checkPassword)
-      return res
-        .status(401)
-        .send({
-          status: false,
-          message: `Invalid login credentials , Invalid password`,
-        });
+      return res.status(401).send({
+        status: false,
+        message: `Invalid login credentials , Invalid password`,
+      });
 
     const token = jwt.sign(
       {
-        userId: user._id,
+        userId: user._id.toString(),
         iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 168 * 60 * 60,
       },
-      "Hercules"
+      process.env.JWT_SEC,
+      { expiresIn: Math.floor(Date.now() / 1000) + 168 * 60 * 60 }
     );
 
-    res
-      .status(200)
-      .send({
-        status: true,
-        messsge: "User Login Successful",
-        data: { userId: user._id, token: token },
-      });
+    res.status(200).send({
+      status: true,
+      messsge: "User Login Successful",
+      data: { userId: user._id, token: token },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({ status: false, error: error.message });
@@ -443,12 +417,10 @@ const updateUserDetails = async function (req, res) {
         Array.isArray(address) ||
         Object.keys(address).length == 0
       )
-        return res
-          .status(400)
-          .send({
-            status: false,
-            message: "Address Should be in Valid Format",
-          });
+        return res.status(400).send({
+          status: false,
+          message: "Address Should be in Valid Format",
+        });
 
       const findAddress = await userModel.findOne({ _id: userId });
 
@@ -512,13 +484,11 @@ const updateUserDetails = async function (req, res) {
       updateData,
       { new: true }
     );
-    return res
-      .status(200)
-      .send({
-        status: true,
-        message: "User profile updated successfully",
-        data: updateDetails,
-      });
+    return res.status(200).send({
+      status: true,
+      message: "User profile updated successfully",
+      data: updateDetails,
+    });
   } catch (err) {
     return res.status(500).send({ status: false, error: err.message });
   }

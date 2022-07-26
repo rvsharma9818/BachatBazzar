@@ -10,7 +10,7 @@ const verifyToken = (req, res, next) => {
         res.status(403).json({ status: false, message: "Token is not valid!" });
       req.user = user;
       next();
-    });
+    });s
   } else {
     return res
       .status(401)
@@ -20,11 +20,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (!isValidObjectId(UserIdData))
-      return res
-        .status(400)
-        .send({ status: false, message: "userId is not valid" });
-    if (req.user.id === req.params.userId) {
+    if (req.user.userId === req.params.userId) {
       next();
     } else {
       res

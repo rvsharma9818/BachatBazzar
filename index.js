@@ -4,10 +4,10 @@ const mongoose = require('mongoose')
 const route = require("./src/routes/route")
 const app = express()
 const {multererror } =require("./src/multer-error/error")
-
+const multer = require('multer')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(multer().any())
 
 require('dotenv').config()
 
