@@ -45,6 +45,6 @@ exports.upload = multer({
     },
   }),
   fileFilter,
-  limits: { fileSize: 100000, files: 1 },
+  limits: { fileSize: 200000000, files: 1 },
 });
 
