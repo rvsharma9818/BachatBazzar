@@ -7,7 +7,10 @@ const currencySymbol = require("currency-symbol-map");
 const createProduct = async (req, res) => {
   try {
     const requestBody = req.body;
+    let file = req.file
+
     //========================================== validations for inputs===============================================
+    
     if (!isValidRequestBody(requestBody)) {
       return res.status(400).send({
           status: false,
@@ -40,6 +43,7 @@ const createProduct = async (req, res) => {
         return res.status(400).send({ status: false, message: "Title is already used." });
       }
     }
+
     //========================================== validations for description ================================================
 
     if (description == "") {
@@ -53,6 +57,7 @@ const createProduct = async (req, res) => {
     }
 
     //========================================== validations for Price ================================================
+    
     if (!validString(price)) {
       return res.status(400).send({ status: false, message: "Price is required" });
     }
@@ -63,7 +68,9 @@ const createProduct = async (req, res) => {
     if (price <= 0) {
       return res.status(400).send({ status: false, message: `Price cannot be Zero` });
     }
+
     //========================================== validations for currencyId ================================================
+    
     if (!validString(currencyId)) {
       return res.status(400).send({ status: false, message: "CurrencyId is required" });
     }
@@ -74,7 +81,9 @@ const createProduct = async (req, res) => {
     if (!(currencyFormat == "₹")) {
       return res.status(400).send({ status: false, message: "currencyformat should be ₹" });
     }
+
     //========================================== validations for installments ================================================
+    
     if (installments) {
       if (!validInstallment(installments)) {
         return res.status(400).send({
@@ -86,6 +95,10 @@ const createProduct = async (req, res) => {
     }
 
     //========================================== validations for file upload ================================================
+    
+    if (!file || typeof file == "string" || file == "") {
+      return res.status(400).send({ status: false, message: "Product image is required..." });
+    }
     let productImagex = req.file.location;
 
 
@@ -94,6 +107,7 @@ const createProduct = async (req, res) => {
     const newProductData = { title, description, price, currencyId, currencyFormat: currencySymbol(currencyId), availableSizes, isFreeShipping, style, installments, productImage: productImagex };
 
     //================================================= validations for availableSizes=====================================
+    
     if (!validString(availableSizes)) {
       return res.status(400).send({ status: false, message: "available Sizes is required" });
     }
@@ -128,6 +142,7 @@ const createProduct = async (req, res) => {
     res.status(500).send({ status: false, error: error.message });
   }
 };
+
 //======================================================= get Product by Filter ==============================
 
 const getProduct = async function (req, res) {
@@ -204,7 +219,7 @@ const getProduct = async function (req, res) {
             message: "priceGreaterThan must have valid Numbers",
           });
       }
-      filter.price = { $gt: priceGreaterThan };
+      filter.price = { $gte: priceGreaterThan };
     }
 
     if (priceLessThan) {
@@ -216,7 +231,7 @@ const getProduct = async function (req, res) {
             message: "priceLessThan must have valid Numbers",
           });
       }
-      filter.price = { $lt: priceLessThan };
+      filter.price = { $lte: priceLessThan };
     }
 
     if (priceGreaterThan && priceLessThan) {
@@ -226,12 +241,8 @@ const getProduct = async function (req, res) {
             message: "priceGreaterThan and priceLessThan can not be the equal ",
           });
       }
-      /*if ( priceGreaterThan > priceLessThan) {
-               //console.log(priceGreaterThan,priceLessThan)
-                return res.status(400).send({ status: false, message: "priceGreaterThan can not be more than priceLessThan" })
-            }*/
-
-      filter.price = { $gt: priceGreaterThan, $lt: priceLessThan };
+      
+      filter.price = { $gte: priceGreaterThan, $lte: priceLessThan };
     }
 
     filter.isDeleted = false;
@@ -259,12 +270,15 @@ const getProduct = async function (req, res) {
     return res.status(500).send({ status: false, error: error.message });
   }
 };
+
 //============================================================== getProductById ==============================================================
 
 const getProductById = async (req, res) => {
   try {
     let productId = req.params.productId?.toString().trim();
+    
     //==============================================================  Validations for ObjectId ==============================================================
+    
     if (!isValidObjectId(productId)) {
       return res.status(400).send({ status: false, message: "Invalid Product Id" });
     }
@@ -294,6 +308,7 @@ const updateProduct = async function (req, res) {
     const { title, description, price, currencyId, isFreeShipping, style, availableSizes, installments } = requestBody;
 
     //========================================== validations for ObjectId && input Body================================================
+    
     if (!isValidObjectId(productId)) {
       return res.status(400).send({
           status: false,
@@ -307,14 +322,12 @@ const updateProduct = async function (req, res) {
     }
 
     //============================================================================== validaiton for Upload for file==============================================================================
-      //if ((files || files.length == 0)) return res.status(400).send({ status: false, message: "Please upload any file to Update" })
-      console.log(req.file.location)
-      let x= req.file.loaction
-      updatedProductDetails["productImage"] = x
-      console.log(updatedProductDetails)
       
-    
-
+      if(req.file){
+        let x= req.file.location
+        updatedProductDetails["productImage"] = x
+      }
+      
     // =========================================================Finding the Product ================================
 
     const product = await productModel.findOne({
@@ -331,6 +344,7 @@ const updateProduct = async function (req, res) {
 
 
     //=============================================== Validations for title===============================
+    
     if (title == "")
       return res.status(400).send({ status: false, message: "Title  cannot be empty" });
     if (title) {
@@ -344,6 +358,7 @@ const updateProduct = async function (req, res) {
       if (!updatedProductDetails.hasOwnProperty("title"))
         updatedProductDetails["title"] = title;
     }
+
     //=================================================validations for Description==============================================================================
 
     if (description == "") {
@@ -374,6 +389,7 @@ const updateProduct = async function (req, res) {
     }
 
     //============================================================================== validations for currencyId==============================================================================
+    
     if (currencyId == "")
       return res.status(400).send({ status: false, message: "currencyId field cannot be empty" });
     if (currencyId) {
@@ -386,6 +402,7 @@ const updateProduct = async function (req, res) {
     }
 
     //==============================================================================validations for Freeshipping==============================================================================
+    
     if (isFreeShipping == "")
       return res.status(400).send({
           status: false,
@@ -405,6 +422,7 @@ const updateProduct = async function (req, res) {
     }
 
     //==============================================================================validations for style==============================================================================
+    
     if (style == "") {
       return res.status(400).send({ status: false, message: "style cannot be empty" });
     } else if (style) {
@@ -414,7 +432,9 @@ const updateProduct = async function (req, res) {
       if (!updatedProductDetails.hasOwnProperty("style"))
         updatedProductDetails["style"] = style;
     }
+
     //============================================================================== validations for availableSizes==============================================================================
+    
     if (availableSizes) {
       let sizesArray = availableSizes.split(",").map((x) => x.trim());
 
@@ -432,6 +452,7 @@ const updateProduct = async function (req, res) {
     }
 
     //============================================================================== validations for installments ==============================================================================
+    
     if (installments == "") {
       return res.status(400).send({ status: false, message: "installments cannot be empty" });
     }
@@ -447,6 +468,7 @@ const updateProduct = async function (req, res) {
       if (!updatedProductDetails.hasOwnProperty("installments"))
         updatedProductDetails["installments"] = installments;
     }
+
     //============================================================================== after all validations finally updating the data
 
     const updatedProduct = await productModel.findOneAndUpdate(
@@ -470,6 +492,7 @@ const updateProduct = async function (req, res) {
 const deleteProductById = async (req, res) => {
   try {
     let productId = req.params.productId?.toString().trim();
+    
     //============================================================================== validations for ObjectId==============================================================================
 
     if (!isValidObjectId(productId)) {
@@ -486,6 +509,7 @@ const deleteProductById = async (req, res) => {
     if (!checkProduct) {
       return res.status(404).send({ status: false, message: "Product doesn't exist" });
     }
+    
     //==============================================================================after checking the deletion of the product ==============================================================================
 
     let deletedProduct = await productModel.findOneAndUpdate(

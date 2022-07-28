@@ -121,6 +121,7 @@ const createUser = async function (req, res) {
     }
 
     //============================================= Validations for email and password ===============================
+    
     if (phone == "")
       return res.status(400).send({ status: false, message: "Phone Number cannot be empty" });
 
@@ -210,6 +211,7 @@ const loginUser = async (req, res) => {
         message: "Password should be Valid min 8 and max 15 ",
       });
     }
+
     // ===============================================Encrypting the password && create Token=============================
 
     const user = await userModel.findOne({ email });
@@ -250,7 +252,8 @@ const loginUser = async (req, res) => {
   }
 };
 
-//=============================  =============================   get details by User id ============ =============================
+//========================================================== get details by User id ============ =============================
+
 let userProfile = async (req, res) => {
   try {
     const UserIdData = req.params.userId;
@@ -268,7 +271,9 @@ let userProfile = async (req, res) => {
     return res.status(500).send({ status: false, error: error.message });
   }
 };
+
 //===================================================================
+
 const updateUserDetails = async function (req, res) {
   try {
     const userId = req.params.userId;
@@ -411,5 +416,3 @@ const updateUserDetails = async function (req, res) {
   }
 };
 module.exports = { loginUser, userProfile, createUser, updateUserDetails };
-
-//===================================================================
