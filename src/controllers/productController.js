@@ -2,14 +2,14 @@ const productModel = require("../models/productModel");
 const { isValid, isValidRequestBody, isValidObjectId, isValidNumber, isValidScripts, validString, validInstallment } = require("../validators/validate");
 const currencySymbol = require("currency-symbol-map");
 
-//================================================Create Product=====================
+//================================================Create Product==============================================
 
 const createProduct = async (req, res) => {
   try {
     const requestBody = req.body;
     let file = req.file
 
-    //========================================== validations for inputs===============================================
+//========================================== validations for inputs============================================
     
     if (!isValidRequestBody(requestBody)) {
       return res.status(400).send({
@@ -26,7 +26,7 @@ const createProduct = async (req, res) => {
 
     const { title, description, price, currencyId, currencyFormat, isFreeShipping, style, availableSizes, installments } = requestBody;
 
-    //========================================== validations for title ================================================
+//========================================== validations for title ============================================
 
     if (title == "") {
       return res.status(400).send({ status: false, message: "Title  cannot be empty" });
@@ -44,7 +44,7 @@ const createProduct = async (req, res) => {
       }
     }
 
-    //========================================== validations for description ================================================
+//========================================== validations for description =======================================
 
     if (description == "") {
       return res.status(400).send({ status: false, message: "Description  cannot be empty" });
@@ -56,7 +56,7 @@ const createProduct = async (req, res) => {
           });
     }
 
-    //========================================== validations for Price ================================================
+//========================================== validations for Price ==============================================
     
     if (!validString(price)) {
       return res.status(400).send({ status: false, message: "Price is required" });
@@ -69,7 +69,7 @@ const createProduct = async (req, res) => {
       return res.status(400).send({ status: false, message: `Price cannot be Zero` });
     }
 
-    //========================================== validations for currencyId ================================================
+//========================================== validations for currencyId =========================================
     
     if (!validString(currencyId)) {
       return res.status(400).send({ status: false, message: "CurrencyId is required" });
@@ -82,7 +82,7 @@ const createProduct = async (req, res) => {
       return res.status(400).send({ status: false, message: "currencyformat should be ₹" });
     }
 
-    //========================================== validations for installments ================================================
+//========================================== validations for installments ========================================
     
     if (installments) {
       if (!validInstallment(installments)) {
@@ -94,7 +94,7 @@ const createProduct = async (req, res) => {
       }
     }
 
-    //========================================== validations for file upload ================================================
+//==================================== validations for file upload ===============================================
     
     if (!file || typeof file == "string" || file == "") {
       return res.status(400).send({ status: false, message: "Product image is required..." });
@@ -102,11 +102,11 @@ const createProduct = async (req, res) => {
     let productImagex = req.file.location;
 
 
-    //==========================================  structuring the data ================================================
+//==========================================  structuring the data ================================================
 
     const newProductData = { title, description, price, currencyId, currencyFormat: currencySymbol(currencyId), availableSizes, isFreeShipping, style, installments, productImage: productImagex };
 
-    //================================================= validations for availableSizes=====================================
+//============================================= validations for availableSizes=====================================
     
     if (!validString(availableSizes)) {
       return res.status(400).send({ status: false, message: "available Sizes is required" });
@@ -129,7 +129,7 @@ const createProduct = async (req, res) => {
       }
     }
 
-    //======================================================= creating new product data ==============================
+//=============================================== creating new product data =================================
 
     const saveProductDetails = await productModel.create(newProductData);
     res.status(201).send({
@@ -143,7 +143,7 @@ const createProduct = async (req, res) => {
   }
 };
 
-//======================================================= get Product by Filter ==============================
+//========================================= get Product by Filter ============================================
 
 const getProduct = async function (req, res) {
   try {
@@ -271,19 +271,19 @@ const getProduct = async function (req, res) {
   }
 };
 
-//============================================================== getProductById ==============================================================
+//========================================= getProductById ===================================================
 
 const getProductById = async (req, res) => {
   try {
     let productId = req.params.productId?.toString().trim();
     
-    //==============================================================  Validations for ObjectId ==============================================================
+//================================  Validations for ObjectId =================================================
     
     if (!isValidObjectId(productId)) {
       return res.status(400).send({ status: false, message: "Invalid Product Id" });
     }
 
-    //============================================================== Finding Products ==============================================================
+//================================================= Finding Products =========================================
 
     let findProducts = await productModel.findOne({ _id: productId, isDeleted: false }).lean();
 
@@ -297,7 +297,7 @@ const getProductById = async (req, res) => {
   }
 };
 
-//================================================== update Product =============================================================
+//================================================== update Product ==========================================
 
 const updateProduct = async function (req, res) {
   try {
@@ -307,7 +307,7 @@ const updateProduct = async function (req, res) {
 
     const { title, description, price, currencyId, isFreeShipping, style, availableSizes, installments } = requestBody;
 
-    //========================================== validations for ObjectId && input Body================================================
+//========================================== validations for ObjectId && input Body===========================
     
     if (!isValidObjectId(productId)) {
       return res.status(400).send({
@@ -321,14 +321,14 @@ const updateProduct = async function (req, res) {
       return res.status(400).send({ status: false, message: "Input field cannot be empty" });
     }
 
-    //============================================================================== validaiton for Upload for file==============================================================================
+//================================================== validaiton for Upload for file============================
       
       if(req.file){
         let x= req.file.location
         updatedProductDetails["productImage"] = x
       }
       
-    // =========================================================Finding the Product ================================
+// =========================================================Finding the Product ================================
 
     const product = await productModel.findOne({
       _id: productId,
@@ -343,7 +343,7 @@ const updateProduct = async function (req, res) {
     }
 
 
-    //=============================================== Validations for title===============================
+//=============================================== Validations for title========================================
     
     if (title == "")
       return res.status(400).send({ status: false, message: "Title  cannot be empty" });
@@ -359,7 +359,7 @@ const updateProduct = async function (req, res) {
         updatedProductDetails["title"] = title;
     }
 
-    //=================================================validations for Description==============================================================================
+//=================================================validations for Description==================================
 
     if (description == "") {
       return res.status(400).send({ status: false, message: "Description  cannot be empty" });
@@ -371,7 +371,7 @@ const updateProduct = async function (req, res) {
         updatedProductDetails["description"] = description;
     }
 
-    //==============================================================================validation for Price==============================================================================
+//========================================validation for Price==================================================
 
     if (price == "")
       return res.status(400).send({ status: false, message: "Price field cannot be empty" });
@@ -388,7 +388,7 @@ const updateProduct = async function (req, res) {
         updatedProductDetails["price"] = price;
     }
 
-    //============================================================================== validations for currencyId==============================================================================
+//===================================== validations for currencyId================================================
     
     if (currencyId == "")
       return res.status(400).send({ status: false, message: "currencyId field cannot be empty" });
@@ -401,7 +401,7 @@ const updateProduct = async function (req, res) {
         updatedProductDetails["currencyId"] = currencyId;
     }
 
-    //==============================================================================validations for Freeshipping==============================================================================
+//=========================================validations for Freeshipping===========================================
     
     if (isFreeShipping == "")
       return res.status(400).send({
@@ -421,7 +421,7 @@ const updateProduct = async function (req, res) {
         updatedProductDetails["isFreeShipping"] = isFreeShipping;
     }
 
-    //==============================================================================validations for style==============================================================================
+//===================================validations for style========================================================
     
     if (style == "") {
       return res.status(400).send({ status: false, message: "style cannot be empty" });
@@ -433,7 +433,7 @@ const updateProduct = async function (req, res) {
         updatedProductDetails["style"] = style;
     }
 
-    //============================================================================== validations for availableSizes==============================================================================
+//============================== validations for availableSizes===================================================
     
     if (availableSizes) {
       let sizesArray = availableSizes.split(",").map((x) => x.trim());
@@ -451,7 +451,7 @@ const updateProduct = async function (req, res) {
       updatedProductDetails["$set"]["availableSizes"] = sizesArray; //{ $set: sizesArray }
     }
 
-    //============================================================================== validations for installments ==============================================================================
+//============================ validations for installments =======================================================
     
     if (installments == "") {
       return res.status(400).send({ status: false, message: "installments cannot be empty" });
@@ -469,7 +469,7 @@ const updateProduct = async function (req, res) {
         updatedProductDetails["installments"] = installments;
     }
 
-    //============================================================================== after all validations finally updating the data
+//=============================== after all validations finally updating the data====================================
 
     const updatedProduct = await productModel.findOneAndUpdate(
       { _id: productId },
@@ -487,19 +487,19 @@ const updateProduct = async function (req, res) {
   }
 };
 
-//=====================================================================deleteProductById===============================
+//========================================deleteProductById=================================================
 
 const deleteProductById = async (req, res) => {
   try {
     let productId = req.params.productId?.toString().trim();
     
-    //============================================================================== validations for ObjectId==============================================================================
+//========================================= validations for ObjectId=========================================
 
     if (!isValidObjectId(productId)) {
       return res.status(400).send({ status: false, message: "Invalid Product Id" });
     }
 
-    //==============================================================================Checking the produc's existance in the Db==============================================================================
+//=====================================Checking the produc's existance in the Db=============================
 
     let checkProduct = await productModel.findOne({
       _id: productId,
@@ -510,7 +510,7 @@ const deleteProductById = async (req, res) => {
       return res.status(404).send({ status: false, message: "Product doesn't exist" });
     }
     
-    //==============================================================================after checking the deletion of the product ==============================================================================
+//==============================after checking the deletion of the product ===================================
 
     let deletedProduct = await productModel.findOneAndUpdate(
       { _id: productId },
@@ -524,4 +524,8 @@ const deleteProductById = async (req, res) => {
   }
 };
 
+//============================================================================================================
+
 module.exports = { createProduct, updateProduct, getProduct, getProductById, deleteProductById };
+
+//============================================================================================================

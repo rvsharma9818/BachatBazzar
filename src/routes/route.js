@@ -5,6 +5,8 @@ const {upload} = require("../AWS/s3")
 const {verifyToken, verifyTokenAndAuthorization } =require("../middleware/auth")
 const {updateProduct, createProduct, getProduct, getProductById, deleteProductById} = require('../controllers/productController')
 
+//===========================================================================================================
+
 // User APIs
 router.route("/register").post(upload.single('profileImage'), userController.createUser)
 
@@ -13,6 +15,8 @@ router.route("/login").post( userController.loginUser)
 router.route("/user/:userId/profile").get(verifyTokenAndAuthorization, userController.userProfile)
 
 router.route("/user/:userId/profile").put(upload.single('profileImage'),verifyTokenAndAuthorization,userController.updateUserDetails)
+
+//===========================================================================================================
 
 // Product APIs
 router.route("/products").post(upload.single('productImage'),createProduct)
@@ -25,6 +29,7 @@ router.route("/products/:productId").put(upload.single('productImage'),updatePro
 
 router.route("/products/:productId").delete(deleteProductById) 
 
+//===========================================================================================================
 
 //if api is invalid OR wrong URL
 router.all("/**", function (req, res) {
@@ -34,4 +39,8 @@ router.all("/**", function (req, res) {
     })
 })
 
+//===========================================================================================================
+
 module.exports = router;
+
+//===========================================================================================================

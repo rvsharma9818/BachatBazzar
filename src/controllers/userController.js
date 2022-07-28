@@ -2,18 +2,18 @@ const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { isValid, isValidRequestBody, isValidObjectId, isValidName, isValidEmail, isValidPhone, isValidPincode, isValidScripts, isValidPassword } = require("../validators/validate");
-//============================================== User Creation ======================================================
+//============================================== User Creation ===============================================
 const createUser = async function (req, res) {
   try {
     let data1 = req.body;
     // let data1 = JSON.parse(data.data)
     let file = req.file;
     console.log(file);
-    // ====================================== Destructuring the request Body ======================================
+// ====================================== Destructuring the request Body =====================================
 
     let { fname, lname, phone, email, password, address } = data1;
 
-    //============================================validations for inputs================================
+//============================================validations for inputs==========================================
 
     if (!isValidRequestBody(data1)) {
       return res.status(400).send({ status: false, message: "Input Data for Creating User" });
@@ -120,7 +120,7 @@ const createUser = async function (req, res) {
       });
     }
 
-    //============================================= Validations for email and password ===============================
+//============================================= Validations for email and password ===============================
     
     if (phone == "")
       return res.status(400).send({ status: false, message: "Phone Number cannot be empty" });
@@ -174,6 +174,8 @@ const createUser = async function (req, res) {
   }
 };
 
+//====================================================Login Api===============================================
+
 const loginUser = async (req, res) => {
   try {
     let requestBody = req.body;
@@ -212,7 +214,7 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // ===============================================Encrypting the password && create Token=============================
+// ===============================================Encrypting the password && create Token=============================
 
     const user = await userModel.findOne({ email });
     if (!user) {
@@ -252,7 +254,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-//========================================================== get details by User id ============ =============================
+//=========================================== Api for Get details by User id =========================================
 
 let userProfile = async (req, res) => {
   try {
@@ -272,7 +274,7 @@ let userProfile = async (req, res) => {
   }
 };
 
-//===================================================================
+//===================================Update Api===================================================================
 
 const updateUserDetails = async function (req, res) {
   try {
@@ -415,4 +417,10 @@ const updateUserDetails = async function (req, res) {
     return res.status(500).send({ status: false, error: err.message });
   }
 };
+
+
+//===========================================================================================================
+
 module.exports = { loginUser, userProfile, createUser, updateUserDetails };
+
+//===========================================================================================================
