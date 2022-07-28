@@ -125,7 +125,7 @@ const createProduct = async (req, res) => {
       }
 
       if (Array.isArray(array)) {
-        newProductData["availableSizes"] = array;
+        newProductData["availableSizes"] = [...new Set(array)];
       }
     }
 
@@ -448,7 +448,7 @@ const updateProduct = async function (req, res) {
       }
       if (!updatedProductDetails.hasOwnProperty(updatedProductDetails, "$set"))
         updatedProductDetails["$set"] = {};
-      updatedProductDetails["$set"]["availableSizes"] = sizesArray; //{ $set: sizesArray }
+      updatedProductDetails["$set"]["availableSizes"] = [...new Set(sizesArray)]; //{ $set: sizesArray }
     }
 
 //============================ validations for installments =======================================================

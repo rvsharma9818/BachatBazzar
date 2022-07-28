@@ -11,7 +11,7 @@ const createUser = async function (req, res) {
     console.log(file);
 // ====================================== Destructuring the request Body =====================================
 
-    let { fname, lname, phone, email, password, address } = data1;
+    let { fname, lname, phone, email, password} = data1;
 
 //============================================validations for inputs==========================================
 
@@ -54,71 +54,162 @@ const createUser = async function (req, res) {
       });
     }
 
-    if (!address || typeof address != "object") {
-      return res.status(400).send({ status: false, message: "Object of address is required" });
-    }
 
-    if (!address.shipping || typeof address.shipping != "object") {
-      return res.status(400).send({
-        status: false,
-        message: "Object shipping address is required...",
-      });
-    }
-    if (!address.billing || typeof address.billing != "object") {
-      return res.status(400).send({
-        status: false,
-        message: "Object billing address is required...",
-      });
-    }
 
+    if (!data1.address) {
+      return res.status(400).send({ status: false, message: "address required" })
+  }
+  // try{
+  //     let address = JSON.parse(data1.address)
+  //     if (!address || typeof address != "object") {
+  //     return res.status(400).send({ status: false, message: "Object of address is required" });
+  //   }
+  // } catch(err){
+  //   return res.status(400).send({ status: false, message: "Address should be valid object"  })
+  // }
+  let address = JSON.parse(data1.address)
+  //     if (!address || typeof address != "object") {
+  //     return res.status(400).send({ status: false, message: "Object of address is required" });
+  //   }
+  
+
+  if (!address.shipping || !address.billing) {
+      return res.status(400).send({ status: false, message: "shipping and billing address required" })
+  }
+
+  let shippingStreet = address.shipping.street
+  let shippingCity = address.shipping.city
+  let shippingPincode = parseInt(address.shipping.pincode)     
+  if (shippingStreet) {
     if (!isValid(address.shipping.street)) {
-      return res.status(400).send({
-        status: false,
-        message: "Street of shipping address is required...",
-      });
-    }
-    if (!isValidScripts(address.shipping.street)) {
-      return res.status(400).send({
-        status: false,
-        message:
-          "street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $].",
-      });
-    }
+        return res.status(400).send({
+          status: false,
+          message: "Street of shipping address is required...",
+        });
+      }
+      if (!isValidScripts(address.shipping.street)) {
+        return res.status(400).send({
+          status: false,
+          message:
+            "street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $].",
+        });
+      }
+  }
 
+  if (shippingCity) {
     if (!isValid(address.shipping.city)) {
-      return res.status(400).send({
-        status: false,
-        message: "City of shipping address is required...",
-      });
-    }
-
+        return res.status(400).send({
+          status: false,
+          message: "City of shipping address is required...",
+        });
+      }
+  }
+  if (shippingPincode) {
     if (!isValidPincode(address.shipping.pincode)) {
-      return res.status(400).send({
-        status: false,
-        message: "Shipping address pincode must be 6 digit number",
-      });
-    }
+        return res.status(400).send({
+          status: false,
+          message: "Shipping address pincode must be 6 digit number",
+        });
+      }
+  }
 
+
+  let billingStreet = address.billing.street
+  let billingCity = address.billing.city                       
+  let billingPincode = parseInt(address.billing.pincode)
+  if (billingStreet) {
     if (!isValid(address.billing.street)) {
       return res.status(400).send({
         status: false,
         message: "Street of billing address is required...",
       });
     }
+  }
 
-    if (!isValid(address.billing.city)) {
+  if (billingCity) {
+      if (!isValid(address.billing.city)) {
       return res.status(400).send({
         status: false,
         message: "City of billing address is required...",
       });
     }
-
+  }
+  if (billingPincode) {
     if (!isValidPincode(address.billing.pincode)) {
-      return res.status(400).send({
-        status: false,
-        message: "Billing address pincode must be 6 digit number",
-      });
-    }
+        return res.status(400).send({
+          status: false,
+          message: "Billing address pincode must be 6 digit number",
+        });
+      }
+  }
+  
+  data1.address = address
+
+    // if (!address || typeof address != "object") {
+    //   return res.status(400).send({ status: false, message: "Object of address is required" });
+    // }
+
+    // if (!address.shipping || typeof address.shipping != "object") {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "Object shipping address is required...",
+    //   });
+    // }
+    // if (!address.billing || typeof address.billing != "object") {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "Object billing address is required...",
+    //   });
+    // }
+
+    // if (!isValid(address.shipping.street)) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "Street of shipping address is required...",
+    //   });
+    // }
+    // if (!isValidScripts(address.shipping.street)) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message:
+    //       "street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $].",
+    //   });
+    // }
+
+    // if (!isValid(address.shipping.city)) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "City of shipping address is required...",
+    //   });
+    // }
+
+    // if (!isValidPincode(address.shipping.pincode)) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "Shipping address pincode must be 6 digit number",
+    //   });
+    // }
+
+    // if (!isValid(address.billing.street)) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "Street of billing address is required...",
+    //   });
+    // }
+
+    // if (!isValid(address.billing.city)) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "City of billing address is required...",
+    //   });
+    // }
+
+    // if (!isValidPincode(address.billing.pincode)) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "Billing address pincode must be 6 digit number",
+    //   });
+    // }
 
 //============================================= Validations for email and password ===============================
     
@@ -174,7 +265,7 @@ const createUser = async function (req, res) {
   }
 };
 
-//====================================================Login Api===============================================
+//====================================================Login=============================================
 
 const loginUser = async (req, res) => {
   try {
