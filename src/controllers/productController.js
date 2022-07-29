@@ -499,7 +499,7 @@ const deleteProductById = async (req, res) => {
       return res.status(400).send({ status: false, message: "Invalid Product Id" });
     }
 
-//=====================================Checking the produc's existance in the Db=============================
+//=====================================Checking the product's existance in the Db=============================
 
     let checkProduct = await productModel.findOne({
       _id: productId,

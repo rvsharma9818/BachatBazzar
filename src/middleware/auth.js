@@ -18,26 +18,24 @@ const verifyToken = function(req, res, next)  {
   }
 };
 
-// const checkUser = async function(userId){
-//     let checkId = await userModel.findById({_id: userId})
-    
-//     if(!checkId) return false
-//     else return true
-    
-// }
+const verifyTokenAndAuthorization = async(req, res, next) => {
+  if (!isValidObjectId(req.params.userId))
+  return res.status(400).send({ status: false, message: "userId is not valid" });
 
-const verifyTokenAndAuthorization = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (!isValidObjectId(req.params.userId))
-      return res.status(400).send({ status: false, message: "userId is not valid" });
-    // if(checkUser(req.params.userId)) return res.status(404).send({status: false, message: "User Not Found..."})
-    if (req.user.userId === req.params.userId) {
-      next();
-    } else {
-      
-      return res.status(403).json({ status: false, message: "You are not alowed to do that!" });
-    }
-  });
+  let user = await userModel.findById(req.params.userId);
+
+  if (!user)
+    return res.status(400).send({ status: false, messgage: " user does not exists" });
+
+  
+    verifyToken(req, res, () => {
+      if (req.user.userId === req.params.userId) {
+        next();
+      } else {
+        res.status(403).json({ status: false, message: "You are not alowed to do that!" });
+      }
+    });
 };
+
 
 module.exports = { verifyToken, verifyTokenAndAuthorization };
