@@ -71,16 +71,21 @@ const createProduct = async (req, res) => {
 
 //========================================== validations for currencyId =========================================
     
-    if (!validString(currencyId)) {
-      return res.status(400).send({ status: false, message: "CurrencyId is required" });
+    // if (!validString(currencyId)) {
+    //   return res.status(400).send({ status: false, message: "CurrencyId is required" });
+    // }
+  if(currencyId){
+  if (!(currencyId == "INR")) {
+    return res.status(400).send({ status: false, message: "currencyId should be INR" });
     }
+  }
 
-    if (!(currencyId == "INR")) {
-      return res.status(400).send({ status: false, message: "currencyId should be INR" });
-    }
+  if(currencyFormat){
     if (!(currencyFormat == "₹")) {
       return res.status(400).send({ status: false, message: "currencyformat should be ₹" });
     }
+  }
+  
 
 //========================================== validations for installments ========================================
     
@@ -275,7 +280,7 @@ const getProduct = async function (req, res) {
 
 const getProductById = async (req, res) => {
   try {
-    let productId = req.params.productId?.toString().trim();
+    let productId = req.params.productId;
     
 //================================  Validations for ObjectId =================================================
     
@@ -437,7 +442,10 @@ const updateProduct = async function (req, res) {
 
 //============================== validations for availableSizes===================================================
     
-    if (availableSizes) {
+    
+      if (availableSizes == "") {
+        return res.status(400).send({ status: false, message: "availableSizes cannot be empty" });
+      } else if (availableSizes) {
       let sizesArray = availableSizes.split(",").map((x) => x.trim());
 
       for (let i = 0; i < sizesArray.length; i++) {
@@ -446,11 +454,14 @@ const updateProduct = async function (req, res) {
               status: false,
               message: `availableSizes should be among ${["S","XS","M","X","L","XXL","XL"]}`,
             });
+        } else if(product.availableSizes.indexOf(sizesArray[i])!=-1){
+          return res.status(400).send({status : false, messagsg : "Size is already present"})
         }
       }
-      if (!updatedProductDetails.hasOwnProperty(updatedProductDetails, "$set"))
-        updatedProductDetails["$set"] = {};
-      updatedProductDetails["$set"]["availableSizes"] = [...new Set(sizesArray)]; //{ $set: sizesArray }
+      
+      if (!updatedProductDetails.hasOwnProperty(updatedProductDetails, "$push"))
+        updatedProductDetails["$push"] = {};
+      updatedProductDetails["$push"]["availableSizes"] = [...new Set(sizesArray)]; //{ $set: sizesArray }
     }
 
 //============================ validations for installments =======================================================
@@ -495,7 +506,7 @@ const updateProduct = async function (req, res) {
 
 const deleteProductById = async (req, res) => {
   try {
-    let productId = req.params.productId?.toString().trim();
+    let productId = req.params.productId;
     
 //========================================= validations for ObjectId=========================================
 
@@ -516,7 +527,7 @@ const deleteProductById = async (req, res) => {
     
 //==============================after checking the deletion of the product ===================================
 
-    let deletedProduct = await productModel.findOneAndUpdate(
+    await productModel.findOneAndUpdate(
       { _id: productId },
       { $set: { isDeleted: true, deletedAt: new Date() } },
       { new: true }
@@ -527,6 +538,7 @@ const deleteProductById = async (req, res) => {
     res.status(500).send({ status: false, message: error.message });
   }
 };
+
 
 //============================================================================================================
 

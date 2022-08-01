@@ -13,11 +13,10 @@ const createUser = async function (req, res) {
     let data = req.body;
 
     if (!req.body.address) {
-      return res.status(400).send({ status: false, message: "Object of address is required" })
+      return res.status(400).send({ status: false, message: "Please provide address" })
     }
     
     let file = req.file;
-    console.log(address)
     // ====================================== Destructuring the request Body =====================================
 
     let { fname, lname, phone, email, password } = data;
@@ -116,9 +115,12 @@ const createUser = async function (req, res) {
       return res.status(400).send({ status: false, message: "street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $]." })
     }
 
-
     if (!isValid(address.shipping.city)) {
       return res.status(400).send({ status: false, message: "City of shipping address is required..." })
+    }
+
+    if (!isValidScripts(address.shipping.city)) {
+      return res.status(400).send({ status: false, message: "city is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $]." })
     }
 
     if (!isValidPincode(address.shipping.pincode)) {
@@ -133,8 +135,16 @@ const createUser = async function (req, res) {
       return res.status(400).send({ status: false, message: "City of billing address is required..." })
     }
 
+    if (!isValidScripts(address.billing.city)) {
+      return res.status(400).send({ status: false, message: "city is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $]." })
+    }
+
+    // if (!isValid(address.billing.pincode)) {
+    //   return res.status(400).send({ status: false, message: "Pincode of billing address is required..." })
+    // }
+
     if (!isValidPincode(address.billing.pincode)) {
-      return res.status(400).send({ status: false, message: "Billing address pincode must be 6 digit number" })
+      return res.status(400).send({ status: false, message: "Pincode of Billing address is required and pincode must be 6 digit number" })
     }
     const bcryptPassword = await bcrypt.hash(password, 6);
     data.password = bcryptPassword;

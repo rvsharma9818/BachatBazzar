@@ -29,7 +29,7 @@ router.route("/products/:productId").get(getProductById)
 
 router.route("/products/:productId").put(upload.single('productImage'),updateProduct) 
 
-router.route("/products/:productId").delete(deleteProductById) 
+router.route("/product/:productId").delete(deleteProductById) 
 
 //===========================================================================================================
 
