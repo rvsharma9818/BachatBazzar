@@ -1,23 +1,28 @@
 const userModel = require("../models/userModel");
+
 const jwt = require("jsonwebtoken");
+
 const bcrypt = require("bcrypt");
+
 const { isValid, isValidRequestBody, isValidObjectId, isValidName, isValidEmail, isValidPhone, isValidPincode, isValidScripts, isValidPassword } = require("../validators/validate");
-//============================================== User Creation ===============================================
+
+//========================================== User Creation===============================================
+
 const createUser = async function (req, res) {
   try {
     let data = req.body;
 
-    if(!req.body.address ){
+    if (!req.body.address) {
       return res.status(400).send({ status: false, message: "Object of address is required" })
-  }
+    }
     let address = JSON.parse(req.body.address)
     let file = req.file;
     console.log(address)
-// ====================================== Destructuring the request Body =====================================
+    // ====================================== Destructuring the request Body =====================================
 
-    let { fname, lname, phone, email, password} = data;
+    let { fname, lname, phone, email, password } = data;
 
-//============================================validations for inputs==========================================
+    //==================================validations for inputs==========================================
 
     if (!isValidRequestBody(data)) {
       return res.status(400).send({ status: false, message: "Input Data for Creating User" });
@@ -58,8 +63,8 @@ const createUser = async function (req, res) {
       });
     }
 
-//============================================= Validations for email and password ===============================
-    
+    //============================================= Validations for email and password ===============================
+
     if (phone == "")
       return res.status(400).send({ status: false, message: "Phone Number cannot be empty" });
 
@@ -97,59 +102,60 @@ const createUser = async function (req, res) {
         message: "Password cannot be more than 15 characters",
       });
     }
-    if(!address || typeof address !='object'){
+    if (!address || typeof address != 'object') {
       return res.status(400).send({ status: false, message: "Object of address is required" })
-  }
+    }
 
-  if(!address.shipping || typeof address.shipping !='object'){
+    if (!address.shipping || typeof address.shipping != 'object') {
       return res.status(400).send({ status: false, message: "Object shipping address is required..." })
-  }
-  if(!address.billing || typeof address.billing !='object'){
+    }
+    if (!address.billing || typeof address.billing != 'object') {
       return res.status(400).send({ status: false, message: "Object billing address is required..." })
-  }
+    }
 
-  if (!isValid(address.shipping.street)) {
+    if (!isValid(address.shipping.street)) {
       return res.status(400).send({ status: false, message: "Street of shipping address is required..." })
-  }
-  if(!isValidScripts(address.shipping.street)){
-      return res.status(400).send({status:false, message:"street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $]."})
-  }
-  
+    }
+    if (!isValidScripts(address.shipping.street)) {
+      return res.status(400).send({ status: false, message: "street is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $]." })
+    }
 
-  if (!isValid(address.shipping.city)) {
+
+    if (!isValid(address.shipping.city)) {
       return res.status(400).send({ status: false, message: "City of shipping address is required..." })
-  }
+    }
 
-  if (!isValidPincode(address.shipping.pincode)) {
+    if (!isValidPincode(address.shipping.pincode)) {
       return res.status(400).send({ status: false, message: "Shipping address pincode must be 6 digit number" })
-  }
+    }
 
-  if (!isValid(address.billing.street)) {
+    if (!isValid(address.billing.street)) {
       return res.status(400).send({ status: false, message: "Street of billing address is required..." })
-  }
+    }
 
-  if (!isValid(address.billing.city)) {
+    if (!isValid(address.billing.city)) {
       return res.status(400).send({ status: false, message: "City of billing address is required..." })
-  }
+    }
 
-  if (!isValidPincode(address.billing.pincode)) {
+    if (!isValidPincode(address.billing.pincode)) {
       return res.status(400).send({ status: false, message: "Billing address pincode must be 6 digit number" })
-  }
+    }
     const bcryptPassword = await bcrypt.hash(password, 6);
     data.password = bcryptPassword;
 
     data.profileImage = req.file.location;
 
     data.address = address
+
     const userCreated = await userModel.create(data);
 
     return res.status(201).send({ status: true, message: "Success", data: userCreated });
   } catch (err) {
-    if (err instanceof SyntaxError ) {
-        return res.status(400).json({status:false,message:"Plss Enter a valid object"});
-      }
-      return res.status(500).send({ status: false, error: err.message });
-};
+    if (err instanceof SyntaxError) {
+      return res.status(400).json({ status: false, message: "Plss Enter a valid object" });
+    }
+    return res.status(500).send({ status: false, error: err.message });
+  };
 }
 //====================================================Login=============================================
 
@@ -191,7 +197,7 @@ const loginUser = async (req, res) => {
       });
     }
 
-// ===============================================Encrypting the password && create Token=============================
+    // ===============================================Encrypting the password && create Token=============================
 
     const user = await userModel.findOne({ email });
     if (!user) {
