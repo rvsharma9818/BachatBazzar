@@ -2,7 +2,7 @@ const productModel = require("../models/productModel");
 const { isValid, isValidRequestBody, isValidObjectId, isValidNumber, isValidScripts, validString, validInstallment } = require("../validators/validate");
 const currencySymbol = require("currency-symbol-map");
 
-//================================================Create Product==============================================
+//================================================Create Product API==============================================
 
 const createProduct = async (req, res) => {
   try {
@@ -143,7 +143,8 @@ const createProduct = async (req, res) => {
   }
 };
 
-//========================================= get Product by Filter ============================================
+
+//========================================= Api for get Product by Filter ============================================
 
 const getProduct = async function (req, res) {
   try {
@@ -271,7 +272,8 @@ const getProduct = async function (req, res) {
   }
 };
 
-//========================================= getProductById ===================================================
+
+//========================================= Api For getProductById ===================================================
 
 const getProductById = async (req, res) => {
   try {
@@ -297,7 +299,9 @@ const getProductById = async (req, res) => {
   }
 };
 
-//================================================== update Product ==========================================
+
+
+//================================================== update Product API==========================================
 
 const updateProduct = async function (req, res) {
   try {
@@ -487,7 +491,9 @@ const updateProduct = async function (req, res) {
   }
 };
 
-//========================================deleteProductById=================================================
+
+
+//========================================Api for deleteProductById=================================================
 
 const deleteProductById = async (req, res) => {
   try {

@@ -4,13 +4,10 @@ const { isValidObjectId } = require("../validators/validate");
 
 const userModel = require("../models/userModel")
 
-const verifyToken = (req, res, next) => {
-
-  const authHeader = req.headers.token;
-
+const verifyToken = function (req, res, next) {
+  const authHeader = req.headers.token || req.headers["authorization"];
   if (authHeader) {
-
-    const token = authHeader.split(" ")[1];
+    const token = authHeader.split(" ")[1] || authHeader.split(" ").pop();
 
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
 
@@ -26,10 +23,8 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-const verifyTokenAndAuthorization = async(req, res, next) => {
-   
-    if (!isValidObjectId(UserIdData))
-  
+const verifyTokenAndAuthorization = async (req, res, next) => {
+  if (!isValidObjectId(req.params.userId))
     return res.status(400).send({ status: false, message: "userId is not valid" });
 
 
@@ -40,8 +35,9 @@ const verifyTokenAndAuthorization = async(req, res, next) => {
  
     return res.status(400).send({ status: false, messgage: " user does not exists" });
 
-   verifyToken(req, res, () => {
-    
+   
+
+  verifyToken(req, res, () => {
     if (req.user.userId === req.params.userId) {
       next();
     } else {

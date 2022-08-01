@@ -35,12 +35,14 @@ const createUser = async function (req, res) {
     if (!isValid(fname)) {
       return res.status(400).send({ status: false, message: "fname is required..." });
     }
+
     if (!isValidName(fname))
       return res.status(400).send({ status: false, msg: "Please Enter a valid First Name" });
 
     if (!isValid(lname)) {
       return res.status(400).send({ status: false, message: "lname is required..." });
     }
+
     if (!isValidName(lname))
       return res.status(400).send({ status: false, msg: "Please Enter a valid last Name" });
 
@@ -55,12 +57,9 @@ const createUser = async function (req, res) {
     if (!isValid(password)) {
       return res.status(400).send({ status: false, message: "Password is required" });
     }
+    
     if (!isValidPassword(password)) {
-      return res.status(400).send({
-        status: false,
-        messsage:
-          "password is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $], and the length should be between 8 to 15",
-      });
+      return res.status(400).send({ status: false, messsage: "password is invalid (Should Contain Alphabets, numbers, quotation marks  & [@ , . ; : ? & ! _ - $], and the length should be between 8 to 15"});
     }
 
     //============================================= Validations for email and password ===============================
@@ -90,17 +89,11 @@ const createUser = async function (req, res) {
     }
 
     if (password == "" || password.toString().trim().length < 8) {
-      return res.status(400).send({
-        status: false,
-        message: "Your password must be at least 8 characters",
-      });
+      return res.status(400).send({ status: false, message: "Your password must be at least 8 characters" });
     }
 
     if (password.toString().trim().length > 15) {
-      return res.status(400).send({
-        status: false,
-        message: "Password cannot be more than 15 characters",
-      });
+      return res.status(400).send({ status: false, message: "Password cannot be more than 15 characters", });
     }
     if (!address || typeof address != 'object') {
       return res.status(400).send({ status: false, message: "Object of address is required" })
@@ -157,7 +150,8 @@ const createUser = async function (req, res) {
     return res.status(500).send({ status: false, error: err.message });
   };
 }
-//====================================================Login=============================================
+
+//====================================================Login API==================================================
 
 const loginUser = async (req, res) => {
   try {
@@ -179,10 +173,7 @@ const loginUser = async (req, res) => {
     }
 
     if (!isValidEmail(email)) {
-      return res.status(400).send({
-        status: false,
-        message: `Email should be a valid email address`,
-      });
+      return res.status(400).send({ status: false, message: "Email should be a valid email address" });
     }
 
     if (!isValid(password)) {
@@ -191,20 +182,14 @@ const loginUser = async (req, res) => {
     }
 
     if (!(password.length >= 8 && password.length <= 15)) {
-      return res.status(400).send({
-        status: false,
-        message: "Password should be Valid min 8 and max 15 ",
-      });
+      return res.status(400).send({ status: false, message: "Password should be Valid min 8 and max 15 " });
     }
 
     // ===============================================Encrypting the password && create Token=============================
 
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(401).send({
-        status: false,
-        message: `Invalid login credentials, email id doesn't exist`,
-      });
+      return res.status(401).send({ status: false, message: "Invalid login credentials, email id doesn't exist" });
     }
 
     let hashedPassword = user.password;
@@ -212,10 +197,7 @@ const loginUser = async (req, res) => {
     const checkPassword = await bcrypt.compare(password, hashedPassword);
 
     if (!checkPassword)
-      return res.status(401).send({
-        status: false,
-        message: `Invalid login credentials , Invalid password`,
-      });
+      return res.status(401).send({ status: false, message: "Invalid login credentials , Invalid password" });
 
     const token = jwt.sign(
       {
@@ -226,12 +208,9 @@ const loginUser = async (req, res) => {
       { expiresIn: Math.floor(Date.now() / 1000) + 168 * 60 * 60 }
     );
 
-    res.status(200).send({
-      status: true,
-      messsge: "User Login Successful",
-      data: { userId: user._id, token: token },
-    });
-  } catch (error) {
+    res.status(200).send({ status: true, messsge: "User Login Successful", data: { userId: user._id, token: token } });
+  } 
+  catch (error) {
     console.log(error);
     res.status(500).send({ status: false, error: error.message });
   }
@@ -252,12 +231,13 @@ let userProfile = async (req, res) => {
       return res.status(400).send({ status: false, messgage: " user does not exists" });
 
     return res.status(200).send({ status: true, message: "User pfofile details", data: user });
-  } catch (error) {
+  } 
+  catch (error) {
     return res.status(500).send({ status: false, error: error.message });
   }
 };
 
-//===================================Update Api===================================================================
+//===================================Update User Detail Api===================================================================
 
 const updateUserDetails = async function (req, res) {
   try {
@@ -332,14 +312,8 @@ const updateUserDetails = async function (req, res) {
     //==checking and validating address==//
     if (address) {
       if (
-        typeof address !== "object" ||
-        Array.isArray(address) ||
-        Object.keys(address).length == 0
-      )
-        return res.status(400).send({
-          status: false,
-          message: "Address Should be in Valid Format",
-        });
+        typeof address !== "object" || Array.isArray(address) || Object.keys(address).length == 0 )
+        return res.status(400).send({ status: false, message: "Address Should be in Valid Format" });
 
       const findAddress = await userModel.findOne({ _id: userId });
 
@@ -386,17 +360,10 @@ const updateUserDetails = async function (req, res) {
     }
 
     //==updating user details==//
-    const updateDetails = await userModel.findByIdAndUpdate(
-      { _id: userId },
-      updateData,
-      { new: true }
-    );
-    return res.status(200).send({
-      status: true,
-      message: "User profile updated successfully",
-      data: updateDetails,
-    });
-  } catch (err) {
+    const updateDetails = await userModel.findByIdAndUpdate({ _id: userId }, updateData, { new: true } );
+    return res.status(200).send({ status: true, message: "User profile updated successfully", data: updateDetails });
+  } 
+  catch (err) {
     return res.status(500).send({ status: false, error: err.message });
   }
 };
