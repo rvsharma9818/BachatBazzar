@@ -21,11 +21,13 @@ const cartCreation = async (req, res) => {
             return res.status(400).send({ status: false, message: "Please provide valid Product Id" });
         }
 
+        if(req.body.quantity <= 0) return res.status(400).send({ status: false, message: "Quantity Should Be a Number and Greater than Zero" });
+
         if(!quantity) {quantity=1}
          
         else if(quantity){
-            if (!isValid(quantity) || !validQuantity(quantity)) {
-                return res.status(400).send({ status: false, message: "Please provide valid quantity & it must be greater than zero." });
+            if (!validQuantity(quantity)) {
+                return res.status(400).send({ status: false, message: "Quantity Should Be a Number and Greater than Zero" });
             }
         }
 
@@ -70,7 +72,6 @@ const cartCreation = async (req, res) => {
             for (i in arr) {
                 if (arr[i].productId.toString() === productId) {
                     arr[i].quantity += quantity;
-
                     let updatedCart = {
                         items: arr,
                         totalPrice: price,
@@ -239,4 +240,4 @@ const deleteCart = async (req, res) => {
     }
 }
 
-module.exports={ cartCreation, getCart, updateCart, deleteCart }  
+module.exports={ cartCreation, getCart, updateCart, deleteCart }

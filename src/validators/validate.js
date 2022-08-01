@@ -76,8 +76,9 @@ const validInstallment = function isInteger(value) {
 
 // Quantity validation
 const validQuantity = function isInteger(value) {
+    if(typeof value !== "number") return false
     if(value < 1) return false
-     if(value % 1 == 0 ) return true
+    return true
 }
 
 // Status validation
