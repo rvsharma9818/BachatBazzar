@@ -15,7 +15,7 @@ const createUser = async function (req, res) {
     if (!req.body.address) {
       return res.status(400).send({ status: false, message: "Object of address is required" })
     }
-    let address = JSON.parse(req.body.address)
+    
     let file = req.file;
     console.log(address)
     // ====================================== Destructuring the request Body =====================================
@@ -95,6 +95,9 @@ const createUser = async function (req, res) {
     if (password.toString().trim().length > 15) {
       return res.status(400).send({ status: false, message: "Password cannot be more than 15 characters", });
     }
+
+    let address = JSON.parse(req.body.address)
+
     if (!address || typeof address != 'object') {
       return res.status(400).send({ status: false, message: "Object of address is required" })
     }
@@ -145,7 +148,7 @@ const createUser = async function (req, res) {
     return res.status(201).send({ status: true, message: "Success", data: userCreated });
   } catch (err) {
     if (err instanceof SyntaxError) {
-      return res.status(400).json({ status: false, message: "Plss Enter a valid object" });
+      return res.status(400).json({ status: false, message: "Please Enter a valid object" });
     }
     return res.status(500).send({ status: false, error: err.message });
   };
@@ -211,7 +214,6 @@ const loginUser = async (req, res) => {
     res.status(200).send({ status: true, messsge: "User Login Successful", data: { userId: user._id, token: token } });
   } 
   catch (error) {
-    console.log(error);
     res.status(500).send({ status: false, error: error.message });
   }
 };
@@ -310,16 +312,17 @@ const updateUserDetails = async function (req, res) {
     }
 
     //==checking and validating address==//
-    if (address) {
-      if (
-        typeof address !== "object" || Array.isArray(address) || Object.keys(address).length == 0 )
+    let addressCheck = JSON.parse(address)
+    if (addressCheck) {
+    
+      if ( typeof addressCheck !== "object" || Array.isArray(addressCheck) || Object.keys(addressCheck).length == 0 )
         return res.status(400).send({ status: false, message: "Address Should be in Valid Format" });
 
       const findAddress = await userModel.findOne({ _id: userId });
 
       //==checking and validating shipping address- street,city,pincode==//
-      if (address.shipping) {
-        const { street, city, pincode } = address.shipping;
+      if (addressCheck.shipping) {
+        const { street, city, pincode } = addressCheck.shipping;
         if (street) {
           if (!isValid(street))
             return res.status(400).send({ status: false, msg: "shipping street is not valid " });
@@ -338,8 +341,8 @@ const updateUserDetails = async function (req, res) {
       }
 
       //==checking and validating billing address- street,city,pincode==//
-      if (address.billing) {
-        const { street, city, pincode } = address.billing;
+      if (addressCheck.billing) {
+        const { street, city, pincode } = addressCheck.billing;
         if (street) {
           if (!isValid(street))
             return res.status(400).send({ status: false, msg: "billing street is not valid " });
@@ -364,10 +367,12 @@ const updateUserDetails = async function (req, res) {
     return res.status(200).send({ status: true, message: "User profile updated successfully", data: updateDetails });
   } 
   catch (err) {
+    if (err instanceof SyntaxError) {
+      return res.status(400).json({ status: false, message: "Please Enter a valid object" });
+    }
     return res.status(500).send({ status: false, error: err.message });
   }
 };
-
 
 //===========================================================================================================
 

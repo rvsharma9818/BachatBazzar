@@ -14,9 +14,9 @@ const verifyToken = function (req, res, next) {
       if (err)
         res.status(403).json({ status: false, message: "Token is not valid!" });
 
-        req.user = user;
+      req.user = user;
 
-        next();
+      next();
     });
   } else {
     return res.status(401).json({ status: false, message: "You are not authenticated!" });
@@ -28,14 +28,12 @@ const verifyTokenAndAuthorization = async (req, res, next) => {
     return res.status(400).send({ status: false, message: "userId is not valid" });
 
 
-    let user = await userModel.findById(UserIdData);
+    let user = await userModel.findById(req.params.userId);
 
 
     if (!user)
  
     return res.status(400).send({ status: false, messgage: " user does not exists" });
-
-   
 
   verifyToken(req, res, () => {
     if (req.user.userId === req.params.userId) {

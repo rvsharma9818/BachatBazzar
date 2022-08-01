@@ -138,7 +138,6 @@ const createProduct = async (req, res) => {
         data: saveProductDetails,
       });
   } catch (error) {
-    console.log(error);
     res.status(500).send({ status: false, error: error.message });
   }
 };
@@ -260,7 +259,6 @@ const getProduct = async function (req, res) {
       priceSort = 1;
     }
 
-    // console.log(filter)
     const getData = await productModel.find(filter).sort({ price: priceSort }).select({ __v: 0 });
 
     if (getData.length == 0) {
@@ -486,8 +484,8 @@ const updateProduct = async function (req, res) {
         message: "Successfully updated product details.",
         data: updatedProduct,
       });
-  } catch (err) {
-    return res.status(500).send({ status: false, message: err.message });
+  } catch (error) {
+    return res.status(500).send({ status: false, message: error.message });
   }
 };
 

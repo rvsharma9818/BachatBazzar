@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require("../controllers/userController")
+const {cartCreation, getCart, updateCart, deleteCart} = require("../controllers/cartController")
+const {orderCreation, updateOrder} = require("../controllers/orderController")
 const {upload} = require("../AWS/s3")
-const {verifyToken, verifyTokenAndAuthorization } =require("../middleware/auth")
+const { verifyTokenAndAuthorization } =require("../middleware/auth")
 const {updateProduct, createProduct, getProduct, getProductById, deleteProductById} = require('../controllers/productController')
 
 //===========================================================================================================
@@ -28,6 +30,24 @@ router.route("/products/:productId").get(getProductById)
 router.route("/products/:productId").put(upload.single('productImage'),updateProduct) 
 
 router.route("/products/:productId").delete(deleteProductById) 
+
+//===========================================================================================================
+
+// Cart APIs
+router.route("/users/:userId/cart").post(verifyTokenAndAuthorization, cartCreation)
+
+router.route("/users/:userId/cart").put(verifyTokenAndAuthorization, updateCart)
+
+router.route("/users/:userId/cart").get(verifyTokenAndAuthorization, getCart)
+
+router.route("/users/:userId/cart").delete(verifyTokenAndAuthorization, deleteCart)
+
+//===========================================================================================================
+
+//Order APIs
+router.route("/users/:userId/orders").post(verifyTokenAndAuthorization, orderCreation)
+
+router.route("/users/:userId/orders").put(verifyTokenAndAuthorization, updateOrder)
 
 //===========================================================================================================
 
