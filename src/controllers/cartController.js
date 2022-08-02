@@ -34,13 +34,13 @@ const cartCreation = async (req, res) => {
         const findUser = await userModel.findById({ _id: userId });
 
         if (!findUser) {
-            return res.status(400).send({ status: false, message: `User doesn't exist by ${userId}` });
+            return res.status(404).send({ status: false, message: `User doesn't exist by ${userId}` });
         }
         
         const findProduct = await productModel.findOne({ _id: productId, isDeleted: false });
 
         if (!findProduct) {
-            return res.status(400).send({ status: false, message: `Product doesn't exist by ${productId}` });
+            return res.status(404).send({ status: false, message: `Product doesn't exist by ${productId}` });
         }
 
         const findCartOfUser = await cartModel.findOne({ userId: userId });

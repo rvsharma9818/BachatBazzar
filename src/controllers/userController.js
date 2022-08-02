@@ -95,18 +95,33 @@ const createUser = async function (req, res) {
       return res.status(400).send({ status: false, message: "Password cannot be more than 15 characters", });
     }
 
-    let address = JSON.parse(req.body.address)
+    let address = req.body.address
 
-    if (!address || typeof address != 'object') {
-      return res.status(400).send({ status: false, message: "Object of address is required" })
+    if( Object.prototype.toString.call(req.body.address) == '[object Object]' ){
+      return res.status(400).send({ status : false, msg : "bye"})
+    }
+    // JSON.parse(address)
+    console.log(address)
+
+    if( Object.prototype.toString.call(req.body.address.shipping) == '[object Object]' ){
+      return res.status(400).send({ status : false, msg : "shipping"})
     }
 
-    if (!address.shipping || typeof address.shipping != 'object') {
-      return res.status(400).send({ status: false, message: "Object shipping address is required..." })
+    if( Object.prototype.toString.call(req.body.address.billing) == '[object Object]' ){
+      return res.status(400).send({ status : false, msg : "billing"})
     }
-    if (!address.billing || typeof address.billing != 'object') {
-      return res.status(400).send({ status: false, message: "Object billing address is required..." })
-    }
+
+    // if (!address || typeof address != 'object') {
+    //   return res.status(400).send({ status: false, message: "Object of address is required" })
+    // }
+
+    // if (!address.shipping || typeof address.shipping != 'object') {
+    //   return res.status(400).send({ status: false, message: "Object shipping address is required..." })
+    // }
+    
+    // if (!address.billing || typeof address.billing != 'object') {
+    //   return res.status(400).send({ status: false, message: "Object billing address is required..." })
+    // }
 
     if (!isValid(address.shipping.street)) {
       return res.status(400).send({ status: false, message: "Street of shipping address is required..." })
@@ -157,9 +172,9 @@ const createUser = async function (req, res) {
 
     return res.status(201).send({ status: true, message: "Success", data: userCreated });
   } catch (err) {
-    if (err instanceof SyntaxError) {
-      return res.status(400).json({ status: false, message: "Please Enter a valid object" });
-    }
+    // if (err instanceof SyntaxError) {
+    //   return res.status(400).json({ status: false, message: "Please Enter a valid object" });
+    // }
     return res.status(500).send({ status: false, error: err.message });
   };
 }
