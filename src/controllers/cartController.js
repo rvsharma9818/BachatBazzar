@@ -34,13 +34,13 @@ const cartCreation = async (req, res) => {
         const findUser = await userModel.findById({ _id: userId });
 
         if (!findUser) {
-            return res.status(400).send({ status: false, message: `User doesn't exist by ${userId}` });
+            return res.status(404).send({ status: false, message: `User doesn't exist by ${userId}` });
         }
         
         const findProduct = await productModel.findOne({ _id: productId, isDeleted: false });
 
         if (!findProduct) {
-            return res.status(400).send({ status: false, message: `Product doesn't exist by ${productId}` });
+            return res.status(404).send({ status: false, message: `Product doesn't exist by ${productId}` });
         }
 
         const findCartOfUser = await cartModel.findOne({ userId: userId });
@@ -124,7 +124,7 @@ const getCart = async (req, res) => {
         .select({ _id: 0, createdAt: 0, updatedAt: 0, __v: 0 });
 
         if (!findCart) {
-            return res.status(400).send({ status: false, message: `Cart doesn't exists by ${userId} ` });
+            return res.status(404).send({ status: false, message: `Cart doesn't exists by ${userId} ` });
         }
 
         return res.status(200).send({ status: true, message: "Successfully fetched cart.", data: findCart });
@@ -234,7 +234,7 @@ const deleteCart = async (req, res) => {
 
         let removedCart = await cartModel.findOneAndUpdate({ userId:userId }, { $set: {items:[],totalItems: 0, totalPrice: 0 } }, { new: true })
         
-        return res.status(200).send({ status: true, message: "Cart deleted succesfully", data: removedCart })
+        return res.status(204)
     } catch (error) {
         res.status(500).send({ status: false, message: error.message });
     }
