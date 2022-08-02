@@ -10,9 +10,9 @@ const orderCreation = async (req, res) => {
         
         let { cartId, status, cancellable } = requestBody;
 
-        if(requestBody.hasOwnProperty('cancellable')){
-            return res.status(400).send({ status: false, message: `cancellable not allowed while creation of order` })
-        }
+        // if(requestBody.hasOwnProperty('cancellable')){
+        //     return res.status(400).send({ status: false, message: `cancellable not allowed while creation of order` })
+        // }
 
         if (!isValidObjectId(userId)) {
             return res.status(400).send({ status: false, message: "Invalid userId in params." });
@@ -130,13 +130,13 @@ const updateOrder = async function (req, res) {
         }
 
         if (status == 'completed' && order.status == 'pending') {
-            const orderCompleted = await orderModel.findOneAndUpdate({_id:orderId},{$set:{status:'completed'}})
-            return res.status(200).send({ status: false, message: "Order is completed" })
+            const orderCompleted = await orderModel.findOneAndUpdate({_id:orderId},{$set:{status:'completed'}}, {new : true})
+            return res.status(200).send({ status: true, message: "Order is completed", data : orderCompleted })
         }
 
         if (status == 'cancelled' && order.status == 'pending') {
-            const orderCancelled = await orderModel.findOneAndUpdate({_id:orderId},{$set:{status:'cancelled'}})
-            return res.status(200).send({ status: false, message: "Order is cancled" })
+            const orderCancelled = await orderModel.findOneAndUpdate({_id:orderId},{$set:{status:'cancelled'}}, {new : true})
+            return res.status(200).send({ status: false, message: "Order is cancelled", data : orderCancelled })
         }
     } catch (error) {
         return res.status(500).send({ status: false, error: error.message })
