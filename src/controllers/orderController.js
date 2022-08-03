@@ -29,6 +29,14 @@ const orderCreation = async (req, res) => {
         if (!isValidObjectId(cartId)) {
             return res.status(400).send({ status: false, message: `Invalid cartId in request body.` });
         }
+
+        if (cancellable == "")
+        return res.status(400).send({ status: false, message: "cancellable field cannot be empty" });
+
+        if (cancellable) { 
+            if (!(cancellable === "true" || cancellable === "false")) {
+                return res.status(400).send({ status: false, message: "cancellable should be a boolean value" });
+            }
        
         if (status) {
             if (status !== 'pending') {
