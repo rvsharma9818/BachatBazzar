@@ -181,7 +181,7 @@ const getProduct = async function (req, res) {
       }
       let brr = Arr[0].split(",");
       for (let i = 0; i < brr.length; i++) {
-        if (!["S", "XS", "M", "X", "L", "XXL", "XL"].includes( brr[i].toUpperCase() )) {
+        if (!["S", "XS", "M", "X", "L", "XXL", "XL"].includes( brr[i].toUpperCase() )) {        
           return false;
         }
         newArr.push(brr[i].toUpperCase());
@@ -190,7 +190,7 @@ const getProduct = async function (req, res) {
     };
 
     if (size) {
-      size = [size].flat();
+      size = [size].flat();     
 
       if (size && !isValidSize(size)) {
         return res.status(400).send({

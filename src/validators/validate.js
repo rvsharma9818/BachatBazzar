@@ -88,4 +88,6 @@ const isValidStatus = function(status) {
     return true
 }
 
+ 
+
 module.exports={ isValid, isValidRequestBody, isValidObjectId, isValidEmail, isValidStatus, isValidScripts, isValidNumber, isValidPhone, isValidPincode, isValidPassword, isValidName, validString, validInstallment, validQuantity }

@@ -96,6 +96,7 @@ const createUser = async function (req, res) {
     }
 
     let address = JSON.parse(req.body.address)
+   
 
     if (!address || typeof address != 'object') {
       return res.status(400).send({ status: false, message: "Object of address is required" })
@@ -250,134 +251,150 @@ let userProfile = async (req, res) => {
 
 const updateUserDetails = async function (req, res) {
   try {
+
     const userId = req.params.userId;
-    const formData = req.file;
-    const updateData = req.body;
+    const file = req.file;
 
     //==validating userId==//
     if (!isValidObjectId(userId))
       return res.status(400).send({ status: false, msg: "invalid user Id" });
+
     let findUserId = await userModel.findById({ _id: userId });
     if (!findUserId)
       return res.status(404).send({ status: false, msg: "user not found" });
 
     //==validating request body==//
-    if (!isValidRequestBody(updateData) && !formData)
+    if (!isValidRequestBody(req.body) && !file)
       return res.status(400).send({ status: false, msg: "please provide data to update" });
-    const { address, fname, lname, email, phone, password } = updateData;
 
-    if (formData) {
-      updateData.profileImage = req.file.location;
+    const { address, fname, lname, email, phone, password } = req.body;
+    const newbody = {}
+
+    if (req.file) {
+      let file = req.file
+
+      if (!file || typeof file == "undefined" || file == "") {
+        return res.status(400).send({ status: false, message: "Profile image is required..." });
+      }
+        let x = req.file.location
+      newbody["profileImage"] = x
     }
 
     //==checking and validating fname==//
-    if (fname == "") {
-      return res.status(400).send({ status: false, message: "fname is not valid" });
-    } else if (fname) {
+    if (fname) {
       if (!isValid(fname))
         return res.status(400).send({ status: false, msg: "fname is missing" });
+
       if (!isValidName(fname))
         return res.status(400).send({ status: false, msg: "fname must contain only alphabates" });
+
     }
 
+    newbody["fname"] = fname
     //==checking and validating lname==//
-    if (lname == "") {
-      return res.status(400).send({ status: false, message: "lname is not valid" });
-    } else if (lname) {
+
+    if (lname) {
       if (!isValid(lname))
         return res.status(400).send({ status: false, msg: "lname is missing" });
+
       if (!isValidName(lname))
         return res.status(400).send({ status: false, msg: "lname must contain only alphabates" });
     }
 
-    //==checking and validating email==//
-    if (email == "") {
-      return res.status(400).send({ status: false, message: "email is not valid" });
-    } else if (email) {
+    newbody["lname"] = lname
+
+    if (email) {
       if (!isValidEmail(email))
         return res.status(400).send({ status: false, msg: "email is not valid" });
     }
+    newbody["email"] = email
 
     //==checking and validating phone==//
-    if (phone == "") {
-      return res.status(400).send({ status: false, message: "phone is not valid" });
-    } else if (phone) {
+    if (phone) {
       if (!isValidPhone(phone))
         return res.status(400).send({ status: false, msg: "phone is not valid" });
+
       let phoneExists = await userModel.findOne({ phone });
       if (phoneExists)
         return res.status(400).send({ status: false, message: "Phone Number Already Exists..." });
     }
+    newbody["phone"] = phone
 
     //==checking and validating password==//
-    if (password == "") {
-      return res.status(400).send({ status: false, message: "password is not valid" });
-    } else if (password) {
+    if (password) {
       if (!isValidPassword(password))
         return res.status(400).send({ status: false, msg: "password is not valid" });
-      updateData.password = await bcrypt.hash(password, 10);
+      newbody["password"] = await bcrypt.hash(password, 10);
     }
 
     //==checking and validating address==//
-    let addressCheck = JSON.parse(address)
-    if (addressCheck) {
-    
-      if ( typeof addressCheck !== "object" || Array.isArray(addressCheck) || Object.keys(addressCheck).length == 0 )
-        return res.status(400).send({ status: false, message: "Address Should be in Valid Format" });
+    if (address) {
+      let addressCheck = JSON.parse(address)
+      if (addressCheck) {
 
-      const findAddress = await userModel.findOne({ _id: userId });
+        if (typeof addressCheck !== "object" || Array.isArray(addressCheck) || Object.keys(addressCheck).length == 0)
+          return res.status(400).send({ status: false, message: "Address Should be in Valid Format" });
 
-      //==checking and validating shipping address- street,city,pincode==//
-      if (addressCheck.shipping) {
-        const { street, city, pincode } = addressCheck.shipping;
-        if (street) {
-          if (!isValid(street))
-            return res.status(400).send({ status: false, msg: "shipping street is not valid " });
-          findAddress.address.shipping.street = street;
+        const findAddress = await userModel.findOne({ _id: userId });
+
+        //==checking and validating shipping address- street,city,pincode==//
+        if (addressCheck.shipping) {
+          const { street, city, pincode } = addressCheck.shipping;
+
+          if (street) {
+            if (!isValid(street))
+              return res.status(400).send({ status: false, msg: "shipping street is not valid " });
+            findAddress.address.shipping.street = street;
+          }
+
+          if (city) {
+            if (!isValid(city))
+              return res.status(400).send({ status: false, msg: "shipping city is not valid " });
+            findAddress.address.shipping.city = city;
+          }
+
+          if (pincode) {
+            if (!isValidPincode(pincode))
+              return res.status(400).send({ status: false, msg: "shipping pincode is not valid " });
+            findAddress.address.shipping.pincode = pincode;
+          }
         }
-        if (city) {
-          if (!isValid(city))
-            return res.status(400).send({ status: false, msg: "shipping city is not valid " });
-          findAddress.address.shipping.city = city;
+
+        //==checking and validating billing address- street,city,pincode==//
+        if (addressCheck.billing) {
+          const { street, city, pincode } = addressCheck.billing;
+
+          if (street) {
+            if (!isValid(street))
+              return res.status(400).send({ status: false, msg: "billing street is not valid " });
+            findAddress.address.billing.street = street;
+          }
+
+          if (city) {
+            if (!isValid(city))
+              return res.status(400).send({ status: false, msg: "billing city is not valid " });
+            findAddress.address.billing.city = city;
+          }
+
+          if (pincode) {
+            if (!isValidPincode(pincode))
+              return res.status(400).send({ status: false, msg: "billing pincode is not valid " });
+            findAddress.address.billing.pincode = pincode;
+          }
         }
-        if (pincode) {
-          if (!isValidPincode(pincode))
-            return res.status(400).send({ status: false, msg: "shipping pincode is not valid " });
-          findAddress.address.shipping.pincode = pincode;
-        }
+        newbody["address"] = findAddress.address;
       }
-
-      //==checking and validating billing address- street,city,pincode==//
-      if (addressCheck.billing) {
-        const { street, city, pincode } = addressCheck.billing;
-        if (street) {
-          if (!isValid(street))
-            return res.status(400).send({ status: false, msg: "billing street is not valid " });
-          findAddress.address.billing.street = street;
-        }
-        if (city) {
-          if (!isValid(city))
-            return res.status(400).send({ status: false, msg: "billing city is not valid " });
-          findAddress.address.billing.city = city;
-        }
-        if (pincode) {
-          if (!isValidPincode(pincode))
-            return res.status(400).send({ status: false, msg: "billing pincode is not valid " });
-          findAddress.address.billing.pincode = pincode;
-        }
-      }
-      updateData.address = findAddress.address;
     }
 
     //==updating user details==//
-    const updateDetails = await userModel.findByIdAndUpdate({ _id: userId }, updateData, { new: true } );
+    const updateDetails = await userModel.findByIdAndUpdate({ _id: userId }, newbody, { new: true });
     return res.status(200).send({ status: true, message: "User profile updated successfully", data: updateDetails });
-  } 
+  }
   catch (err) {
     if (err instanceof SyntaxError) {
       return res.status(400).json({ status: false, message: "Please Enter a valid object" });
     }
-    return res.status(500).send({ status: false, error: err.message });
+    return res.status(500).json({ status: false, error: err.message });
   }
 };
 
