@@ -3,6 +3,8 @@ const cartModel = require("../models/cartModel");
 const orderModel = require("../models/orderModel");
 const { isValidRequestBody, isValidObjectId, isValidStatus } = require('../validators/validate')
 
+//=======================================================================================
+
 const orderCreation = async (req, res) => {
     try {
         let userId = req.params.userId;
@@ -90,6 +92,8 @@ const orderCreation = async (req, res) => {
     }
 };
 
+//=======================================================================================
+
 const updateOrder = async function (req, res) {
     try {
         const userId = req.params.userId
@@ -104,7 +108,7 @@ const updateOrder = async function (req, res) {
         }
 
         if (!isValidObjectId(orderId)) {
-            return res.status(400).send({ status: false, message: "Not a valid orderId " })
+            return res.status(400).send({ status: false, message: "Please provide a valid orderId " })
         }
 
         if (!isValidStatus(status)) {
@@ -118,7 +122,7 @@ const updateOrder = async function (req, res) {
         const order = await orderModel.findOne({ _id: orderId, isDeleted: false, userId: userId })
 
         if (!order) {
-            return res.status(400).send({ status: false, message: "Order Id is not matched with this userId" })
+            return res.status(404).send({ status: false, message: "Order not found for this userId" })
         }
 
         if (status == 'cancelled' && order.cancellable == false) {
@@ -147,4 +151,8 @@ const updateOrder = async function (req, res) {
     }
 }
 
+//=======================================================================================
+
 module.exports = { orderCreation, updateOrder }
+
+//=======================================================================================

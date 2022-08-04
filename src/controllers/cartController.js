@@ -3,6 +3,8 @@ const productModel = require('../models/productModel');
 const userModel = require('../models/userModel');
 const { isValid, isValidRequestBody, isValidObjectId, validQuantity } = require('../validators/validate')
 
+//=================================================================================================================
+
 const cartCreation = async (req, res) => {
     try {
         let userId = req.params.userId;
@@ -47,7 +49,7 @@ const cartCreation = async (req, res) => {
         let e = findProduct.price
 
         if (!findCartOfUser) {
-            var cartData = {
+            var cartData = { 
                 userId: userId,
                 items: [
                     {
@@ -113,10 +115,7 @@ const getCart = async (req, res) => {
 
         const findUserProfile = await userModel.findById({ _id: userId })
         if (!findUserProfile) {
-            return res.status(400).send({
-                status: false,
-                message: `User doesn't exists by ${userId}`
-            })
+            return res.status(400).send({ status: false, message: `User doesn't exists by ${userId}` })
         }
 
         //===================================================  Finding the Cart details===================================================  
@@ -134,6 +133,9 @@ const getCart = async (req, res) => {
 };
 
 
+//=================================================================================================================
+
+
 const updateCart = async function (req, res) {
     try {
 
@@ -147,19 +149,21 @@ const updateCart = async function (req, res) {
         if (!cartId) {
             return res.status(400).send({ status: false, message: "cartId be must required..." })
         }
+
         if (!productId) {
             return res.status(400).send({ status: false, message: "productId must be required..." })
         }
+
         if (!removeProduct && removeProduct != 0) {
             return res.status(400).send({ status: false, message: "removeProduct key must be required..." })
         }
 
         if (!isValidObjectId(cartId)) {
-            return res.status(400).send({ status: false, message: "Not a valid cartId" })
+            return res.status(400).send({ status: false, message: "Please provide valid cartId" })
         }
 
         if (!isValidObjectId(productId)) {
-            return res.status(400).send({ status: false, message: "Not a valid ProductId" })
+            return res.status(400).send({ status: false, message: "Please provide valid ProductId" })
         }
 
         if (!(removeProduct == "1" || removeProduct == "0")) {
@@ -202,9 +206,7 @@ const updateCart = async function (req, res) {
                             }
                         },
                         { new: true })
-
                     return res.status(200).send({ status: true, message: 'sucessfully removed product from cart', data: removeCart })
-
                 }
 
                 const product = await cartModel.findOneAndUpdate({ "items.productId": productId, userId: userId }, { $inc: { "items.$.quantity": -1, totalPrice: -getPrice } }, { new: true })
@@ -218,6 +220,8 @@ const updateCart = async function (req, res) {
 }
 
 
+//=================================================================================================================
+
 const deleteCart = async (req, res) => {
     try {
         let userId = req.params.userId.toString().trim()
@@ -225,7 +229,7 @@ const deleteCart = async (req, res) => {
         const findUserCart = await cartModel.findOne({ userId: userId })
 
         if (!findUserCart) {
-            return res.status(404).send({ status: false, message: "No user found" })
+            return res.status(404).send({ status: false, message: "User doesn't exist" })
         }
 
         if (findUserCart.items.length == 0) {
@@ -240,4 +244,8 @@ const deleteCart = async (req, res) => {
     }
 }
 
+//=================================================================================================================
+
 module.exports = { cartCreation, getCart, updateCart, deleteCart }
+
+//=================================================================================================================
