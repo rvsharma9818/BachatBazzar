@@ -7,12 +7,15 @@ const orderCreation = async (req, res) => {
     try {
         let userId = req.params.userId;
         let requestBody = req.body;
-        
+
         let { cartId, status, cancellable } = requestBody;
 
-        // if(requestBody.hasOwnProperty('cancellable')){
-        //     return res.status(400).send({ status: false, message: `cancellable not allowed while creation of order` })
-        // }
+        if(requestBody.hasOwnProperty('cancellable')){
+            if ((typeof cancellable !== "boolean")) {
+                return res.status(400).send({ status: false, message: "cancellable should be a boolean value" });
+            }
+        }
+
 
         if (!isValidObjectId(userId)) {
             return res.status(400).send({ status: false, message: "Invalid userId in params." });
@@ -29,67 +32,60 @@ const orderCreation = async (req, res) => {
         if (!isValidObjectId(cartId)) {
             return res.status(400).send({ status: false, message: `Invalid cartId in request body.` });
         }
-
-        if (cancellable == "")
-        return res.status(400).send({ status: false, message: "cancellable field cannot be empty" });
-
-        if (cancellable) { 
-            if (!(cancellable === "true" || cancellable === "false")) {
-                return res.status(400).send({ status: false, message: "cancellable should be a boolean value" });
-            }
-       
+        
         if (status) {
             if (status !== 'pending') {
                 return res.status(400).send({ status: false, message: "status must be Pending during creation of order" })
             }
         }
-        
-        const searchUser = await userModel.findOne({ _id: userId });
 
-        if (!searchUser) {
-            return res.status(404).send({ status: false, message: `user doesn't exist for ${userId}` });
+            const searchUser = await userModel.findOne({ _id: userId });
+
+            if (!searchUser) {
+                return res.status(404).send({ status: false, message: `user doesn't exist for ${userId}` });
+            }
+
+            const searchCartDetails = await cartModel.findOne({ _id: cartId, userId: userId });
+
+            if (!searchCartDetails) {
+                return res.status(404).send({ status: false, message: `Cart doesn't belongs to ${userId}` });
+            }
+
+            if (!searchCartDetails.items.length) {
+                return res.status(404).send({ status: false, message: `Please add some product in cart to make an order.` });
+            }
+
+            //adding quantity of every products
+
+            const reducer = (previousValue, currentValue) => previousValue + currentValue;
+
+            let totalQuantity = searchCartDetails.items.map((x) => x.quantity).reduce(reducer);
+
+            const orderDetails = {
+                userId: userId,
+                items: searchCartDetails.items,
+                totalPrice: searchCartDetails.totalPrice,
+                totalItems: searchCartDetails.totalItems,
+                totalQuantity: totalQuantity,
+                cancellable,
+                status,
+            };
+            const savedOrder = await orderModel.create(orderDetails);
+
+            //Empty the cart after the successfull order
+
+            if (status == 'pending' || savedOrder.status == 'pending') {
+                await cartModel.findOneAndUpdate({ _id: cartId, userId: userId }, {
+                    $set: {
+                        items: [],
+                        totalPrice: 0,
+                        totalItems: 0,
+                    },
+                })
+            };
+            return res.status(201).send({ status: true, message: "Order placed.", data: savedOrder });
         }
-             
-        const searchCartDetails = await cartModel.findOne({ _id: cartId, userId: userId });
-
-        if (!searchCartDetails) {
-            return res.status(404).send({ status: false, message: `Cart doesn't belongs to ${userId}` });
-        }
-
-        if (!searchCartDetails.items.length) {
-            return res.status(404).send({ status: false, message: `Please add some product in cart to make an order.` });
-        }
-
-        //adding quantity of every products
-
-        const reducer = (previousValue, currentValue) => previousValue + currentValue;
-
-        let totalQuantity = searchCartDetails.items.map((x) => x.quantity).reduce(reducer);
-
-        const orderDetails = {
-            userId: userId,
-            items: searchCartDetails.items,
-            totalPrice: searchCartDetails.totalPrice,
-            totalItems: searchCartDetails.totalItems,
-            totalQuantity: totalQuantity,
-            cancellable,
-            status,
-        };
-        const savedOrder = await orderModel.create(orderDetails);
-
-        //Empty the cart after the successfull order
-
-        if(status == 'pending' || savedOrder.status == 'pending'){
-            await cartModel.findOneAndUpdate({ _id: cartId, userId: userId }, {
-                $set: {
-                    items: [],
-                    totalPrice: 0,
-                    totalItems: 0,
-                },
-            })
-        };
-        return res.status(201).send({ status: true, message: "Order placed.", data: savedOrder });
-    } catch (error) {
+    catch (error) {
         return res.status(500).send({ status: false, message: error.message });
     }
 };
@@ -119,7 +115,7 @@ const updateOrder = async function (req, res) {
             return res.status(400).send({ status: false, message: "status can not be pending during updation" })
         }
 
-        const order = await orderModel.findOne({ _id: orderId,isDeleted:false, userId: userId })
+        const order = await orderModel.findOne({ _id: orderId, isDeleted: false, userId: userId })
 
         if (!order) {
             return res.status(400).send({ status: false, message: "Order Id is not matched with this userId" })
@@ -138,13 +134,13 @@ const updateOrder = async function (req, res) {
         }
 
         if (status == 'completed' && order.status == 'pending') {
-            const orderCompleted = await orderModel.findOneAndUpdate({_id:orderId},{$set:{status:'completed'}}, {new : true})
-            return res.status(200).send({ status: true, message: "Order is completed", data : orderCompleted })
+            const orderCompleted = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'completed' } }, { new: true })
+            return res.status(200).send({ status: true, message: "Order is completed", data: orderCompleted })
         }
 
         if (status == 'cancelled' && order.status == 'pending') {
-            const orderCancelled = await orderModel.findOneAndUpdate({_id:orderId},{$set:{status:'cancelled'}}, {new : true})
-            return res.status(200).send({ status: false, message: "Order is cancelled", data : orderCancelled })
+            const orderCancelled = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled' } }, { new: true })
+            return res.status(200).send({ status: false, message: "Order is cancelled", data: orderCancelled })
         }
     } catch (error) {
         return res.status(500).send({ status: false, error: error.message })
