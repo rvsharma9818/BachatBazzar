@@ -285,10 +285,6 @@ const updateProduct = async function (req, res) {
     } 
     const updatedProductDetails = {}; // considering a empty object
 
-    if (!files && Object.keys(requestBody).length == 0) {
-      return res.status(400).send({ status: false, message: "Input field cannot be empty" });
-    }
-
 //================================================== validaiton for Upload for file============================
       
     if(req.file){
@@ -306,6 +302,10 @@ const updateProduct = async function (req, res) {
 
     if (requestBody.isDeleted && requestBody.isDeleted != "false") {
       return res.status(400).send({ status: false, data: "isDeleted must be false" });
+    }
+
+    if (!files && Object.keys(requestBody).length == 0) {
+      return res.status(400).send({ status: false, message: "Input field cannot be empty" });
     }
 
 

@@ -150,27 +150,28 @@ const updateCart = async function (req, res) {
             return res.status(400).send({ status: false, message: "cartId be must required..." })
         }
 
-        if (!productId) {
-            return res.status(400).send({ status: false, message: "productId must be required..." })
-        }
-
-        if (!removeProduct && removeProduct != 0) {
-            return res.status(400).send({ status: false, message: "removeProduct key must be required..." })
-        }
-
         if (!isValidObjectId(cartId)) {
             return res.status(400).send({ status: false, message: "Please provide valid cartId" })
+        }
+
+        if (!productId) {
+            return res.status(400).send({ status: false, message: "productId must be required..." })
         }
 
         if (!isValidObjectId(productId)) {
             return res.status(400).send({ status: false, message: "Please provide valid ProductId" })
         }
 
+
+        if (!removeProduct && removeProduct != 0) {
+            return res.status(400).send({ status: false, message: "removeProduct key must be required..." })
+        }
+        
         if (!(removeProduct == "1" || removeProduct == "0")) {
             return res.status(400).send({ status: false, message: "removeProduct value only can be 0 or 1" })
         }
 
-        const cartInDB = await cartModel.findOne({ _id: cartId })
+        const cartInDB = await cartModel.findOne({ $and : [{_id : cartId}, {userId : userId}]})
 
         if (!cartInDB) {
             return res.status(404).send({ status: false, message: "cartId does not exist" })
@@ -238,8 +239,9 @@ const deleteCart = async (req, res) => {
 
         let removedCart = await cartModel.findOneAndUpdate({ userId: userId }, { $set: { items: [], totalItems: 0, totalPrice: 0 } }, { new: true })
 
-        return res.status(204)
-    } catch (error) {
+        return res.status(204).send({status : true})
+    } 
+    catch (error) {
         res.status(500).send({ status: false, message: error.message });
     }
 }
