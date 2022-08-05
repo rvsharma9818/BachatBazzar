@@ -144,7 +144,7 @@ const updateOrder = async function (req, res) {
 
         if (status == 'cancelled' && order.status == 'pending') {
             const orderCancelled = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled' } }, { new: true })
-            return res.status(200).send({ status: false, message: "Order is cancelled", data: orderCancelled })
+            return res.status(200).send({ status: true, message: "Order is cancelled", data: orderCancelled })
         }
     } catch (error) {
         return res.status(500).send({ status: false, error: error.message })

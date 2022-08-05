@@ -9,7 +9,7 @@ const userModel = require("../models/userModel")
 const verifyToken = function (req, res, next) {
   const authHeader = req.headers.token || req.headers["authorization"];
   if (authHeader) {
-    const token = authHeader.split(" ")[1] || authHeader.split(" ").pop();
+    const token = authHeader.split(" ")[1]
 
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
 
