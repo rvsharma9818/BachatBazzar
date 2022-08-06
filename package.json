@@ -20,6 +20,7 @@
   "dependencies": {
     "aws-sdk": "^2.825.0",
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "currency-symbol-map": "^5.1.0",
