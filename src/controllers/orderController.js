@@ -3,8 +3,8 @@ const cartModel = require("../models/cartModel");
 const orderModel = require("../models/orderModel");
 const { isValidRequestBody, isValidObjectId, isValidStatus } = require('../validators/validate')
 
-//=======================================================================================
 
+// User feature to place order
 const orderCreation = async (req, res) => {
     try {
         let userId = req.params.userId;
@@ -85,39 +85,120 @@ const orderCreation = async (req, res) => {
                     },
                 })
             };
-            return res.status(201).send({ status: true, message: "Order placed.", data: savedOrder });
+    
+            const sendMail = require('../EmailServices/emailservices');
+    sendMail({
+      to: "rvsharma2652@gmail.com",
+      subject: 'Order is Succesfully placed',
+      html: require('../EmailServices/emailtemplate')({
+                title:"Your Order is Succesfully placed",
+                name:searchUser.fname+" "+searchUser.lname, 
+                orderId: savedOrder._id.toString() ,
+                total:savedOrder.totalPrice,
+                status:"Pending",
+                items:savedOrder.totalItems
+            })
+    })
+    .then(() => {
+      return res.json({success: true});
+    })
+    .catch(err => {
+        console.log(err)
+      return res.status(500).json({error: 'Error in email sending.'});
+    });
         }
     catch (error) {
+        console.log(error)
         return res.status(500).send({ status: false, message: error.message });
     }
 };
 
-//=======================================================================================
+// Admin feature to see aorder list
 
-const updateOrder = async function (req, res) {
+const getorder =(async (req,res)=>{
+try {
+    const order =await orderModel.find({isDeleted:false});
+
+    if(!order){
+        return res.status(404).send({staus:false, msg:"No order list"})
+    }
+
+    return res.status(200).send({status:true,data:order})
+
+} catch (error) {
+return res.status(500).send({status:false,msg:error.message})    
+}
+})
+// getuser order list User Feature
+const getorderUser =(async (req,res)=>{
     try {
-        const userId = req.params.userId
-        const { orderId, status } = req.body
+        let userId =req.params.userId
+        const order =await orderModel.find({isDeleted:false,userId:userId});
+    
+        if(!order){
+            return res.status(404).send({staus:false, msg:"No order list"})
+        }
+    
+        return res.status(200).send({status:true,data:order})
+    
+    } catch (error) {
+    return res.status(500).send({status:false,msg:error.message})    
+    }
+    })
+    
+
+//Admin and user both Feature
+
+const getorderbyid =(async (req,res)=>{
+    try {
+
+        const { orderId } = req.body
 
         if (!orderId || orderId == "") {
             return res.status(400).send({ status: false, message: "Order Id is required" })
         }
-
-        if (!status) {
-            return res.status(400).send({ status: false, message: "Status is required" })
-        }
-
+        
+        
         if (!isValidObjectId(orderId)) {
             return res.status(400).send({ status: false, message: "Please provide a valid orderId " })
         }
 
-        if (!isValidStatus(status)) {
-            return res.status(400).send({ status: false, message: "Status can be completed or cancelled only" })
+        const order =await orderModel.findOne({isDeleted:false,_id:orderId});
+    
+        if(!order){
+            return res.status(404).send({staus:false, msg:"No order list"})
+        }
+    
+        return res.status(200).send({status:true,data:order})
+    
+    } catch (error) {
+    return res.status(500).send({status:false,msg:error.message})    
+    }
+    })
+
+
+
+
+   //User feature for cancelled the order
+   
+   const updateOrder = async function (req, res) {
+    try {
+        const userId = req.params.userId
+        const { orderId } = req.body
+
+        if (!orderId || orderId == "") {
+            return res.status(400).send({ status: false, message: "Order Id is required" })
+        }
+        const searchUser = await userModel.findOne({ _id: userId });
+
+        if (!searchUser) {
+            return res.status(404).send({ status: false, message: `user doesn't exist for ${userId}` });
+        }
+        
+        if (!isValidObjectId(orderId)) {
+            return res.status(400).send({ status: false, message: "Please provide a valid orderId " })
         }
 
-        if (status == 'pending') {
-            return res.status(400).send({ status: false, message: "status can not be pending during updation" })
-        }
 
         const order = await orderModel.findOne({ _id: orderId, isDeleted: false, userId: userId })
 
@@ -125,27 +206,71 @@ const updateOrder = async function (req, res) {
             return res.status(404).send({ status: false, message: "Order not found for this userId" })
         }
 
-        if (status == 'cancelled' && order.cancellable == false) {
+        if ( order.cancellable == false) {
             return res.status(400).send({ status: false, message: "Order is not cancellable" })
         }
 
-        if (status == 'completed' && (order.status == 'completed' || order.status == 'cancelled')) {
-            return res.status(400).send({ status: false, message: `Order status can not be changed after ${order.status}` })
-        }
-
-        if (status == 'cancelled' && (order.status == 'completed' || order.status == 'cancelled')) {
-            return res.status(400).send({ status: false, message: `Order status can not be changed after ${order.status}` })
-        }
-
-        if (status == 'completed' && order.status == 'pending') {
-            const orderCompleted = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'completed' } }, { new: true })
-            return res.status(200).send({ status: true, message: "Order is completed", data: orderCompleted })
-        }
-
-        if (status == 'cancelled' && order.status == 'pending') {
             const orderCancelled = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled' } }, { new: true })
-            return res.status(200).send({ status: true, message: "Order is cancelled", data: orderCancelled })
+        
+            const sendMail = require('../EmailServices/emailservices');
+            sendMail({
+              to: "rvsharma2652@gmail.com",
+              subject: 'Order is Cancelled',
+              html: require('../EmailServices/emailtemplate')({
+                        title:"Order is Cancelled",
+                        status:"Cancelled",
+                        name:searchUser.fname+" "+searchUser.lname, 
+                        orderId: orderCancelled._id.toString() ,
+                        total:orderCancelled.totalPrice,
+                        items:orderCancelled.totalItems
+                    })
+            })
+            .then(() => {
+              return res.json({success: true});
+            })
+            .catch(err => {
+                console.log(err)
+              return res.status(500).json({error: 'Error in email sending.'});
+            });
+            
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message })
+    }
+}
+
+//Admin feature for delete the order
+
+const deleteOrder = async function (req, res) {
+    try {
+        const userId = req.params.userId
+        const { orderId } = req.body
+
+        if (!orderId || orderId == "") {
+            return res.status(400).send({ status: false, message: "Order Id is required" })
         }
+        const searchUser = await userModel.findOne({ _id: userId });
+
+        if (!searchUser) {
+            return res.status(404).send({ status: false, message: `user doesn't exist for ${userId}` });
+        }
+        
+        if (!isValidObjectId(orderId)) {
+            return res.status(400).send({ status: false, message: "Please provide a valid orderId " })
+        }
+
+
+        const order = await orderModel.findOne({ _id: orderId, isDeleted: false})
+
+        if (!order) {
+            return res.status(404).send({ status: false, message: "Order not found for this userId" })
+        }
+
+        
+    const orderdelete= await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled',isDeleted:true,deletedAt:Date.now().toString() } }, { new: true })
+        
+    return res.status(200).send({ status: true, message: "Order is Deleted Succesfully " ,data:orderdelete})
+
+            
     } catch (error) {
         return res.status(500).send({ status: false, error: error.message })
     }
@@ -153,6 +278,6 @@ const updateOrder = async function (req, res) {
 
 //=======================================================================================
 
-module.exports = { orderCreation, updateOrder }
+module.exports = { orderCreation, updateOrder,getorder,getorderbyid,deleteOrder,getorderUser }
 
 //=======================================================================================

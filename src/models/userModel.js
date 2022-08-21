@@ -11,7 +11,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    role: {
+      type: Boolean,
+      default: false
+    },
     email: {
       type: String,
       required: true,
@@ -33,41 +36,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     address: {
-      shipping: {
-        street: {
-          type: String,
-          required: true,
-        },
-
-        city: {
-          type: String,
-          required: true,
-        },
-
-        pincode: {
-          type: Number,
-          required: true,
-        },
-      },
-      billing: {
-        street: {
-          type: String,
-          required: true,
-        },
-
-        city: {
-          type: String,
-          required: true,
-        },
-
-        pincode: {
-          type: Number,
-          required: true,
-        },
-      },
+      type: String,
+      required: true
     },
-  },{ timestamps: true });
+  }, { timestamps: true });
 
 module.exports = mongoose.model("user", userSchema);
