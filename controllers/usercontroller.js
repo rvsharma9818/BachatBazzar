@@ -10,7 +10,6 @@ const bcrypt = require("bcryptjs");
 const createUser = async function (req, res) {
     try {
         let data = req.body;
-console.log(req.body)
 
         let file = req.file;
         // ====================================== Destructuring the request Body =====================================
@@ -48,7 +47,7 @@ console.log(req.body)
         return res.status(201).send({ status: true, message: "Success", data: userCreated });
     } catch (error) {
 
-        return res.status(500).send({ status: false, error: error.message });
+        return res.status(500).send({ status: false, error: error });
     };
 }
 
