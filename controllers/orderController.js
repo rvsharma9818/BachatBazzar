@@ -63,7 +63,7 @@ const orderCreation = async (req, res) => {
             //Empty the cart after the successfull order
 
             if (status == 'pending' || savedOrder.status == 'pending') {
-                await cartModel.findOneAndUpdate({ _id: cartId, userId: userId }, {
+                await cartModel.findOneAndUpdate({ userId: userId }, {
                     $set: {
                         items: [],
                         totalPrice: 0,
