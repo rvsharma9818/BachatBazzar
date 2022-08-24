@@ -8,7 +8,7 @@ const USerroute = require("./routes/userRoutes")
 
 const productroute = require("./routes/productRoute")
 
-const Categoryroute = require("./routes/cartRoute")
+const Categoryroute = require("./routes/categoryRoute")
 
 const Cartroute = require("./routes/cartRoute")
 
