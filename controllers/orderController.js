@@ -78,7 +78,7 @@ const orderCreation = async (req, res) => {
       subject: 'Order is Succesfully placed',
       html: require('../Email-setup/emailservices')({
                 title:"Your Order is Succesfully placed",
-                name:searchUser.fname+" "+searchUser.lname, 
+                name:searchUser.name, 
                 orderId: savedOrder._id.toString() ,
                 total:savedOrder.totalPrice,
                 status:"Pending",
@@ -199,7 +199,7 @@ const getorderbyid =(async (req,res)=>{
               html: require('../Email-setup/emailTemplate')({
                         title:"Order is Cancelled",
                         status:"Cancelled",
-                        name:searchUser.fname+" "+searchUser.lname, 
+                        name:searchUser.name, 
                         orderId: orderCancelled._id.toString() ,
                         total:orderCancelled.totalPrice,
                         items:orderCancelled.totalItems
