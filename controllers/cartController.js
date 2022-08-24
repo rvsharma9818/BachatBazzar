@@ -134,11 +134,7 @@ const updateCart = async function (req, res) {
         cartId = cartId
         removeProduct = removeProduct
 
-        if (!cartId) {
-            return res.status(400).send({ status: false, message: "cartId be must required..." })
-        }
-
-
+       
         if (!productId) {
             return res.status(400).send({ status: false, message: "productId must be required..." })
         }
@@ -153,7 +149,7 @@ const updateCart = async function (req, res) {
             return res.status(400).send({ status: false, message: "removeProduct value only can be 0 or 1" })
         }
 
-        const cartInDB = await cartModel.findOne({ $and : [{_id : cartId}, {userId : userId}]})
+        const cartInDB = await cartModel.findOne({userId : userId})
 
         if (!cartInDB) {
             return res.status(404).send({ status: false, message: "cartId does not exist" })
