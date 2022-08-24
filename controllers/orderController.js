@@ -76,7 +76,7 @@ const orderCreation = async (req, res) => {
     sendMail({
       to: "rvsharma2652@gmail.com",
       subject: 'Order is Succesfully placed',
-      html: require('../Email-setup/emailservices')({
+      html: require('../Email-setup/emailTemplate')({
                 title:"Your Order is Succesfully placed",
                 name:searchUser.name, 
                 orderId: savedOrder._id.toString() ,
