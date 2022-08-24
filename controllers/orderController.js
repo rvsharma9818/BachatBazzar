@@ -9,7 +9,7 @@ const orderCreation = async (req, res) => {
         let userId = req.params.userId;
         let requestBody = req.body;
 
-        let { cartId, status, cancellable } = requestBody;
+        let { status, cancellable } = requestBody;
 
         if(requestBody.hasOwnProperty('cancellable')){
             if ((typeof cancellable !== "boolean")) {
@@ -19,9 +19,6 @@ const orderCreation = async (req, res) => {
 
 
         
-        if (!cartId) {
-            return res.status(400).send({ status: false, message: `Cart Id is required` });
-        }
 
         
         if (status) {
@@ -36,7 +33,7 @@ const orderCreation = async (req, res) => {
                 return res.status(404).send({ status: false, message: `user doesn't exist for ${userId}` });
             }
 
-            const searchCartDetails = await cartModel.findOne({ _id: cartId, userId: userId });
+            const searchCartDetails = await cartModel.findOne({ userId: userId });
 
             if (!searchCartDetails) {
                 return res.status(404).send({ status: false, message: `Cart doesn't belongs to ${userId}` });
@@ -75,11 +72,11 @@ const orderCreation = async (req, res) => {
                 })
             };
     
-            const sendMail = require('../EmailServices/emailservices');
+            const sendMail = require('../Email-setup/emailservices');
     sendMail({
       to: "rvsharma2652@gmail.com",
       subject: 'Order is Succesfully placed',
-      html: require('../EmailServices/emailtemplate')({
+      html: require('../Email-setup/emailservices')({
                 title:"Your Order is Succesfully placed",
                 name:searchUser.fname+" "+searchUser.lname, 
                 orderId: savedOrder._id.toString() ,
@@ -195,11 +192,11 @@ const getorderbyid =(async (req,res)=>{
 
             const orderCancelled = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled' } }, { new: true })
         
-            const sendMail = require('../EmailServices/emailservices');
+            const sendMail = require('../Email-setup/emailservices');
             sendMail({
               to: "rvsharma2652@gmail.com",
               subject: 'Order is Cancelled',
-              html: require('../EmailServices/emailtemplate')({
+              html: require('../Email-setup/emailTemplate')({
                         title:"Order is Cancelled",
                         status:"Cancelled",
                         name:searchUser.fname+" "+searchUser.lname, 
