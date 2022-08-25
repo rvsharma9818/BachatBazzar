@@ -1,0 +1,82 @@
+<link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+  crossorigin="anonymous"
+/>
+<div class="wrapper-warning" *ngIf="err">
+  <div class="card">
+    <div class="icon"><i class="fas fa-exclamation-circle"></i></div>
+    <div class="subject">
+      <h3>Warning</h3>
+      <p>{{errt}}</p>
+    </div>
+  </div>
+</div>
+<!-- section-warning -->
+<div *ngIf="loader" class="loader"></div>
+<div class="container" id="container">
+  <div class="form-container sign-in-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onlogin()">
+      <h1>Sign in</h1>
+      <div class="social-container">
+        <a class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>or use your account</span>
+      <input type="email" formControlName="email" placeholder="Email" />
+      <div
+        *ngIf="
+          loginForm.get('email').invalid &&
+          loginForm.get('email').errors &&
+          (loginForm.get('email').dirty || loginForm.get('email').touched)
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="loginForm.get('email').hasError('required')"
+        >
+          This field is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="loginForm.get('email').hasError('pattern')"
+        >
+          Email Should be like aaa1@gmail/google.com
+        </small>
+      </div>
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <div
+        *ngIf="
+          loginForm.get('password').invalid &&
+          loginForm.get('password').errors &&
+          (loginForm.get('password').dirty || loginForm.get('password').touched)
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="loginForm.get('password').hasError('required')"
+        >
+          This field is required.
+        </small>
+      </div>
+      <a>Forgot your password?</a>
+      <button>Sign In</button>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-right">
+        <h1>Hello, Friend!</h1>
+        <p>Enter your personal details and start journey with us</p>
+        <button class="ghost" id="signUp" routerLink="/signup">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>

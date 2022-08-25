@@ -1,0 +1,389 @@
+@import url(//db.onlinewebfonts.com/c/2f407d03c34861737fe4b85ab35eb729?family=Cera+Pro);
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.eot");
+  src: url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.svg#Cera Pro")
+      format("svg");
+}
+
+@import url(//db.onlinewebfonts.com/c/98b78079f5ee4295c40260785b4e4fbf?family=Cera+Pro);
+
+@font-face {
+  font-family: "Cera Pro Bold";
+  src: url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.eot");
+  src: url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.svg#Cera Pro")
+      format("svg");
+}
+
+@import "~swiper/css";
+@import "~swiper/css/pagination";
+@import "~swiper/css/navigation";
+
+.swiper {
+  width: 77%;
+  height: 100%;
+  position: relative;
+  left: 55px;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.swiper-button-prev {
+  color: red;
+  position: absolute;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(4px) !important;
+  color: #000 !important;
+  fill: rgb(241, 238, 238) !important;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  stroke: rgb(252, 250, 250) !important;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding-top: 210px;
+  left: 0;
+  padding-bottom: 213px;
+}
+
+.swiper-button-next {
+  color: #000;
+  position: absolute;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(4px) !important;
+  color: #000 !important;
+  fill: rgb(241, 238, 238) !important;
+  box-shadow: 0 38px 19px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  stroke: rgb(252, 250, 250) !important;
+  box-shadow: 0 38px 19px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding-top: 210px;
+  padding-bottom: 213px;
+}
+
+.container-fluid {
+  background-color: rgb(244, 247, 255);
+  height: 520px;
+  padding: 20px;
+}
+
+.upper {
+  width: 100%;
+  display: flex;
+  position: relative;
+  top: 20px;
+  left: 60px;
+}
+
+.upper p {
+  font-size: 26px;
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+.anchor {
+  position: relative;
+  right: -530px;
+  display: flex;
+}
+.anchor li {
+  margin: 15px;
+  color: rgb(52, 153, 255);
+  border-bottom: 1px solid rgb(52, 153, 255);
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 0;
+  list-style: none;
+}
+.crouselx {
+  position: relative;
+  margin-top: 14px;
+  display: flex;
+  width: 100%;
+}
+
+.srcss {
+  position: relative;
+  left: 59px;
+}
+.srcss:hover {
+  cursor: pointer;
+}
+
+.cont {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+ng-template {
+  width: 13rem;
+  height: 25rem;
+  overflow: hidden;
+}
+.wrappe {
+  width: 14rem;
+  height: 25rem;
+  transition: 0.6s ease-in-out;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 5px;
+}
+.img {
+  position: relative;
+  width: 100%;
+  height: 16rem;
+  overflow: hidden;
+  background-color: white;
+}
+.src {
+  position: relative;
+  left: -10px;
+  width: 45%;
+  height: 14rem;
+}
+
+.icon {
+  position: absolute;
+  bottom: -50px;
+  width: 100%;
+  border: 1px solid black;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: black;
+  padding: 4px;
+  padding-left: 60px;
+  transition: 0.4s ease-in-out;
+  transform-origin: bottom;
+}
+.icon li {
+  list-style: none;
+  font-size: 16px;
+  position: relative;
+  width: 9rem;
+  left: -40px;
+  margin-right: 40px;
+  padding-left: 50px;
+
+  border-left: 1px solid white;
+}
+.icon li a {
+  transition: 0.4s ease-in;
+}
+.hh {
+  position: relative;
+  margin-left: 20px;
+  padding-left: -50px;
+}
+
+.whishlist {
+  position: relative;
+  color: rgb(52, 153, 255);
+
+  font-size: 16px;
+  border: 1px solid rgb(52, 153, 255);
+  padding: 4px 6px 4px 6px;
+  border-radius: 50%;
+  transition: 0.4s ease-in-out;
+  transform-origin: right;
+}
+.whishlist:hover {
+  background-color: black;
+  color: rgb(251, 171, 54);
+  border: none;
+}
+.wrappe:hover {
+  box-shadow: 0 14px 22px rgba(158, 155, 155, 0.25),
+    0 10px 10px rgba(153, 145, 145, 0.22);
+  cursor: pointer;
+}
+
+.wrappe:hover .icon {
+  bottom: -12px;
+}
+.wrappe:hover .whishlist {
+  right: 35px;
+}
+.product-item {
+  /* height: 330px; */
+  width: 260px;
+  border: 2px solid #f1f1f0;
+  text-align: center;
+  padding: 15px;
+  position: relative;
+}
+
+.product-item__name {
+  display: block;
+  color: #394264;
+  text-decoration: none;
+  font-size: 17px;
+  padding: 5px 0 25px 0;
+}
+
+.btn--buy:hover {
+  background-color: rgb(0, 0, 0);
+  color: rgb(251, 171, 54);
+  outline: none;
+  border: none;
+}
+ol {
+  list-style: none;
+  position: absolute;
+  top: 20px;
+  right: -100px;
+  z-index: 2;
+  transition: 0.9s ease-in-out;
+  transform-origin: right;
+}
+ol li {
+  margin-bottom: 14px;
+}
+.product-item:hover ol {
+  right: 20px;
+}
+.fa-handcuffs {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.price span {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.btn {
+  display: block;
+  background-color: rgb(69, 161, 254);
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 16px;
+  width: 100px;
+  text-align: center;
+  padding: 8px 0;
+  text-decoration: none;
+}
+
+a.btn {
+  color: #fff;
+}
+
+.product-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.product-item__price {
+  width: 100%;
+  height: 50px;
+}
+
+.btn--buy,
+.price {
+  position: absolute;
+  bottom: 20px;
+}
+.price {
+  right: 20px;
+}
+
+/*Corner ribbons*/
+
+.ribbon-wrapper {
+  /* background-color: blue; */
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.ribbon {
+  font: 20px Roboto Condensed;
+  color: #000;
+  background-color: rgb(251, 171, 54);
+  text-align: center;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  position: relative;
+  padding: 3px 0;
+  left: -30px;
+  /*top: 15px;*/
+  top: 15px;
+  width: 120px;
+  /*  -webkit-box-shadow: 5px 2px 3px rgba(229,229,229,0.9);
+  -moz-box-shadow:    5px 2px 3px rgba(229,229,229,0.9);
+  box-shadow:         5px 2px 3px rgba(229,229,229,0.9);*/
+}
+
+.product-item ul {
+  text-align: left;
+  font-size: 18px;
+  line-height: 18px;
+  color: #338dc9;
+}
+
+.product-item li span {
+  color: #34363d;
+  font-size: 14px;
+}
+
+.delivery {
+  font-size: 14px;
+  color: #888888;
+  opacity: 0;
+  margin: 0 0 5px 20px;
+  display: block;
+}
+.product-item__price span {
+  position: relative;
+  top: -10px;
+  left: 9px;
+  font-size: 24px;
+}

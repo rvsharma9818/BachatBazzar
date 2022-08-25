@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: white;
 }
 .row {
   width: 90%;
@@ -116,4 +117,10 @@ h4 {
   text-transform: lowercase;
   color: rgb(137, 138, 138);
   font-weight: 500;
+}
+
+.src{
+  position: relative;
+  height: 100%;
+  width: 100%;
 }

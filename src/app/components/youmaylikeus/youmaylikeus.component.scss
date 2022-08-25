@@ -1,0 +1,260 @@
+@import url(//db.onlinewebfonts.com/c/98b78079f5ee4295c40260785b4e4fbf?family=Cera+Pro);
+@import url(//db.onlinewebfonts.com/c/2f407d03c34861737fe4b85ab35eb729?family=Cera+Pro);
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.eot");
+  src: url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/2f407d03c34861737fe4b85ab35eb729.svg#Cera Pro")
+      format("svg");
+}
+
+
+@font-face {
+  font-family: "Cera Pro Bold";
+  src: url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.eot");
+  src: url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/98b78079f5ee4295c40260785b4e4fbf.svg#Cera Pro")
+      format("svg");
+}
+
+
+.container-fluidx {
+  background-color: rgb(244, 247, 255);
+  width: 150%;
+  height: 520px;
+  padding: 20px;
+  position: relative;
+  left: -120px;
+}
+
+.upper {
+  width: 100%;
+  display: flex;
+  position: relative;
+  top: 5px;
+  left: 440px;
+}
+
+.upper p {
+  font-family: 'Roboto Slab', serif;
+  font-size: 30px;
+  font-weight: bolder;
+  text-transform: uppercase;
+}
+.anchor {
+  position: relative;
+  right: -530px;
+  display: flex;
+}
+.anchor li {
+  margin: 15px;
+  color: rgb(52, 153, 255);
+  border-bottom: 1px solid rgb(52, 153, 255);
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 0;
+  list-style: none;
+}
+.crouselx {
+  position: relative;
+  margin-top: 14px;
+  display: flex;
+  width: 100%;
+}
+
+.srcss {
+  position: relative;
+  left: 59px;
+  height:340px
+}
+.srcss:hover {
+  cursor: pointer;
+}
+
+.cont {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.wrap{
+  display: flex;
+  position: relative;
+  left: 30px;
+  margin-left: 30px;
+}
+.item {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 230px;
+  height: 340px;
+  margin-left: 27px;
+  background: #fff;
+  -webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: 1s;
+}
+
+.item .img-box {
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: 1s;
+}
+
+.item .img-box img {
+  display: block;
+  width: 100%;
+  margin: 0 auto 0;
+  transition: 1s;
+}
+
+.details {
+  position: absolute;
+  bottom: -145px;
+  width: 100%;
+  background: #fff;
+  padding: 10px;
+  padding-top: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: 1s;
+}
+
+
+
+.details h2 {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 25px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.details h2 span {
+  font-size: 12px;
+  color: #bbb;
+  font-weight: normal;
+}
+
+.details .price {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+ul {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+  margin: 5px 5px 0;
+  font-size: 12px;
+  font-weight: normal;
+  color: #bbb;
+  transition: 0.7s;
+}
+
+ul li:hover {
+  cursor: pointer;
+  color: #333;
+  transition: 0.7s;
+}
+
+ul li:first-child {
+  margin-left: 0;
+}
+
+ul.colors li {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+ul.colors li:hover {
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+}
+
+ul.colors li:nth-child(1) {
+  background: #9F8A42;
+}
+
+ul.colors li:nth-child(2) {
+  background: #ACAEA9;
+}
+
+ul.colors li:nth-child(3) {
+  background: #cd7f32;
+}
+
+a {
+  display: block;
+  padding: 5px;
+  color: #fff;
+  margin: 15px 0 0;
+  background: #333;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: 1s;
+}
+
+a:hover {
+  background: #666;
+  transition: 1s;
+}
+
+
+.item:hover .details {
+  overflow: visible;
+  bottom: 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  transition: 1s;
+}
+
+.item:hover .img-box {
+  position: absolute;
+  bottom: 60px;
+  transition: 3s;
+}
+
+.item:hover h2, .item:hover .price {
+  padding-top: 20px;
+  padding-bottom: 0;
+}

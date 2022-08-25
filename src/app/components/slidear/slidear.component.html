@@ -1,56 +1,19 @@
-
-<swiper
-[autoplay]="{
-  delay: 2500,
-  disableOnInteraction: true
-}"
-class="mySwiper"
->
-
-<ng-template swiperSlide>
-<img src="assets/images/slide-1.jpg" alt="" class="sli" />
-<div class="box">
-  <p class="new">NEW collection</p>
-  <p class="womens">Womens's</p>
-  <h3>sportswear & joggers</h3>
-  <button class="expolre">Discover now</button>
+<div class="slider">
+  <div
+    *ngFor="let slide of slides; let i = index"
+    class="slide"
+    [style.background-image]="activeSlideIndex === i ? slide.backgroundExpanded : slide.backgroundCollapsed"
+    [ngClass]="{'active' : activeSlideIndex === i}"
+    (click)="activeSlideIndex = i"
+  >
+    <div class="content-wrapper">
+      <div class="content" [style.color]="slide.textColor">
+        <img *ngIf="slide.logo" [src]="slide.logo" [alt]="slide.title" class="logo" />
+        <h2 *ngIf="slide.title"  class="title">{{ slide.title }}</h2>
+        <p class="description">{{ slide.description }}</p>
+        <a [href]="slide.ctaLink" class="cta">{{ slide.ctaText }}</a>
+        <div class="overlay"></div>
+      </div>
+    </div>
+  </div>
 </div>
-</ng-template>
-<ng-template swiperSlide>
-  <img src="assets/images/slide-2.jpg" alt="" class="sli" />
-  <div class="box">
-    <p class="new">NEW collection</p>
-    <p class="womens">mens's</p>
-    <h3>coats & jackets</h3>
-    <button class="expolre">Discover now</button>
-  </div>
-</ng-template>
-<ng-template swiperSlide
-><img src="assets/images/slide-1 (2).jpg" alt="" class="sli" />
-<div class="box1">
-  <p class="new1">New arrivals</p>
-  <p class="womensc">the new way</p>
-  <h2>to buy furniture</h2>
-  <button class="shop">discover now</button>
-</div>
-</ng-template>
-
-<ng-template swiperSlide>
-  <img src="assets/images/slide-2 (1).jpg" alt="" class="sli" />
-  <div class="box1">
-    <p class="new2">hottest deals</p>
-    <p class="womensc2">wherever you go</p>
-    <h1>dji mavic 2 pro</h1>
-    <button class="shop2">discover here</button>
-  </div>
-</ng-template>
-<ng-template swiperSlide>
-  <img src="assets/images/slide-3 (2).jpg" alt="" class="sli" />
-  <div class="box1">
-    <p class="new2">limited quantities</p>
-    <p class="womensc3">Refresh your</p>
-    <h4>wardrobe</h4>
-    <button class="shop2">discover here</button>
-  </div>
-</ng-template>
-</swiper>

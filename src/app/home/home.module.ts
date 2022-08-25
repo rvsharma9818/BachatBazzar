@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { CardComponent } from '../components/card/card.component';
@@ -20,6 +19,7 @@ import { NewArrivalsComponent } from '../components/new-arrivals/new-arrivals.co
 import { PartnerComponent } from '../components/partner/partner.component';
 import { TrendingComponent } from '../components/trending/trending.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DefaultComponent } from '../components/default/default.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     TrendingComponent,
     NewArrivalsComponent,
     PartnerComponent,
+    DefaultComponent
   ],
   imports: [
     CommonModule,
@@ -43,8 +44,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatTabsModule,
     MatToolbarModule,
     MatIconModule,
-    SwiperModule
-    ,HttpClientModule
+    SwiperModule,
+    HttpClientModule,
+
   ],
 })
 export class HomeModule {}

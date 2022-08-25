@@ -1,0 +1,46 @@
+<div class="container-fluidx">
+  <div class="upper">
+    <p>Products Similar Like This</p>
+
+  </div>
+  <div class="crouselx">
+
+<img src="assets/images/trending.jpg" alt="" class="srcss">
+<div class="wrap">
+
+  <div  *ngFor="let slide of apiData | paginate: { itemsPerPage: 4, currentPage: p }">
+
+        <div class="item">
+          <div class="img-box">
+            <img src="https://source.unsplash.com/1-nx1QR5dTE" alt="Awesome Sunglasses">
+          </div>
+          <div class="details">
+            <h2>Awesome Sunglasses<br><span>Men's Collection</span></h2>
+            <div class="price">{{slide.id}}$</div>
+            <label>Size</label>
+            <ul>
+              <li>55-14</li>
+              <li>58-14</li>
+              <li>62-14</li>
+            </ul>
+            <label>Color</label>
+            <ul class="colors">
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <a href="#">Add to cart</a>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+      <pagination-controls class="my-pagination"  id="some_id"
+      (pageChange)="p = $event"
+      (pageBoundsCorrection)="p = $event"
+       previousLabel="Previous"
+       nextLabel="Next">
+     </pagination-controls>
+
+</div>
