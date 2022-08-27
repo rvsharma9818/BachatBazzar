@@ -18,9 +18,10 @@ import { RecommdedComponent } from '../components/recommded/recommded.component'
 import { NewArrivalsComponent } from '../components/new-arrivals/new-arrivals.component';
 import { PartnerComponent } from '../components/partner/partner.component';
 import { TrendingComponent } from '../components/trending/trending.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DefaultComponent } from '../components/default/default.component';
-
+import { TokenInterceptorService } from '../Services/token-interceptor.service';
+import { NgToastModule } from 'ng-angular-popup'
 @NgModule({
   declarations: [
     HomeComponent,
@@ -46,7 +47,12 @@ import { DefaultComponent } from '../components/default/default.component';
     MatIconModule,
     SwiperModule,
     HttpClientModule,
-
+    NgToastModule
   ],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptorService,
+    multi:true
+  }],
 })
 export class HomeModule {}

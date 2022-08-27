@@ -13,6 +13,10 @@ const routes: Routes = [
         component: DefaultComponent,
       },
       {
+        path: 'home',
+        component: DefaultComponent,
+      },
+      {
         path: 'product',
         loadChildren: () =>
           import('./product/product.module').then((m) => m.ProductModule),

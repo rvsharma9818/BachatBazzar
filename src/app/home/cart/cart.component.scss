@@ -1,3 +1,5 @@
+$green: #b7cb66;
+$blue: #25599f;
 @mixin size($point) {
   @if $point == lg-device {
     @media (min-width: 1224px) and (max-width: 1600px) {
@@ -34,6 +36,7 @@
   word-wrap: normal;
   direction: ltr;
   -webkit-font-smoothing: antialiased;
+  z-index: 2;
 }
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap");
 
@@ -52,7 +55,7 @@ body {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-background-color: white;
+  background-color: white;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -273,6 +276,7 @@ background-color: white;
             }
 
             &.item_remove {
+              z-index: 2;
               background-color: transparent;
               @include size(sm-device) {
                 position: absolute;
@@ -280,6 +284,7 @@ background-color: white;
                 top: 0px;
               }
               span {
+                z-index: 2;
                 font-size: 18px;
                 opacity: 0.6;
                 padding: 5px;
@@ -358,10 +363,11 @@ background-color: white;
     background: linear-gradient(45deg, #303030, #3a3634);
     padding: 30px 40px;
     width: 330px;
+    height: 400px;
     flex: 0 0 330px;
     box-shadow: -8px 0px 32px rgba(0, 0, 0, 0.36);
     position: relative;
-        left: -10px;
+    left: -10px;
     @include size(md-device) {
       width: 100%;
       flex: 0 0 100%;
@@ -408,12 +414,17 @@ background-color: white;
           }
         }
         &.w_75 {
-          width: 65%;
-          flex: 0 0 65%;
+          width: 75%;
+          flex: 0 0 75%;
         }
-        &.w_25 {
-          width: 35%;
-          flex: 0 0 35%;
+        p {
+          color: #f3f3f3;
+          font-weight: 700;
+          font-family: "Libre Baskerville", serif;
+          font-size: 20px;
+          width: 100%;
+          flex: 0 0 100%;
+          letter-spacing: 0.5px;
         }
         .input_label {
           color: #f3f3f3;
@@ -537,4 +548,191 @@ background-color: white;
       }
     }
   }
+}
+
+.center {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.offer {
+  position: relative;
+  border-bottom: 5px solid $green;
+  height: auto;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  .layerimg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-image: url("https://images.pexels.com/photos/161772/las-vegas-nevada-cities-urban-161772.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    box-shadow: 0 10px 100px rgba(0, 0, 0, 0.3);
+    background-size: cover;
+    z-index: 1;
+    transition: 0.6s all cubic-bezier(0.74, -0.02, 0.45, 1.04);
+    transform: scale(1) rotate(0deg);
+  }
+
+  .layer {
+    background-color: $blue;
+    background: -moz-linear-gradient(
+      left,
+      rgba(26, 64, 119, 1) 0%,
+      rgba(26, 64, 119, 0.55) 100%
+    );
+    background: -webkit-linear-gradient(
+      left,
+      rgba(26, 64, 119, 1) 0%,
+      rgba(26, 64, 119, 0.55) 100%
+    );
+    background: linear-gradient(
+      to right,
+      rgba(26, 64, 119, 1) 0%,
+      rgba(26, 64, 119, 0.55) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(
+        startColorstr="#1a4077",
+        endColorstr="#8c1a4077",
+        GradientType=1
+      );
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 1;
+  }
+
+  .text {
+    width: 100%;
+    padding: 25px 40px;
+    z-index: 3;
+    position: relative;
+    .topline {
+      font-size: 25px;
+      color: $green;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    h4 {
+      font-size: 45px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      margin-top: 25px;
+      text-transform: uppercase;
+      line-height: 0.8;
+      transition: 0.5s ease-in-out;
+    }
+    .date {
+      font-weight: 500;
+      color: $green;
+      transition: 0.5s ease-in-out;
+    }
+    p {
+      color: #ffffff;
+      font-size: 14px;
+      margin: 15px 0 12px;
+      max-width: 500px;
+    }
+    .price {
+      font-size: 23px;
+      color: #ffffff;
+      opacity: 0.7;
+    }
+  }
+  a.btn {
+    color: #ffffff;
+    text-decoration: none;
+    z-index: 2;
+    font-weight: 300;
+    position: absolute;
+    text-transform: uppercase;
+    font-size: 14px;
+    background-color: $green;
+    background: rgb(183, 203, 102);
+    background: -moz-linear-gradient(
+      top,
+      rgba(183, 203, 102, 1) 0%,
+      rgba(152, 173, 69, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      top,
+      rgba(183, 203, 102, 1) 0%,
+      rgba(152, 173, 69, 1) 100%
+    );
+    background: linear-gradient(
+      to bottom,
+      rgba(183, 203, 102, 1) 0%,
+      rgba(152, 173, 69, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(
+        startColorstr="#b7cb66",
+        endColorstr="#98ad45",
+        GradientType=0
+      );
+    padding: 8px 30px 8px 20px;
+    right: 40px;
+    bottom: 35px;
+  }
+  .info {
+    position: absolute;
+    z-index: 2;
+    color: #fff;
+    top: 0;
+    right: 0;
+    padding: 8px 30px 8px 10px;
+    background-color: $blue;
+    font-size: 12px;
+    span {
+      position: relative;
+    }
+    span:nth-child(1) {
+      margin-right: 5px;
+    }
+  }
+}
+
+.offer:hover {
+  .layerimg {
+    transform: scale(1.2) rotate(3deg);
+  }
+
+  .text h4 {
+    transform: translate(30px, 0px);
+  }
+
+  .text .date {
+    transform: translate(30px, 0px);
+  }
+}
+
+@media (max-width: 750px) {
+  .offer a.btn {
+    position: relative;
+    right: initial;
+    bottom: initial;
+    display: inline-block;
+    margin-top: 20px;
+  }
+}
+
+.fa-trash {
+  position: relative;
+  margin-left: 600px;
+  transition: 0.4s ease-in;
+  cursor: pointer;
+}
+.fa-trash:hover {
+  color: rgb(252, 181, 13);
 }

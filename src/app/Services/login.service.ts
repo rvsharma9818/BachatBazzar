@@ -13,7 +13,7 @@ export class LoginService {
     private router: Router,) { }
 
 
-  registerUser(registrationInfo): Observable<any> {
+  registerUser(registrationInfo: FormData): Observable<any> {
     return this.http.post<any>(this._registerUrl, registrationInfo);
   }
 
@@ -29,6 +29,10 @@ export class LoginService {
 
   getToken() {
     return localStorage.getItem('token')
+  }
+
+  getuserId(){
+    return localStorage.getItem('userId')
   }
 
   loggedIn() {

@@ -6,6 +6,8 @@ import { ShopComponent } from './shop.component';
 import { CategoryComponent } from 'src/app/shop-components/category/category.component';
 import { DetailsViewComponent } from 'src/app/shop-components/details-view/details-view.component';
 import { GridViewsComponent   } from 'src/app/Shop-components/grid-views/grid-views.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from 'src/app/Services/token-interceptor.service';
 
 
 @NgModule({
@@ -18,6 +20,11 @@ import { GridViewsComponent   } from 'src/app/Shop-components/grid-views/grid-vi
   imports: [
     CommonModule,
     ShopRoutingModule
-  ]
+  ],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptorService,
+    multi:true
+  }],
 })
 export class ShopModule { }

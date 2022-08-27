@@ -1,11 +1,8 @@
-import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
-import { SwiperComponent } from 'swiper/angular';
-
-// import Swiper core and required modules
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import SwiperCore, { Pagination, Navigation, Virtual } from 'swiper';
-import { HttpClient } from '@angular/common/http';
-import { throwError } from 'rxjs';
-
+import { ProductService } from 'src/app/Services/product.service';
+import { CartService } from 'src/app/Services/cart.service';
+import { NgToastService } from 'ng-angular-popup';
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation, Virtual]);
 @Component({
@@ -13,28 +10,50 @@ SwiperCore.use([Pagination, Navigation, Virtual]);
   templateUrl: './new-arrivals.component.html',
   styleUrls: ['./new-arrivals.component.scss'],
   encapsulation: ViewEncapsulation.None,
-
 })
 export class NewArrivalsComponent implements OnInit {
-  apiData:any
-  limit: number = 20;
+  productlist: any;
   constructor(
-    private readonly http: HttpClient,
+    public productservice: ProductService,
+    public cartService: CartService,
+    private toast: NgToastService
   ) {}
   ngOnInit() {
-    this.fetch()
+    this.get();
   }
-
-
-  fetch() {
-    const api = `https://jsonplaceholder.typicode.com/albums/1/photos?_start=0&_limit=${this.limit}`;
-    const http$ = this.http.get<any>(api);
-
-    http$.subscribe(
-      (res) =>{ this.apiData = res
-        console.log(res)
+  get() {
+    this.productservice.getproduct().subscribe(
+      (res) => {
+        this.productlist = res.data;
       },
-      err => throwError(err)
-    )
+      (err) => {
+        this.toast.error({
+          detail: 'WARNING',
+          summary: 'Something Went Wrong',
+          duration: 5000,
+        });      }
+    );
   }
+  addtocart(productId: any) {
+    const obj = {
+      productId: productId,
+    };
+    this.cartService.addtocart(obj).subscribe(
+      (res) => {
+        this.toast.success({
+          detail: 'SUCCESS',
+          summary: 'Product Added Sucessfully',
+          duration: 5000,
+        });
+      },
+      (err) => {
+        this.toast.error({
+          detail: 'WARNING',
+          summary: 'Something Went Wrong',
+          duration: 5000,
+        });
+      }
+    );
+  }
+
 }

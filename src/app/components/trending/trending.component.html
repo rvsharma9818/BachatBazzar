@@ -8,9 +8,8 @@
     </ul>
   </div>
   <div class="crouselx">
-
-<img src="assets/images/trending.jpg" alt="" class="srcss">
-<swiper
+    <img src="assets/images/trending.jpg" alt="" class="srcss" />
+    <swiper
       #swiperRef
       [slidesPerView]="4"
       [centeredSlides]="false"
@@ -19,39 +18,39 @@
       [virtual]="true"
       class="mySwiper"
     >
-      <ng-template swiperSlide *ngFor="let slide of apiData">
+      <ng-template swiperSlide *ngFor="let slide of productlist">
         <div class="product-item">
           <!--Ribbon-->
-              <div class="ribbon-wrapper">
-              <div class="ribbon"> Sale </div>
-            </div>
-         <!--//Ribbon-->
-            <img src="assets/images/product.jpg" alt="">
-            <ol>
-              <li ><a class="whishlist"><i class="fa-solid fa-cart-shopping"></i></a></li>
-              <li><a class="whishlist"><i class="fa-solid fa-heart"></i></a></li>
-              <li><a class="whishlist"><i class="fa-solid fa-handcuffs"></i></a></li>
-            </ol>
-                        <a href="#" class="product-item__name">Techno 7.85 3G, black, 4 cores (TM859B) </a>
+          <div class="ribbon-wrapper">
+            <div class="ribbon">Sale</div>
+          </div>
+          <!--//Ribbon-->
+          <img [src]="[slide.productImage]" alt="" />
+          <ol>
+            <li>
+              <a class="whishlist"><i class="fa-solid fa-heart"></i></a>
+            </li>
+            <li>
+              <a class="whishlist"><i class="fa-solid fa-handcuffs"></i></a>
+            </li>
+          </ol>
+          <a class="product-item__name">{{ slide.title }}</a>
           <div class="product-item__description">
             <ul>
               <li><span>Memory card support: MicroSD</span></li>
             </ul>
           </div>
 
-                        <div class="product-item__price">
-                          <a href="#" class="btn btn--buy">Buy</a>
-                          <div class="price">
-                      <!-- <a href="#" class="delivery">Not a Availanle</a> -->
-                            <span>17490&nbsp;&#8377;
-
-                          </span></div>
-
-                        </div>
-                      </div>
+          <div class="product-item__price">
+            <a (click)="addtocart(this.slide._id)" class="btn btn--buy"
+              >Add To Cart</a
+            >
+            <div class="price">
+              <span>&#8377;&nbsp;{{ slide.price }} </span>
+            </div>
+          </div>
+        </div>
       </ng-template>
     </swiper>
-
-
-</div>
+  </div>
 </div>

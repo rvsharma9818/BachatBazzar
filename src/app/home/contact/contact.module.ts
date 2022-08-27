@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactComponent } from './contact.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from 'src/app/Services/token-interceptor.service';
 
 
 @NgModule({
@@ -12,6 +14,11 @@ import { ContactComponent } from './contact.component';
   imports: [
     CommonModule,
     ContactRoutingModule
-  ]
+  ],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptorService,
+    multi:true
+  }],
 })
 export class ContactModule { }
