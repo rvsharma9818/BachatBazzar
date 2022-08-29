@@ -56,8 +56,8 @@ app.use("/bachatbazzar/wishlist",Wishlist)
 
 app.use(multererror)
 
-app.listen(process.env.PORT, ()=>
+app.listen(process.env.PORT || 3000, ()=>
  
-console.log("Express App Running On Port 3000")
+console.log(`Express App Running On Port ${process.env.PORT || 3000}`)
 
 )
