@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+const mongoose = require("mongoose");
 const ObjectId = Schema.Types.ObjectId
 
 const WishListSchema = new Schema({
@@ -28,4 +28,4 @@ const WishListSchema = new Schema({
 }, { timestamps: true })
 
 
-export default model('WishList', WishListSchema)
+module.exports = mongoose.model('WishList', WishListSchema)
