@@ -50,7 +50,7 @@ app.use("/bachatbazzar/cart",Cartroute)
 
 app.use("/bachatbazzar/order",Orderroute)
 
-app.use("/bachatbazzar/payement",Payement)
+// app.use("/bachatbazzar/payement",Payement)
 
 app.use("/bachatbazzar/wishlist",Wishlist)
 
