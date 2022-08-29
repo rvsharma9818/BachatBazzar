@@ -57,7 +57,7 @@ const wishlistCreation = async (req, res) => {
 
         if (findWishlistOfUser) {
 
-            let price = findWishlistOfUser.totalPrice + quantity * findWishlistOfUser.price;
+            let price = findWishlistOfUser.totalPrice + quantity * findProduct.price;
 
             let arr = findWishlistOfUser.items;
 
