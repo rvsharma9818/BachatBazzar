@@ -20,7 +20,8 @@ const createProduct = async (req, res) => {
       style,
       availableSizes,
       installments,
-      category
+      category,
+      shortdescription
     } = requestBody;
 
 
@@ -109,6 +110,7 @@ const createProduct = async (req, res) => {
       category,
       style,
       installments,
+      shortdescription,
       productImage: productImagex,
     };
 
@@ -224,7 +226,8 @@ const updateProduct = async function (req, res) {
       style,
       availableSizes,
       installments,
-      category
+      category,
+      shortdescription
     } = requestBody;
 
     //========================================== validations for ObjectId && input Body===========================
@@ -289,6 +292,12 @@ const updateProduct = async function (req, res) {
 
       if (!updatedProductDetails.hasOwnProperty("description"))
         updatedProductDetails["description"] = description;
+    }
+
+    if (shortdescription) {
+
+      if (!updatedProductDetails.hasOwnProperty("shortdescription"))
+        updatedProductDetails["shortdescription"] = shortdescription;
     }
 
     //========================================validation for Price==================================================

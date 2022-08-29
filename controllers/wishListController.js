@@ -1,10 +1,10 @@
-const cartModel = require('../models/cartModel');
+const WhishlistModel = require('../models/wishListmodel');
+
 const productModel = require('../models/productModel');
+
 const userModel = require('../models/usermodel');
 
-//=================================================================================================================
-
-const cartCreation = async (req, res) => {
+const wishlistCreation = async (req, res) => {
     try {
         let userId = req.params.userId;
         userId = userId?.toString().trim()
@@ -32,12 +32,13 @@ const cartCreation = async (req, res) => {
             return res.status(404).send({ status: false, message: `Product doesn't exist by ${productId}` });
         }
 
-        const findCartOfUser = await cartModel.findOne({ userId: userId });
+        const findWishlistOfUser = await WhishlistModel
+            .findOne({ userId: userId });
 
         let e = findProduct.price
 
-        if (!findCartOfUser) {
-            var cartData = { 
+        if (!findWishlistOfUser) {
+            var WhishlistData = {
                 userId: userId,
                 items: [
                     {
@@ -49,15 +50,16 @@ const cartCreation = async (req, res) => {
 
                 totalItems: 1
             };
-            const createCart = await cartModel.create(cartData);
-            return res.status(201).send({ status: true, message: `Cart created successfully`, data: createCart });
+            const createWhislist = await WhishlistModel
+                .create(WhishlistData);
+            return res.status(201).send({ status: true, message: `Cart created successfully`, data: createWhislist });
         }
 
-        if (findCartOfUser) {
+        if (findWishlistOfUser) {
 
-            let price = findCartOfUser.totalPrice + quantity * findProduct.price;
+            let price = findWishlistOfUser.totalPrice + quantity * findWishlistOfUser.price;
 
-            let arr = findCartOfUser.items;
+            let arr = findWishlistOfUser.items;
 
             for (i in arr) {
                 if (arr[i].productId.toString() === productId) {
@@ -68,11 +70,12 @@ const cartCreation = async (req, res) => {
                         totalItems: arr.length,
                     };
 
-                    let responseData = await cartModel.findOneAndUpdate(
-                        { _id: findCartOfUser._id },
-                        updatedCart,
-                        { new: true }
-                    );
+                    let responseData = await WhishlistModel
+                        .findOneAndUpdate(
+                            { _id: findWishlistOfUser._id },
+                            updatedCart,
+                            { new: true }
+                        );
                     return res.status(200).send({ status: true, message: `Product added successfully`, data: responseData });
                 }
             }
@@ -84,7 +87,8 @@ const cartCreation = async (req, res) => {
                 totalItems: arr.length,
             };
 
-            let responseData = await cartModel.findOneAndUpdate({ _id: findCartOfUser._id }, updatedCart, { new: true });
+            let responseData = await WhishlistModel
+                .findOneAndUpdate({ _id: findWishlistOfUser._id }, updatedCart, { new: true });
             return res.status(200).send({ status: true, message: `Product added successfully`, data: responseData });
         }
     } catch (error) {
@@ -93,13 +97,10 @@ const cartCreation = async (req, res) => {
 };
 
 
-//============================================================== Get Cart details ==============================================================
-
-const getCart = async (req, res) => {
+const getWishlist = async (req, res) => {
     try {
         let userId = req.params.userId;
 
-        //=================================================== Find the user By Id =================================================== 
 
         const findUserProfile = await userModel.findById({ _id: userId })
         if (!findUserProfile) {
@@ -107,34 +108,33 @@ const getCart = async (req, res) => {
         }
 
         //===================================================  Finding the Cart details===================================================  
-        const findCart = await cartModel.findOne({ userId: userId }).populate("items.productId", { title: 1, price: 1, productImage: 1, availableSizes: 1,shortdescription:1 })
+        const findWishlist = await WhishlistModel
+            .findOne({ userId: userId }).populate("items.productId", { title: 1, price: 1, productImage: 1, availableSizes: 1, shortdescription: 1 })
             .select({ _id: 0, createdAt: 0, updatedAt: 0, __v: 0 });
 
-        if (!findCart) {
+        if (!findWishlist) {
             return res.status(404).send({ status: false, message: `Cart doesn't exists by ${userId} ` });
         }
 
-        return res.status(200).send({ status: true, message: "Successfully fetched cart.", data: findCart });
+        return res.status(200).send({ status: true, message: "Successfully fetched cart.", data: findWishlist });
     } catch (error) {
         return res.status(500).send({ status: false, message: "Error is : " + error });
     }
 };
 
 
-//=================================================================================================================
 
 
-const updateCart = async function (req, res) {
+const updateWishlist = async function (req, res) {
     try {
 
         const userId = req.params.userId
-        let { productId, cartId, removeProduct } = req.body
+        let { productId, removeProduct } = req.body
 
         productId = productId
-        cartId = cartId
         removeProduct = removeProduct
 
-       
+
         if (!productId) {
             return res.status(400).send({ status: false, message: "productId must be required..." })
         }
@@ -144,14 +144,12 @@ const updateCart = async function (req, res) {
         if (!removeProduct && removeProduct != 0) {
             return res.status(400).send({ status: false, message: "removeProduct key must be required..." })
         }
-        
-        if (!(removeProduct == "1" || removeProduct == "0")) {
-            return res.status(400).send({ status: false, message: "removeProduct value only can be 0 or 1" })
-        }
 
-        const cartInDB = await cartModel.findOne({userId : userId})
 
-        if (!cartInDB) {
+        const WishlistInDB = await WhishlistModel
+            .findOne({ userId: userId })
+
+        if (!WishlistInDB) {
             return res.status(404).send({ status: false, message: "cartId does not exist" })
         }
 
@@ -161,13 +159,14 @@ const updateCart = async function (req, res) {
             return res.status(404).send({ status: false, message: "productId does not exist" })
         }
 
-        const productIdInCart = await cartModel.findOne({ userId: userId, "items.productId": productId })
+        const productIdInWishlist = await WhishlistModel
+            .findOne({ userId: userId, "items.productId": productId })
 
-        if (!productIdInCart) {
+        if (!productIdInWishlist) {
             return res.status(404).send({ status: false, message: "productId does not exist in this cart" })
         }
-        let { items } = cartInDB
-        let getPrice = productInDB.price
+        let { items } = WishlistInDB
+        let getPrice = productIdInWishlist.price
 
         for (let i = 0; i < items.length; i++) {
             if (items[i].productId == productId) {
@@ -176,21 +175,19 @@ const updateCart = async function (req, res) {
 
                 if (removeProduct == 0 || (items[i].quantity == 1 && removeProduct == 1)) {
 
-                    const removeCart = await cartModel.findOneAndUpdate({ userId: userId },
-                        {
-                            $pull: { items: { productId: productId } },
-                            $inc: {
-                                totalPrice: - totelProductprice,
-                                totalItems: - 1
-                            }
-                        },
-                        { new: true })
-                    return res.status(200).send({ status: true, message: 'sucessfully removed product from cart', data: removeCart })
+                    const removeWishlist = await WhishlistModel
+                        .findOneAndUpdate({ userId: userId },
+                            {
+                                $pull: { items: { productId: productId } },
+                                $inc: {
+                                    totalPrice: - totelProductprice,
+                                    totalItems: - 1
+                                }
+                            },
+                            { new: true })
+                    return res.status(200).send({ status: true, message: 'sucessfully removed product from cart', data: removeWishlist })
                 }
 
-                const product = await cartModel.findOneAndUpdate({ "items.productId": productId, userId: userId }, { $inc: { "items.$.quantity": -1, totalPrice: -getPrice } }, { new: true })
-
-                return res.status(200).send({ status: true, message: 'sucessfully decrease one quantity of product', data: product })
             }
         }
     } catch (error) {
@@ -199,33 +196,30 @@ const updateCart = async function (req, res) {
 }
 
 
-//=================================================================================================================
-
-const deleteCart = async (req, res) => {
+const deletewhishlist = async (req, res) => {
     try {
         let userId = req.params.userId.toString().trim()
 
-        const findUserCart = await cartModel.findOne({ userId: userId })
+        const findUserWhislist = await WhishlistModel
+            .findOne({ userId: userId })
 
-        if (!findUserCart) {
+        if (!findUserWhislist) {
             return res.status(404).send({ status: false, message: "User doesn't exist" })
         }
 
-        if (findUserCart.items.length == 0) {
+        if (findUserWhislist.items.length == 0) {
             return res.status(400).send({ status: false, message: "Products are already deleted in the cart" })
         }
 
-        await cartModel.findOneAndUpdate({ userId: userId }, { $set: { items: [], totalItems: 0, totalPrice: 0 } }, { new: true })
+        await WhishlistModel
+            .findOneAndUpdate({ userId: userId }, { $set: { items: [], totalItems: 0, totalPrice: 0 } }, { new: true })
 
-        return res.status(204).send({status: true, message: "Cart Deleted Successfully"})
-    } 
+        return res.status(204).send({ status: true, message: "Cart Deleted Successfully" })
+    }
     catch (error) {
         res.status(500).send({ status: false, message: error.message });
     }
 }
 
-//=================================================================================================================
 
-module.exports = { cartCreation, getCart, updateCart, deleteCart }
-
-//=================================================================================================================
+module.exports = { wishlistCreation, getWishlist, updateWishlist, deletewhishlist }

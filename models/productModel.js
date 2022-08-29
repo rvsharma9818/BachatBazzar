@@ -10,6 +10,11 @@ const productSchema = new mongoose.Schema(
       unique: true,
       trim: true
     },
+    shortdescription:{
+      type: String,
+      required: true,
+      trim: true
+    },
     description: {
       type: String,
       required: true,

@@ -14,6 +14,9 @@ const Cartroute = require("./routes/cartRoute")
 
 const Orderroute = require("./routes/orderRoute")
 
+const Wishlist=require("./routes/WhislistRoute")
+
+
 const app = express()
 
 const {multererror } =require("./aws-setup/multer-err")
@@ -45,6 +48,9 @@ app.use("/bachatbazzar/cart",Cartroute)
 
 app.use("/bachatbazzar/order",Orderroute)
 
+app.use("/bachatbazzar/payement",Payement)
+
+app.use("/bachatbazzar/wishlist",Wishlist)
 
 app.use(multererror)
 
