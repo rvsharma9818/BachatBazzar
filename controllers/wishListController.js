@@ -92,7 +92,7 @@ const wishlistCreation = async (req, res) => {
             return res.status(200).send({ status: true, message: `Product added successfully`, data: responseData });
         }
     } catch (error) {
-        console.log(err)
+        console.log(error)
         res.status(500).send({ status: false, message: error});
     }
 };
