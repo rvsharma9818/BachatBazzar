@@ -36,7 +36,9 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true })
 
 .catch(err => console.log(err))
 
-app.use(cors())
+app.use(cors({
+    origin: '*'
+}))
 
 app.use("/bachatbazzar/user",USerroute)
 
