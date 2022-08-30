@@ -166,7 +166,7 @@ const updateWishlist = async function (req, res) {
             return res.status(404).send({ status: false, message: "productId does not exist in this cart" })
         }
         let { items } = WishlistInDB
-        let getPrice = productIdInWishlist.price
+        let getPrice = productInDB.price
 
         for (let i = 0; i < items.length; i++) {
             if (items[i].productId == productId) {
