@@ -10,7 +10,7 @@ export class ProductService {
   userId= this.authservice.getuserId()
    _getProducturl=`https://bachatbazzar.herokuapp.com/bachatbazzar/product/products`
 
-   _getproducturlbyid=`https://bachatbazzar.herokuapp.com/bachatbazzar/product/products/`
+   _getproducturlbyid=`https://bachatbazzar.herokuapp.com/bachatbazzar/product/products`
 
    _postproduct=`https://bachatbazzar.herokuapp.com/bachatbazzar/product/products/${this.userId}`
 
@@ -29,8 +29,8 @@ export class ProductService {
     return this.http.get<any>(this._getProducturl);
   }
 
-  getproductbyid(): Observable<any> {
-    return this.http.get<any>(this._getproducturlbyid);
+  getproductbyid(id:any): Observable<any> {
+    return this.http.get<any>(`${this._getproducturlbyid}/${id}`);
   }
 
   updateproductbyid(product: any,productId: any): Observable<any> {

@@ -2,6 +2,7 @@
 
 .conta{
   padding: 30px;
+  height: 100%;
 }
 .card-wrapper{
     max-width: 1200px;
@@ -21,20 +22,29 @@ img{
   }
 .img-showcase{
     display: flex;
-    width: 100%;
+    width: 140%;
+height: 600px;
+overflow: hidden;
     transition: all 0.5s ease;
     border: none;
 
   }
 .img-showcase img{
-    min-width: 100%;
+    width: 50%;
+    position: relative;
+    left: 85px;
     border: none;
-
+    object-fit: cover;
+object-position: 50% 0%;
   }
 .img-select{
     display: flex;
     border: none;
 
+  }
+  .my-pagination{
+    position: relative;
+    top: 40px;
   }
 .img-item{
     margin: 0.3rem;
@@ -117,8 +127,10 @@ border: none;
 }
 .product-detail p{
     font-size: 0.9rem;
+    height: 170px;
     padding: 0.3rem;
     opacity: 0.8;
+    overflow: hidden;
 }
 .product-detail ul{
     margin: 1rem 0;
@@ -411,4 +423,12 @@ border: none;
   width: fit-content;
   top: -125px;
   right: -1100px;
+}
+.my-pagination{
+  display: inline-block;
+  font-weight: bold;
+  color: #256eff;
+  left: 30%;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PayemntService } from '../Services/payemnt.service';
 
 @Component({
   selector: 'app-payement',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PayementComponent implements OnInit {
 
-  constructor() { }
+  paymentHandler: any = null;
 
-  ngOnInit(): void {
+  success: boolean = false
+
+  failure:boolean = false
+
+  constructor(private checkout: PayemntService) {}
+
+  ngOnInit() {
   }
+
+
+     paymentstripe(h:any){
+      console.log("hhh")
+      this.checkout.makePayment(h).subscribe((data: any) => {
+        console.log(data);
+        if (data.data === "success") {
+          this.success = true
+        }
+        else {
+          this.failure = true
+        }
+      });
+    };
 
 }

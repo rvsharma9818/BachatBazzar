@@ -72,13 +72,27 @@ img{
     box-shadow: 0 0 10px 1px rgba(0, 4, 4, 0.15);
 }
 .item-img{
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  width: 120%;
 }
 .item-img img{
-    width: 70%;
-    margin: 16px auto;
+  width: 50%;
+  height: 300px;
+  object-fit: cover;
+  object-position: 0% 0%;
+  margin: 16px auto;
 }
+.my-pagination{
+  position: relative;
+   display: inline-block;
+   font-weight: bold;
+   color: #256eff;
+   left: 40%;
+   margin-top: 20px;
+   margin-bottom: 40px;
+ }
+
 .icon-list{
     position: absolute;
     bottom: -100px;
@@ -182,6 +196,8 @@ img{
 }
 .details-active .item-detail p{
     display: block;
+    height: 100px;
+    overflow: hidden;
 }
 .details-active .item-detail .add-btn{
     display: block;

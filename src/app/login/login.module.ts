@@ -6,6 +6,7 @@ import { SignupComponent } from '../components/signup/signup.component';
 import { LoginxComponent } from '../components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgToastModule } from 'ng-angular-popup'
 
 
 @NgModule({
@@ -19,7 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
     LoginRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgToastModule
+
   ]
 })
 export class LoginModule { }

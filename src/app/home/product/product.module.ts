@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product.component';
-import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+import {NgxPaginationModule} from 'ngx-pagination'; 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SwiperModule } from 'swiper/angular';
 import { YoumaylikeusComponent } from 'src/app/components/youmaylikeus/youmaylikeus.component';

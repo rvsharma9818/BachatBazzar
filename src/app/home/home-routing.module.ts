@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DetaileproductComponent } from '../cart/detaileproduct/detaileproduct.component';
 import { DefaultComponent } from '../components/default/default.component';
+import { DetailsViewComponent } from '../shop-components/details-view/details-view.component';
 import { HomeComponent } from './home.component';
 
 const routes: Routes = [
@@ -46,6 +48,16 @@ const routes: Routes = [
         loadChildren: () =>
           import('./cart/cart.module').then((m) => m.CartModule),
       },
+      {
+        path: 'wishlist',
+        loadChildren: () =>
+          import('./wishlist/wishlist.module').then((m) => m.WishlistModule),
+      },
+      {
+        path:'detailsproduct/:id',component:DetaileproductComponent
+      },
+  { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
+
     ],
   },
 ];
@@ -54,4 +66,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

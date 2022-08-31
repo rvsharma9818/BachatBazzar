@@ -22,6 +22,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DefaultComponent } from '../components/default/default.component';
 import { TokenInterceptorService } from '../Services/token-interceptor.service';
 import { NgToastModule } from 'ng-angular-popup'
+import { DetaileproductComponent } from '../cart/detaileproduct/detaileproduct.component';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -37,7 +38,9 @@ import { NgToastModule } from 'ng-angular-popup'
     TrendingComponent,
     NewArrivalsComponent,
     PartnerComponent,
-    DefaultComponent
+    DefaultComponent,
+    DetaileproductComponent,
+
   ],
   imports: [
     CommonModule,

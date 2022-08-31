@@ -9,6 +9,30 @@
   flex-direction: column;
   overflow: hidden;
 }
+.circle{
+  background-color: rgb(252, 170, 50);
+  color: #000;
+  position: absolute;
+  padding: 2px 8px 2px 8px;
+  border-radius: 55%;
+  z-index: 2;
+  left: 25px;
+  width: fit-content;
+  height: fit-content;
+  top: -2px;
+}
+.circlee{
+  background-color: rgb(252, 170, 50);
+  color: #000;
+  position: absolute;
+  padding: 2px 8px 2px 8px;
+  border-radius: 55%;
+  z-index: 2;
+  left: 90px;
+  width: fit-content;
+  height: fit-content;
+  top: -1px;
+}
 .firstheader {
   overflow: hidden;
   display: flex;

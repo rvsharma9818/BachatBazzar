@@ -123,7 +123,10 @@
 
 .item .img-box img {
   display: block;
-  width: 100%;
+  width: 50%;
+  height: 70%;
+  object-fit: cover;
+  object-position: 50% 0%;
   margin: 0 auto 0;
   transition: 1s;
 }
@@ -142,14 +145,22 @@
   transition: 1s;
 }
 
+.my-pagination{
+  display: inline-block;
+  font-weight: bold;
+  color: #256eff;
+  left: 30%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
 
 
 .details h2 {
   margin: 0;
   padding: 0;
   padding-bottom: 25px;
-  width: 100%;
-  font-size: 16px;
+  width: 95%;
+  font-size: 14px;
 }
 
 .details h2 span {
@@ -160,7 +171,7 @@
 
 .details .price {
   position: absolute;
-  top: 0;
+  top: 40px;
   right: 25px;
   font-weight: bold;
   font-size: 20px;
@@ -248,13 +259,25 @@ a:hover {
   transition: 1s;
 }
 
-.item:hover .img-box {
-  position: absolute;
-  bottom: 60px;
-  transition: 3s;
-}
+// .item:hover .img-box {
+//   position: absolute;
+//   bottom: 60px;
+//   transition: 3s;
+// }
+
 
 .item:hover h2, .item:hover .price {
   padding-top: 20px;
   padding-bottom: 0;
+}
+
+.my-pagination{
+ position: relative;
+  display: inline-block;
+  font-weight: bold;
+  color: #256eff;
+  left: 30%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+
 }

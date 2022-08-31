@@ -14,10 +14,13 @@
       <li>
         <a routerLink="cart"><i class="fa-solid fa-cart-shopping"></i></a>
         <p>Cart</p>
+        <div class="circle">{{items}}</div>
       </li>
       <li>
-        <a><i class="fa-solid fa-heart"></i></a>
+        <a routerLink="wishlist"><i class="fa-solid fa-heart"></i></a>
         <p>Whishlist</p>
+        <div class="circlee">{{wishlist}}</div>
+
       </li>
       <li>
         <a><i class="fa-solid fa-user"></i></a>
@@ -32,7 +35,7 @@
     <nav class="navi">
       <nav class="navbar">
         <ul class="list">
-          <li><a routerLink="home">home</a></li>
+          <li><a  [routerLink]="['/home']">home</a></li>
           <li><a routerLink="product">Product</a></li>
           <li><a routerLink="shop" >Shop</a></li>
           <li><a routerLink="blog" >Blog</a></li>

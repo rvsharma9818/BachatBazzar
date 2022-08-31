@@ -58,8 +58,8 @@ img{
 .item-list{
     margin: 25px 0;
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    row-gap: 32px;
+    grid-template-columns: auto auto auto;
+    row-gap: 12px;
 }
 .item{
     background-color: #fff;
@@ -74,9 +74,13 @@ img{
 .item-img{
     position: relative;
     overflow: hidden;
+    width: 120%;
 }
 .item-img img{
-    width: 70%;
+    width: 50%;
+    height: 300px;
+    object-fit: cover;
+    object-position: 50% 0%;
     margin: 16px auto;
 }
 .icon-list{
@@ -206,4 +210,13 @@ img{
     .details-active .item{
         grid-template-columns: 100%;
     }
+}
+.my-pagination{
+ position: relative;
+  display: inline-block;
+  font-weight: bold;
+  color: #256eff;
+  left: 40%;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }

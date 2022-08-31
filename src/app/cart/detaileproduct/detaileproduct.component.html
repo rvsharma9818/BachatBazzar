@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+
+
+<div id="product">
+    <div class="product_images">
+      <img [src]=[productlist.productImage] alt="" class="src">
+    </div>
+    <div class="product_details">
+        <div class="back" [routerLink]="['/home']" >
+            <span class="material-symbols-outlined">chevron_left</span>
+           <h6>Back to <a >Home</a></h6>
+        </div>
+
+        <h2>{{productlist.title}}</h2>
+        <h3>₹{{productlist.price}}</h3>
+
+        <div class="about">
+            <p>Availability :<span>In stock</span></p>
+            <p>Product Code : <span>#4657</span></p>
+            <p>Tags : <span>{{productlist.category.title}}</span> </p>
+        </div>
+
+        <p class="desc">{{productlist.description}}</p>
+        <ul>
+            <li>Dark blue suit for a tone-on-tone look</li>
+            <li>Regular fit</li>
+            <li>100% Cotton</li>
+            <li>Free shipping with 4 days delivery</li>
+        </ul>
+
+
+        <div class="cta">
+            <div class="btn btn_primary" (click)="addtocart(this.productlist._id)">add to cart</div>
+            <div class="btn btn_outline_secondary" (click)="addtowishlist(this.productlist._id)">
+                <span class="material-symbols-outlined">favorite</span>add to wishlist</div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<section>
+  <div class="background-container"> <span class="background-overlay"></span>
+    <div class="background-cover container">
+      <div class="line-heading">
+        <div class="line-heading-left">
+          <h2>Say hello to us</h2>
+          <h4>Talk to us</h4>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+          Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes</p>
+      </div>
+    </div>
+  </div>
+</section>

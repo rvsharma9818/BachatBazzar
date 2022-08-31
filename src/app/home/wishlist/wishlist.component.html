@@ -1,0 +1,120 @@
+<section class="cart_wrapper">
+  <div class="cart_lists">
+    <div class="cart_title">
+      <span class="material-icons-outlined">local_mall</span>
+      Your Shopping Wishlist<i  class="fa-solid fa-trash" (click)="emptycart()"
+      ></i>
+    </div>
+    <div class="hdhgd" *ngIf="wishlist.length === 0">
+      <img src="assets/images/o.jpg" alt="" class="empty">
+      <div id="error-overlay" class="error-overlay">
+        <div class="error-popup">
+          <div class="animated-icon">
+            <div class="animated-eyes">
+              <div class="icon eye1"></div>
+              <div class="icon eye2"></div>
+            </div>
+          </div>
+          <p class="error-message noselect">
+            Your Wishlist Is Empty
+          </p>
+          <div class="reload-button">
+            <a [routerLink]="['/home']">Shop </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cart_list_wrap" *ngIf="wishlist.length !== 0">
+      <div class="cart_responsive" *ngFor="let cart of wishlist">
+        <div class="tr_item">
+          <div class="td_item item_img">
+            <img [src]="[cart.productId.productImage]" />
+          </div>
+          <div class="td_item item_name">
+            <label class="main">{{ cart.productId.title }}</label>
+            <label class="sub">Ref.{{ cart.productId._id }}</label>
+          </div>
+          <div class="td_item item_color">
+            <label>{{ cart.quantity }}</label>
+          </div>
+          <div class="td_item item_qty">
+            <label>₹&nbsp;{{ cart.productId.price }}</label>
+          </div>
+          <div class="td_item item_price">
+            <label (click)="addtocart(this.cart.productId._id)"><i class="fa-solid fa-cart-plus"></i></label>
+          </div>
+
+          <div class="td_item item_remove">
+            <span
+              class="material-icons-outlined"
+              (click)="deletewish(this.cart.productId._id)"
+              >close</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="back_cart">
+          <a [routerLink]="['/home']" routerLinkActive="router-link-active" >
+            <span class="material-icons-outlined">west</span>
+            Back to Shop
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="bannerWrapper">
+    <div class="bannerTop">
+      <div>Buy Or Rent</div><div><span class="bold">special equipment</span></div><div>from 10 shifts</div>
+    </div>
+    <div class="bannerTopSub">
+      <div>
+        <span>-10%</span> <br>Flat off
+      </div>
+    </div>
+    <div class="bannerPicture">
+    </div>
+    <div class="bannerGuarantee">
+      <div class="bannerLike"></div>
+      <span>
+        <div class="guaranteeLine">only</div>
+        <div class="guaranteeLine">reliable</div>
+        <div class="guaranteeLine">technique</div>
+      </span>
+    </div>
+    <div class="bannerBottom">
+      <button class="rentNow">Go to Shop Now</button>
+    </div>
+  </div>
+
+</section>
+<!-- Summer Jumbotron -->
+
+<div class="center">
+  <div class="offer">
+    <div class="layerimg"></div>
+    <div class="layer"></div>
+
+    <div class="text">
+      <span class="topline">Top-Seller</span>
+
+      <h4>Explore Las Vegas</h4>
+      <div class="date">01 Mar 2018 - 11 Mar 2018</div>
+      <p>
+        Las Vegas; maybe the most famous city in the World.It is a muss see.
+        Beside its countless casinos and beautifuls hotels Las Vegas offers the
+        best theater shows.
+      </p>
+      <div class="price">price: 2500 $ p. P.</div>
+      <a  class="btn">details & booking </a>
+    </div>
+
+    <div class="info">
+      <span>
+        <i class="fas fa-exclamation-circle"></i>
+      </span>
+      <span> Only a few tickets left! </span>
+    </div>
+  </div>
+</div>

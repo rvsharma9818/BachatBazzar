@@ -28,22 +28,23 @@
               <div class="ribbon"> Sale </div>
             </div>
          <!--//Ribbon-->
-            <img [src]=[slide.productImage] alt="">
-            <ol>
-              <li><a class="whishlist"><i class="fa-solid fa-heart"></i></a></li>
-              <li><a class="whishlist"><i class="fa-solid fa-handcuffs"></i></a></li>
+         <div class="productImage">
+
+          <img [src]=[slide.productImage] alt="" class="img" >
+         </div>            <ol>
+              <li><a class="whishlist" (click)="addtowishlist(this.slide._id)"><i class="fa-solid fa-heart"></i></a></li>
+              <li><a class="whishlist" [routerLink]="['detailsproduct',this.slide._id]"><i class="fa-solid fa-handcuffs"></i></a></li>
             </ol>
                         <a class="product-item__name">{{slide.title}}</a>
           <div class="product-item__description">
             <ul>
-              <li><span>{{slide.title}}</span></li>
+              <li><span>Loreum ipsum product</span></li>
             </ul>
           </div>
 
                         <div class="product-item__price">
                           <a  class="btn btn--buy" (click)="addtocart(this.slide._id)">Add To Cart</a>
                           <div class="price">
-                      <!-- <a href="#" class="delivery">Not a Availanle</a> -->
                             <span>{{slide.price}}&nbsp;&#8377;
 
                           </span></div>

@@ -5,6 +5,7 @@ import { NgToastService } from 'ng-angular-popup';
 
 // import Swiper core and required modules
 import SwiperCore, { Pagination, Navigation, Virtual } from 'swiper';
+import { WishlistService } from 'src/app/Services/wishlist.service';
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation, Virtual]);
@@ -24,7 +25,9 @@ export class TrendingComponent implements OnInit {
   constructor(
     public productservice: ProductService,
     public cartService: CartService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private wishlist:WishlistService
+
 
   ) { }
   ngOnInit() {
@@ -57,5 +60,26 @@ export class TrendingComponent implements OnInit {
       });
     })
 
+  }
+  addtowishlist(productId: any) {
+    const obj = {
+      productId: productId,
+    };
+    this.wishlist.addtowishlist(obj).subscribe(
+      (res) => {
+        this.toast.success({
+          detail: 'SUCCESS',
+          summary: 'Product Added Sucessfully',
+          duration: 5000,
+        });
+      },
+      (err) => {
+        this.toast.error({
+          detail: 'WARNING',
+          summary: 'Something Went Wrong',
+          duration: 5000,
+        });
+      }
+    );
   }
 }

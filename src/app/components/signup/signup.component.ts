@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { LoginService } from 'src/app/Services/login.service';
 @Component({
   selector: 'app-signup',
@@ -8,9 +9,11 @@ import { LoginService } from 'src/app/Services/login.service';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-  constructor(public authServiced: LoginService, public router: Router) {}
-  errt: string = '';
-  err: boolean = false;
+  constructor(
+    public authServiced: LoginService,
+    public router: Router,
+    private toast: NgToastService
+  ) {}
   loader: boolean = false;
   ngOnInit(): void {}
 
@@ -61,11 +64,11 @@ export class SignupComponent implements OnInit {
       },
       (err) => {
         this.loader = false;
-        this.err = true;
-        this.errt = err.error.message;
-        setTimeout(() => {
-          this.err = false;
-        }, 4000);
+        this.toast.error({
+          detail: 'WARNING',
+          summary: `${err.error.message}`,
+          duration: 5000,
+        });
       }
     );
   }

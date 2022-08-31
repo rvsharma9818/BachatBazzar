@@ -1,157 +1,169 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-        <!-- section-success -->
+<link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+  crossorigin="anonymous"
+/>
+<!-- section-success -->
 
-        <!-- section-warning -->
-        <div class="wrapper-warning" *ngIf="err">
-          <div class="card">
-            <div class="icon"><i class="fas fa-exclamation-circle"></i></div>
-            <div class="subject">
-              <h3>Warning</h3>
-              <p>{{errt}}</p>
-            </div>
-          </div>
-        </div>
-        <!-- section-warning -->
-        <div *ngIf="loader" class="loader"></div>
+<!-- section-warning -->
+
+<!-- section-warning -->
+<div *ngIf="loader" class="loader"></div>
 <div class="container right-panel-active" id="container">
-
   <div class="form-container sign-up-container">
-
     <form [formGroup]="Signupform" (ngSubmit)="onsignup()">
       <h1>Create Account</h1>
 
       <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <a class="social"><i class="fab fa-facebook-f"></i></a>
+        <a class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a class="social"><i class="fab fa-linkedin-in"></i></a>
       </div>
 
       <input type="text" formControlName="name" placeholder="Name" />
 
-      <div *ngIf="
-        Signupform.get('name').invalid &&
-        Signupform.get('name').errors &&
-        (Signupform.get('name').dirty || Signupform.get('name').touched)
-      ">
-
-      <small class="text-danger" *ngIf="Signupform.get('name').hasError('required')">
+      <div
+        *ngIf="
+          Signupform.get('name').invalid &&
+          Signupform.get('name').errors &&
+          (Signupform.get('name').dirty || Signupform.get('name').touched)
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('name').hasError('required')"
+        >
           This field is required.
-
-      </small>
-
+        </small>
       </div>
 
       <input type="email" formControlName="email" placeholder="Email" />
 
-      <div *ngIf="
-        Signupform.get('email').invalid &&
-        Signupform.get('email').errors &&
-        (Signupform.get('email').dirty || Signupform.get('email').touched)
-      ">
-
-      <small class="text-danger" *ngIf="Signupform.get('email').hasError('required')">
+      <div
+        *ngIf="
+          Signupform.get('email').invalid &&
+          Signupform.get('email').errors &&
+          (Signupform.get('email').dirty || Signupform.get('email').touched)
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('email').hasError('required')"
+        >
           This field is required.
         </small>
 
-        <small class="text-danger" *ngIf="Signupform.get('email').hasError('pattern')">
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('email').hasError('pattern')"
+        >
           Email Should be like aaa1@gmail/google.com
         </small>
-
-
       </div>
 
-      <input type="password" formControlName="password" placeholder="Password" />
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+      />
 
-      <div *ngIf="
-        Signupform.get('password').invalid &&
-        Signupform.get('password').errors &&
-        (Signupform.get('password').dirty || Signupform.get('password').touched)
-      ">
-
-      <small class="text-danger" *ngIf="Signupform.get('password').hasError('required')">
+      <div
+        *ngIf="
+          Signupform.get('password').invalid &&
+          Signupform.get('password').errors &&
+          (Signupform.get('password').dirty ||
+            Signupform.get('password').touched)
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('password').hasError('required')"
+        >
           This field is required.
-
         </small>
 
-        <small class="text-danger" *ngIf="Signupform.get('password').hasError('pattern')">
-          Password contain [A-Z + a-z + 1-9 + special charcater ]<br>
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('password').hasError('pattern')"
+        >
+          Password contain [A-Z + a-z + 1-9 + special charcater ]<br />
           Should be 8 to 15 charchater
         </small>
-
-
       </div>
 
       <input type="text" placeholder="Mobile" formControlName="mobile" />
 
-      <div *ngIf="
+      <div
+        *ngIf="
           Signupform.get('mobile').invalid &&
           Signupform.get('mobile').errors &&
           (Signupform.get('mobile').dirty || Signupform.get('mobile').touched)
-        ">
-
-        <small class="text-danger" *ngIf="Signupform.get('mobile').hasError('required')">
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('mobile').hasError('required')"
+        >
           This field is required.
         </small>
 
-        <small class="text-danger" *ngIf="Signupform.get('mobile').hasError('minlength')">
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('mobile').hasError('minlength')"
+        >
           The minimum length for this field is
-          {{
-          Signupform.get("mobile").errors["minlength"].requiredLength
-          }}
+          {{ Signupform.get("mobile").errors["minlength"].requiredLength }}
           characters.
-
         </small>
 
-        <small class="text-danger" *ngIf="Signupform.get('mobile').hasError('maxlength')">
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('mobile').hasError('maxlength')"
+        >
           The maximum length for this field is
-          {{
-          Signupform.get("mobile").errors["maxlength"].requiredLength
-          }}
+          {{ Signupform.get("mobile").errors["maxlength"].requiredLength }}
           characters.
         </small>
-
       </div>
 
-      <input type="file" placeholder="Profile Image" formControlName="profile" (change)="onFileChange($event)" />
+      <input
+        type="file"
+        placeholder="Profile Image"
+        formControlName="profile"
+        (change)="onFileChange($event)"
+      />
 
-      <div *ngIf="
-        Signupform.get('profile').invalid &&
-        Signupform.get('profile').errors &&
-        (Signupform.get('profile').dirty || Signupform.get('profile').touched)
-      ">
-
-      <small class="text-danger" *ngIf="Signupform.get('profile').hasError('required')">
+      <div
+        *ngIf="
+          Signupform.get('profile').invalid &&
+          Signupform.get('profile').errors &&
+          (Signupform.get('profile').dirty || Signupform.get('profile').touched)
+        "
+      >
+        <small
+          class="text-danger"
+          *ngIf="Signupform.get('profile').hasError('required')"
+        >
           This field is required.
         </small>
-
       </div>
 
       <button type="submit" (click)="onsignup()" [disabled]="!Signupform.valid">
         Sign Up
       </button>
-
     </form>
-
   </div>
 
-
   <div class="overlay-container">
-
     <div class="overlay">
-
       <div class="overlay-panel overlay-left">
-
         <h1>Welcome Back!</h1>
 
         <p>To keep connected with us please login with your personal info</p>
 
         <button class="ghost" id="signIn" routerLink="/signin">Sign In</button>
-
       </div>
-
     </div>
-
   </div>
-
 </div>

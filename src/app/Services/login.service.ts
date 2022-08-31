@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  _registerUrl="http://localhost:3000/bachatbazzar/user/register"
+  _registerUrl="https://bachatbazzar.herokuapp.com/bachatbazzar/user/register"
   _loginUrl="https://bachatbazzar.herokuapp.com/bachatbazzar/user/login"
 
   constructor(private http: HttpClient,
