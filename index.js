@@ -16,7 +16,7 @@ const Orderroute = require("./routes/orderRoute")
 
 const Wishlist=require("./routes/WhislistRoute")
 
-
+const payement = require("./routes/paymentRoute")
 const app = express()
 
 const {multererror } =require("./aws-setup/multer-err")
@@ -37,7 +37,7 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true })
 .catch(err => console.log(err))
 
 app.use(cors({
-    origin: '*'
+    origin:"*",
 }))
 
 app.use("/bachatbazzar/user",USerroute)
@@ -50,7 +50,7 @@ app.use("/bachatbazzar/cart",Cartroute)
 
 app.use("/bachatbazzar/order",Orderroute)
 
-// app.use("/bachatbazzar/payement",Payement)
+app.use("/bachatbazzar/payement",payement)
 
 app.use("/bachatbazzar/wishlist",Wishlist)
 
