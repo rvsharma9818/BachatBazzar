@@ -57,7 +57,7 @@ const wishlistCreation = async (req, res) => {
 
         if (findWishlistOfUser) {
 
-            let price = findWishlistOfUser.totalPrice + quantity * findWishlistOfUser.price;
+            let price = findWishlistOfUser.totalPrice + quantity * findProduct.price;
 
             let arr = findWishlistOfUser.items;
 
@@ -92,7 +92,7 @@ const wishlistCreation = async (req, res) => {
             return res.status(200).send({ status: true, message: `Product added successfully`, data: responseData });
         }
     } catch (error) {
-        res.status(500).send({ status: false, message: error.message });
+        res.status(500).send({ status: false, message: error});
     }
 };
 
@@ -166,7 +166,7 @@ const updateWishlist = async function (req, res) {
             return res.status(404).send({ status: false, message: "productId does not exist in this cart" })
         }
         let { items } = WishlistInDB
-        let getPrice = productIdInWishlist.price
+        let getPrice = productInDB.price
 
         for (let i = 0; i < items.length; i++) {
             if (items[i].productId == productId) {
@@ -191,7 +191,7 @@ const updateWishlist = async function (req, res) {
             }
         }
     } catch (error) {
-        return res.status(500).send({ status: false, error: error.message })
+        return res.status(500).send({ status: false, error: error })
     }
 }
 
