@@ -107,7 +107,7 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
 
 // Create order function
 
-const createOrder = async (customer, data) => {
+const createOrder = async (req,res,customer, data) => {
   
   try {
     const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).populate("items.productId").select({description:0})
