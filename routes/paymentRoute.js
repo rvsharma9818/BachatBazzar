@@ -1,6 +1,6 @@
 const Stripe = require("stripe")("sk_test_51KGmCqSFlzgfGUwqeOmGYi3WOLxD0Cv6h73rVZacTm04ZlcHix5oe4ygEQwyEWGd2xPX1lrvKJsUjqDANX6melqn00fmJcuBPu");
 const express = require("express"); 
-const { Order } = require("../models/orderModel");
+const orderModel = require("../models/orderModel");
 const CartModel = require("../models/cartModel")
 
 require("dotenv").config();
@@ -133,8 +133,7 @@ const createOrder = async (customer, data) => {
               totalItems: 0,
           },
         })
-        
-        const savedOrder = await Order.create(newOrder);
+        const savedOrder = await orderModel.create(newOrder);
   const sendMail = require('../Email-setup/emailservices');
   sendMail({
   to: "rvsharma2652@gmail.com",
@@ -143,7 +142,7 @@ const createOrder = async (customer, data) => {
       title:"Your Order is Succesfully placed",
       name:searchUser.name, 
       orderId: savedOrder._id.toString() ,
-      total:savedOrder.totalPrice,
+      total:savedOrder.amount_subtotal,
       status:"Pending",
       items:savedOrder.totalItems
   })
