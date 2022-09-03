@@ -143,7 +143,7 @@ const createOrder = async (customer, data) => {
   subject: 'Order is Succesfully placed',
   html: require('../Email-setup/emailTemplate')({
       title:"Your Order is Succesfully placed",
-      name:searchUser.name, 
+      name:customer.metadata.userId, 
       orderId: savedOrder._id.toString() ,
       total:savedOrder.amount_subtotal,
       status:"Pending",
