@@ -107,7 +107,7 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
 
 // Create order function
 
-const createOrder = async (customer, data,req,res) => {
+const createOrder = async (customer, data) => {
   
   try {
     const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).populate("items.productId").select({description:0})
@@ -151,15 +151,13 @@ const createOrder = async (customer, data,req,res) => {
   })
   })
   .then(() => {
-  return res.json({success: true});
+  return ({success: true});
   })
   .catch(err => {
   console.log(err)
-  return res.status(500).json({error: 'Error in email sending.'});
   });
     } catch (err) {
     console.log(err);
-  return res.status(500).json(err)
   }
 };
 
