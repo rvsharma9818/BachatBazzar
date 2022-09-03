@@ -33,7 +33,7 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
             id: item.productId._id,
           },
         },
-        unit_amount: item.productId.price,
+        unit_amount: item.productId.price*100,
       },
       quantity: item.quantity,
     };
