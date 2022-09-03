@@ -15,7 +15,7 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
   const customer = await Stripe.customers.create({
     metadata: {
       userId: userId,
-      cart: JSON.stringify(Cart.items),
+      // cart: JSON.stringify(Cart.items),
     },
   });
 //   console.log(Cart.items)
