@@ -107,12 +107,11 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
 const createOrder = async (customer, data) => {
   
   try {
-    const Items = JSON.parse(customer.metadata.cart);
-console.log(Items)
-    const products = Items.map((item) => {
+    const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).populate("items.productId").select({description:0})
+    const products = Cart.items.map((item) => {
       return {
-        productId: item.id,
-        quantity: item.cartQuantity,
+        productId: item.productId._id,
+        quantity: item.productId.quantity,
       };
     });
   
