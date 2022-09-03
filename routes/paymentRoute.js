@@ -115,7 +115,7 @@ const createOrder = async (customer, data) => {
       };
     });
   
-    const newOrder = new Order({
+    const newOrder = {
       userId: customer.metadata.userId,
       customerId: data.customer,
       paymentIntentId: data.payment_intent,
@@ -124,7 +124,7 @@ const createOrder = async (customer, data) => {
       total: data.amount_total,
       shipping: data.customer_details,
       payment_status: data.payment_status,
-    });
+    };
     console.log(newOrder)
       await CartModel.findOneAndUpdate({ userId: customer.metadata.userId }, {
           $set: {
@@ -134,7 +134,7 @@ const createOrder = async (customer, data) => {
           },
         })
         
-        const savedOrder = await newOrder.save();
+        const savedOrder = await Order.create(newOrder);
   const sendMail = require('../Email-setup/emailservices');
   sendMail({
   to: "rvsharma2652@gmail.com",
