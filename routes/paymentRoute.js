@@ -18,6 +18,9 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
       // cart: JSON.stringify(Cart.items),
     },
   });
+  if (!Cart.items.length) {
+    return res.status(404).send({ status: false, message: `Please add some product in cart to make an order.` });
+}
 //   console.log(Cart.items)
   const line_items =Object.values(Cart.items).map((item) => {
     return {
