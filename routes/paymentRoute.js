@@ -143,11 +143,12 @@ const createOrder = async (customer, data) => {
   subject: 'Order is Succesfully placed',
   html: require('../Email-setup/emailTemplate')({
       title:"Your Order is Succesfully placed",
-      name:savedOrder.name, 
+      name:savedOrder.shipping.name, 
       orderId: savedOrder._id.toString() ,
       total:savedOrder.subtotal,
       status:"Pending",
-      items:savedOrder.total
+      items:savedOrder.total,
+      transcation:savedOrder.paymentIntentId
   })
   })
   .then(() => {
