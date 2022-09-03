@@ -115,7 +115,7 @@ const createOrder = async (customer, data) => {
       };
     });
   
-    const newOrder = new Order({
+    const newOrder =  Order({
       userId: customer.metadata.userId,
       customerId: data.customer,
       paymentIntentId: data.payment_intent,
