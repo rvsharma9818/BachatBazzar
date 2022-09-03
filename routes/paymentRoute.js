@@ -33,7 +33,7 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
             id: item.productId._id,
           },
         },
-        unit_amount: 9000* 100,
+        unit_amount: item.productId.price,
       },
       quantity: item.quantity,
     };
@@ -107,14 +107,14 @@ const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).popula
 
 // Create order function
 
-const createOrder = async (req,res,customer, data) => {
+const createOrder = async (customer, data,req,res) => {
   
   try {
     const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).populate("items.productId").select({description:0})
     const products = Cart.items.map((item) => {
       return {
         productId: item.productId._id,
-        quantity: item.productId.quantity,
+        quantity: item.quantity,
       };
     });
   
@@ -143,11 +143,11 @@ const createOrder = async (req,res,customer, data) => {
   subject: 'Order is Succesfully placed',
   html: require('../Email-setup/emailTemplate')({
       title:"Your Order is Succesfully placed",
-      name:customer.metadata.userId, 
+      name:savedOrder.name, 
       orderId: savedOrder._id.toString() ,
-      total:savedOrder.amount_subtotal,
+      total:savedOrder.subtotal,
       status:"Pending",
-      items:savedOrder.totalItems
+      items:savedOrder.total
   })
   })
   .then(() => {
@@ -155,10 +155,11 @@ const createOrder = async (req,res,customer, data) => {
   })
   .catch(err => {
   console.log(err)
-  return data.status(500).json({error: 'Error in email sending.'});
+  return res.status(500).json({error: 'Error in email sending.'});
   });
     } catch (err) {
     console.log(err);
+  return res.status(500).json(err)
   }
 };
 
