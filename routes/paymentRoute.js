@@ -1,5 +1,5 @@
 const Stripe = require("stripe")("sk_test_51KGmCqSFlzgfGUwqeOmGYi3WOLxD0Cv6h73rVZacTm04ZlcHix5oe4ygEQwyEWGd2xPX1lrvKJsUjqDANX6melqn00fmJcuBPu");
-const express = require("express"); 
+const express = require("express");
 const orderModel = require("../models/orderModel");
 const CartModel = require("../models/cartModel")
 
@@ -8,116 +8,116 @@ require("dotenv").config();
 
 const router = express.Router();
 
-router.post("/create-checkout-session/", async (req, res) => {
-    try{
-const userId=req.body.userId
-const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).populate("items.productId").select({description:0})
-  const customer = await Stripe.customers.create({
-    metadata: {
-      userId: userId,
-      // cart: JSON.stringify(Cart.items),
-    },
-  });
-  if (!Cart.items.length) {
-    return res.status(404).send({ status: false, message: `Please add some product in cart to make an order.` });
-}
-//   console.log(Cart.items)
-  const line_items =Object.values(Cart.items).map((item) => {
-    return {
-      price_data: {
-        currency: "inr",
-        product_data: {
-          name: item.productId.title,
-          images: [item.productId.productImage],
-          metadata: {
-            id: item.productId._id,
-          },
-        },
-        unit_amount: item.productId.price*100,
+router.post("/create-checkout-session/:userId", async (req, res) => {
+  try {
+    const userId = req.body.userId
+    const Cart = await CartModel.findOne({ userId: req.params.userId }).populate("items.productId").select({ description: 0 })
+    const customer = await Stripe.customers.create({
+      metadata: {
+        userId: userId,
+        // cart: JSON.stringify(Cart.items),
       },
-      quantity: item.quantity,
-    };
-  });
+    });
+    if (!Cart.items.length) {
+      return res.status(404).send({ status: false, message: `Please add some product in cart to make an order.` });
+    }
+    //   console.log(Cart.items)
+    const line_items = Object.values(Cart.items).map((item) => {
+      return {
+        price_data: {
+          currency: "inr",
+          product_data: {
+            name: item.productId.title,
+            images: [item.productId.productImage],
+            metadata: {
+              id: item.productId._id,
+            },
+          },
+          unit_amount: item.productId.price * 100,
+        },
+        quantity: item.quantity,
+      };
+    });
 
-  const session = await Stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    shipping_address_collection: {
-      allowed_countries: ["IN"],
-    },
-    shipping_options: [
-      {
-        shipping_rate_data: {
-          type: "fixed_amount",
-          fixed_amount: {
-            amount: 0,
-            currency: "inr",
-          },
-          display_name: "Free shipping",
-          // Delivers between 5-7 business days
-          delivery_estimate: {
-            minimum: {
-              unit: "business_day",
-              value: 5,
+    const session = await Stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      shipping_address_collection: {
+        allowed_countries: ["IN"],
+      },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: {
+              amount: 0,
+              currency: "inr",
             },
-            maximum: {
-              unit: "business_day",
-              value: 7,
+            display_name: "Free shipping",
+            // Delivers between 5-7 business days
+            delivery_estimate: {
+              minimum: {
+                unit: "business_day",
+                value: 5,
+              },
+              maximum: {
+                unit: "business_day",
+                value: 7,
+              },
             },
           },
         },
-      },
-      {
-        shipping_rate_data: {
-          type: "fixed_amount",
-          fixed_amount: {
-            amount: 1500,
-            currency: "inr",
-          },
-          display_name: "Next day air",
-          // Delivers in exactly 1 business day
-          delivery_estimate: {
-            minimum: {
-              unit: "business_day",
-              value: 1,
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: {
+              amount: 1500,
+              currency: "inr",
             },
-            maximum: {
-              unit: "business_day",
-              value: 1,
+            display_name: "Next day air",
+            // Delivers in exactly 1 business day
+            delivery_estimate: {
+              minimum: {
+                unit: "business_day",
+                value: 1,
+              },
+              maximum: {
+                unit: "business_day",
+                value: 1,
+              },
             },
           },
         },
+      ],
+      phone_number_collection: {
+        enabled: true,
       },
-    ],
-    phone_number_collection: {
-      enabled: true,
-    },
-    line_items,
-    mode: "payment",
-    customer: customer.id,
-    success_url: `http://localhost:3000/checkout-success`,
-    cancel_url: `http://localhost:3000/cart`,
-  });
+      line_items,
+      mode: "payment",
+      customer: customer.id,
+      success_url: `http://localhost:3000/checkout-success`,
+      cancel_url: `http://localhost:3000/cart`,
+    });
 
-  // res.redirect(303, session.url);
-  res.send({ url: session.url });
-}catch(err){
+    // res.redirect(303, session.url);
+    res.send({ url: session.url });
+  } catch (err) {
     return res.send(err)
-}
+  }
 });
 
 // Create order function
 
 const createOrder = async (customer, data) => {
-  
+
   try {
-    const Cart = await CartModel.findOne({userId:"6304e0b32c6028d3bd050a52"}).populate("items.productId").select({description:0})
+    const Cart = await CartModel.findOne({ userId: "6304e0b32c6028d3bd050a52" }).populate("items.productId").select({ description: 0 })
     const products = Cart.items.map((item) => {
       return {
         productId: item.productId._id,
         quantity: item.quantity,
       };
     });
-  
+
     const newOrder = {
       userId: customer.metadata.userId,
       customerId: data.customer,
@@ -129,35 +129,35 @@ const createOrder = async (customer, data) => {
       payment_status: data.payment_status,
     };
     console.log(newOrder)
-      await CartModel.findOneAndUpdate({ userId: customer.metadata.userId }, {
-          $set: {
-              items: [],
-              totalPrice: 0,
-              totalItems: 0,
-          },
-        })
-        const savedOrder = await orderModel.create(newOrder);
-  const sendMail = require('../Email-setup/emailservices');
-  sendMail({
-  to: "rvsharma2652@gmail.com",
-  subject: 'Order is Succesfully placed',
-  html: require('../Email-setup/emailTemplate')({
-      title:"Your Order is Succesfully placed",
-      name:savedOrder.shipping.name, 
-      orderId: savedOrder._id.toString() ,
-      total:savedOrder.subtotal,
-      status:"Pending",
-      items:savedOrder.total,
-      transcation:savedOrder.paymentIntentId
-  })
-  })
-  .then(() => {
-  return ({success: true});
-  })
-  .catch(err => {
-  console.log(err)
-  });
-    } catch (err) {
+    await CartModel.findOneAndUpdate({ userId: customer.metadata.userId }, {
+      $set: {
+        items: [],
+        totalPrice: 0,
+        totalItems: 0,
+      },
+    })
+    const savedOrder = await orderModel.create(newOrder);
+    const sendMail = require('../Email-setup/emailservices');
+    sendMail({
+      to: "rvsharma2652@gmail.com",
+      subject: 'Order is Succesfully placed',
+      html: require('../Email-setup/emailTemplate')({
+        title: "Your Order is Succesfully placed",
+        name: savedOrder.shipping.name,
+        orderId: savedOrder._id.toString(),
+        total: savedOrder.subtotal,
+        status: "Pending",
+        items: savedOrder.total,
+        transcation: savedOrder.paymentIntentId
+      })
+    })
+      .then(() => {
+        return ({ success: true });
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  } catch (err) {
     console.log(err);
   }
 };
@@ -186,7 +186,7 @@ router.post(
           signature,
           webhookSecret
         );
-        
+
       } catch (err) {
         console.log(`⚠️  Webhook signature verification failed:  ${err}`);
         return res.sendStatus(400);
