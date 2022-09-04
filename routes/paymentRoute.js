@@ -10,18 +10,15 @@ const router = express.Router();
 
 router.post("/create-checkout-session/:userId", async (req, res) => {
   try {
-    const userId = req.body.userId
     const Cart = await CartModel.findOne({ userId: req.params.userId }).populate("items.productId").select({ description: 0 })
     const customer = await Stripe.customers.create({
       metadata: {
-        userId: userId,
-        // cart: JSON.stringify(Cart.items),
+        userId: req.params.userId,
       },
     });
     if (!Cart.items.length) {
       return res.status(404).send({ status: false, message: `Please add some product in cart to make an order.` });
     }
-    //   console.log(Cart.items)
     const line_items = Object.values(Cart.items).map((item) => {
       return {
         price_data: {
