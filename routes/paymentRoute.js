@@ -6,7 +6,7 @@ const { webhook, generatepayement } = require("../controllers/PaymentController"
 
 const { verifyTokenAndAuthorization } =require("../middleware/middleware")
 
-const create = require("./orderController")
+const create = require("../controllers/orderController")
 
 router.route("/create-checkout-session/:userId").post(verifyTokenAndAuthorization,generatepayement);
 
