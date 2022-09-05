@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const orderSchema = new mongoose.Schema({
 
@@ -45,6 +46,14 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  status: {
+    type: String,
+    default: "Pending"
+  },
+  isDeleted:{
+    type:Boolean,
+    default:false
+  }
 },
   { timestamps: true })
 
