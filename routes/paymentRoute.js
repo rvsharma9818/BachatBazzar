@@ -71,8 +71,7 @@ const createOrder = async (customer, data) => {
 
 // Stripe webhoook
 
-router.post("/webhook", express.json({ type: "application/json" }), (async (req, res) => {
-    async (req, res) => {
+router.post("/webhook", express.json({ type: "application/json" }), async (req, res) => {
         let data;
         let eventType;
 
@@ -120,6 +119,6 @@ router.post("/webhook", express.json({ type: "application/json" }), (async (req,
 
         res.status(200).end();
     }
-}));
+);
 
 module.exports = router;
