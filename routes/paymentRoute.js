@@ -5,6 +5,9 @@ const router = express.Router();
 const {  generatepayement } = require("../controllers/PaymentController")
 
 const { verifyTokenAndAuthorization } =require("../middleware/middleware")
+require("dotenv").config();
+
+const Stripe = require("stripe")(process.env.STRIPE_KEY);
 
 const CartModel = require("../models/cartModel")
 const orderModel = require("../models/orderModel");
