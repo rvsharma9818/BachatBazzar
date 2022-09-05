@@ -118,7 +118,8 @@ const createOrder = async (customer, data) => {
     const newOrder = {
       userId: customer.metadata.userId,
       customerId: data.customer,
-      paymentIntentId: data.payment_intent,
+      orderId:Math.floor(Math.random()*1000000),
+      transactionId: data.payment_intent,
       products,
       subtotal: data.amount_subtotal,
       total: data.amount_total,
@@ -141,11 +142,11 @@ const createOrder = async (customer, data) => {
       html: require('../Email-setup/emailTemplate')({
         title: "Your Order is Succesfully placed",
         name: savedOrder.shipping.name,
-        orderId: savedOrder._id.toString(),
+        orderId: savedOrder.orderId,
         total: savedOrder.subtotal,
         status: "Pending",
         items: savedOrder.total,
-        transcation: savedOrder.paymentIntentId
+        transcation: savedOrder.transactionId
       })
     })
       .then(() => {
@@ -188,17 +189,13 @@ router.post(
         console.log(`⚠️  Webhook signature verification failed:  ${err}`);
         return res.sendStatus(400);
       }
-      // Extract the object from the event.
       data = event.data.object;
       eventType = event.type;
     } else {
-      // Webhook signing is recommended, but if the secret is not configured in `config.js`,
-      // retrieve the event data directly from the request body.
       data = req.body.data.object;
       eventType = req.body.type;
     }
 
-    // Handle the checkout.session.completed event
     if (eventType === "checkout.session.completed") {
       Stripe.customers
         .retrieve(data.customer)
