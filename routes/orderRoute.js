@@ -9,8 +9,6 @@ const { verifyTokenAndAuthorization, verifyTokenAndAdmin } =require("../middlewa
 
 //Order APIs
 
-router.route("/users/:userId/orders").post(verifyTokenAndAuthorization, orderCreation)
-
 router.route("/users/:userId/getorder").get(verifyTokenAndAuthorization, getorderUser)
 
 router.route("/users/:userId/getorderbyid").get(verifyTokenAndAuthorization, getorderbyid)
