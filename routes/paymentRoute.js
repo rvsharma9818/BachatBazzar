@@ -6,6 +6,8 @@ const {  generatepayement } = require("../controllers/PaymentController")
 
 const { verifyTokenAndAuthorization } =require("../middleware/middleware")
 
+const CartModel = require("../models/cartModel")
+const orderModel = require("../models/orderModel");
 
 router.route("/create-checkout-session/:userId").post(verifyTokenAndAuthorization,generatepayement);
 
