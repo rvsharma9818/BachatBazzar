@@ -2,15 +2,70 @@ const express = require('express');
 
 const router = express.Router();
 
-const { webhook, generatepayement } = require("../controllers/PaymentController")
+const {  generatepayement } = require("../controllers/PaymentController")
 
 const { verifyTokenAndAuthorization } =require("../middleware/middleware")
 
-const create = require("../controllers/orderController")
 
 router.route("/create-checkout-session/:userId").post(verifyTokenAndAuthorization,generatepayement);
 
 
+const createOrder = async (customer, data) => {
+
+    try {
+        const Cart = await CartModel.findOne({ userId: "6304e0b32c6028d3bd050a52" }).populate("items.productId").select({ description: 0 })
+
+        const products = Cart.items.map((item) => {
+            return {
+                productId: item.productId._id,
+                quantity: item.quantity,
+            };
+        });
+
+        const newOrder = {
+            userId: customer.metadata.userId,
+            customerId: data.customer,
+            orderId: Math.floor(Math.random() * 1000000),
+            transactionId: data.payment_intent,
+            products,
+            subtotal: data.amount_subtotal,
+            total: data.amount_total,
+            shipping: data.customer_details,
+            payment_status: data.payment_status,
+        };
+        console.log(newOrder)
+        await CartModel.findOneAndUpdate({ userId: customer.metadata.userId }, {
+            $set: {
+                items: [],
+                totalPrice: 0,
+                totalItems: 0,
+            },
+        })
+        const savedOrder = await orderModel.create(newOrder);
+        const sendMail = require('../Email-setup/emailservices');
+        sendMail({
+            to: "rvsharma2652@gmail.com",
+            subject: 'Order is Succesfully placed',
+            html: require('../Email-setup/emailTemplate')({
+                title: "Your Order is Succesfully placed",
+                name: savedOrder.shipping.name,
+                orderId: savedOrder.orderId,
+                total: savedOrder.subtotal,
+                status: "Pending",
+                items: savedOrder.total,
+                transcation: savedOrder.transactionId
+            })
+        })
+            .then(() => {
+                return ({ success: true });
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 // Stripe webhoook
 
@@ -52,7 +107,7 @@ router.post("/webhook", express.json({ type: "application/json" }), (async (req,
                 .then(async (customer) => {
                     try {
                         // CREATE ORDER
-                        create.createOrder(customer, data);
+                        createOrder(customer, data);
                     } catch (err) {
                         console.log(typeof createOrder);
                         console.log(err);

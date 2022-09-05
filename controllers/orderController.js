@@ -6,62 +6,6 @@ const orderModel = require("../models/orderModel");
 
 
 // User feature to place order
-const createOrder = async (customer, data) => {
-
-    try {
-        const Cart = await CartModel.findOne({ userId: "6304e0b32c6028d3bd050a52" }).populate("items.productId").select({ description: 0 })
-
-        const products = Cart.items.map((item) => {
-            return {
-                productId: item.productId._id,
-                quantity: item.quantity,
-            };
-        });
-
-        const newOrder = {
-            userId: customer.metadata.userId,
-            customerId: data.customer,
-            orderId: Math.floor(Math.random() * 1000000),
-            transactionId: data.payment_intent,
-            products,
-            subtotal: data.amount_subtotal,
-            total: data.amount_total,
-            shipping: data.customer_details,
-            payment_status: data.payment_status,
-        };
-        console.log(newOrder)
-        await CartModel.findOneAndUpdate({ userId: customer.metadata.userId }, {
-            $set: {
-                items: [],
-                totalPrice: 0,
-                totalItems: 0,
-            },
-        })
-        const savedOrder = await orderModel.create(newOrder);
-        const sendMail = require('../Email-setup/emailservices');
-        sendMail({
-            to: "rvsharma2652@gmail.com",
-            subject: 'Order is Succesfully placed',
-            html: require('../Email-setup/emailTemplate')({
-                title: "Your Order is Succesfully placed",
-                name: savedOrder.shipping.name,
-                orderId: savedOrder.orderId,
-                total: savedOrder.subtotal,
-                status: "Pending",
-                items: savedOrder.total,
-                transcation: savedOrder.transactionId
-            })
-        })
-            .then(() => {
-                return ({ success: true });
-            })
-            .catch(err => {
-                console.log(err)
-            });
-    } catch (err) {
-        console.log(err);
-    }
-};
 
 
 // Admin feature to see aorder list
@@ -218,6 +162,6 @@ const deleteOrder = async function (req, res) {
 
 //=======================================================================================
 
-module.exports = { createOrder, updateOrder, getorder, getorderbyid, deleteOrder, getorderUser }
+module.exports = { updateOrder, getorder, getorderbyid, deleteOrder, getorderUser }
 
 //=======================================================================================
