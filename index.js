@@ -41,6 +41,8 @@ app.use(cors({
     origin:"*",
 }))
 
+app.use(express.static('dist/bachatbazzar'));
+
 app.use("/bachatbazzar/user",USerroute)
 
 app.use("/bachatbazzar/product",productroute)
