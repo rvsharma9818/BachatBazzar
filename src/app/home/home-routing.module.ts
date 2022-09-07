@@ -54,9 +54,9 @@ const routes: Routes = [
           import('./wishlist/wishlist.module').then((m) => m.WishlistModule),
       },
       {
-        path:'detailsproduct/:id',component:DetaileproductComponent
+        path: 'detailsproduct/:id', component: DetaileproductComponent
       },
-  { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
+      { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
 
     ],
   },
@@ -66,4 +66,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRoutingModule {}
+export class HomeRoutingModule { }

@@ -43,7 +43,7 @@ export class OrderService {
     return this.http.put<any>(`${this._cancelorder}`, orderId);
   }
 
-  deleteorder(orderId: any): Observable<any> {
-    return this.http.delete<any>(`${this._deleteorder}`, orderId);
+  deleteorder(orderId:any): Observable<any> {
+    return this.http.delete<any>(`${this._deleteorder}/${orderId}`);
   }
 }

@@ -270,7 +270,7 @@
       <div class="form_group w_75">
         <p>Total Items&nbsp;&nbsp;<i class="fa-solid fa-arrow-right-long"></i>&nbsp;&nbsp;{{items}}</p>
       </div>
-      <button class="btn">Checkout</button>
+      <button class="btn" (click)="paymentstripe()">Checkout</button>
     </div>
   </div>
 </section>
@@ -303,3 +303,14 @@
     </div>
   </div>
 </div>
+
+<div class="cd-popup is-visible" role="alert" *ngIf="sure" >
+	<div class="cd-popup-container">
+		<p>Are you sure you want to Place this Order?</p>
+		<ul class="cd-buttons">
+			<li><a href={{data.url}}>Yes</a></li>
+			<li><a (click)="falsex()">No</a></li>
+		</ul>
+		<a href="#0" class="cd-popup-close img-replace">Close</a>
+	</div> <!-- cd-popup-container -->
+</div> <!-- cd-popup -->

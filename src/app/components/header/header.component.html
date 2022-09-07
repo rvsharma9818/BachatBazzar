@@ -13,18 +13,31 @@
     <div class="iconsx">
       <li>
         <a routerLink="cart"><i class="fa-solid fa-cart-shopping"></i></a>
-        <p>Cart</p>
+        <p class="lk">Cart</p>
         <div class="circle">{{items}}</div>
       </li>
       <li>
         <a routerLink="wishlist"><i class="fa-solid fa-heart"></i></a>
-        <p>Whishlist</p>
+        <p class="lk">Whishlist</p>
         <div class="circlee">{{wishlist}}</div>
 
       </li>
-      <li>
-        <a><i class="fa-solid fa-user"></i></a>
-        <p>Profile</p>
+      <li class="mat">
+        <button class="coustmize" mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>donut_small</mat-icon>
+            <span [routerLink]="['user']">Order</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span (click)="this.userservice.logoutUser()">Logout</span>
+          </button>
+        </mat-menu>
+        <p>{{username}}</p>
+
       </li>
     </div>
   </div>

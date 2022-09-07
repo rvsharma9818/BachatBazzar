@@ -8,12 +8,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginService } from './Services/login.service';
 import { LoginguardGuard } from './Guard/loginguard.guard';
 import { TokenInterceptorService } from './Services/token-interceptor.service';
-import { PayementComponent } from './payement/payement.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PayementComponent,
     ],
   imports: [
     BrowserModule,

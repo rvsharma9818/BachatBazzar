@@ -7,13 +7,13 @@ import { LoginService } from './login.service';
   providedIn: 'root'
 })
 export class PayemntService {
-  userId= this.authservice.getuserId()
+  userId = this.authservice.getuserId()
 
-  constructor(private http: HttpClient,private authservice:LoginService) { }
+  constructor(private http: HttpClient, private authservice: LoginService) { }
 
-  makePayment(h: any): Observable<any>{
-    const url = `http://localhost:3000/bachatbazzar/payement/checkout/${this.userId}`
+  makePayment(): Observable<any> {
+    const url = `https://bachatbazzar.herokuapp.com/bachatbazzar/payement/create-checkout-session/${this.userId}`
 
-    return this.http.post<any>(url,h)
+    return this.http.post<any>(url, {})
   }
 }

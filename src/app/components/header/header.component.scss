@@ -16,10 +16,10 @@
   padding: 2px 8px 2px 8px;
   border-radius: 55%;
   z-index: 2;
-  left: 25px;
+  left: 22px;
   width: fit-content;
   height: fit-content;
-  top: -2px;
+  top: 0px;
 }
 .circlee{
   background-color: rgb(252, 170, 50);
@@ -28,10 +28,10 @@
   padding: 2px 8px 2px 8px;
   border-radius: 55%;
   z-index: 2;
-  left: 90px;
+  left: 87px;
   width: fit-content;
   height: fit-content;
-  top: -1px;
+  top: 1px;
 }
 .firstheader {
   overflow: hidden;
@@ -58,6 +58,7 @@
   width: 700px;
   height: 50px;
   border: 2px solid rgb(252, 172, 52);
+  border-radius: 40px;
 }
 #cars {
   background: none;
@@ -180,7 +181,10 @@
   color: #000;
 }
 .iconsx li a {
+  text-decoration: none;
   display: flex;
+  position: relative;
+  top: 8px;
   justify-content: center;
   align-items: center;
   z-index: 1;
@@ -188,8 +192,12 @@
 .iconsx li p {
   text-transform: capitalize;
   font-size: 16px;
+  position: relative;
 }
-
+.lk{
+  position: relative;
+  top: 8.5px;
+}
 .list {
   width: 700px;
   display: flex;
@@ -214,4 +222,21 @@
 
 .list li a:hover {
   color: rgb(252, 170, 50);
+}
+.coustmize{
+  background:none !important;
+  border: none !important;
+  font-size: 20px !important;
+}
+.mat-menu-item {
+  color: blue !important;
+}
+
+button.mat-menu-item{
+    background-color: white;
+}
+
+button.mat-menu-item:hover {
+    background-color: blue;
+    color: #fff !important;
 }

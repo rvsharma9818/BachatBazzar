@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { CartService } from 'src/app/Services/cart.service';
+import { LoginService } from 'src/app/Services/login.service';
 import { WishlistService } from 'src/app/Services/wishlist.service';
 
 @Component({
@@ -11,9 +12,11 @@ import { WishlistService } from 'src/app/Services/wishlist.service';
 export class HeaderComponent implements OnInit {
   items: number = 0;
   wishlist: number = 0;
+  username:string="Profile"
   constructor(
     public cartservice: CartService,
-    public wishlistService: WishlistService
+    public wishlistService: WishlistService,
+    public userservice:LoginService
   ) {}
 
   ngOnInit(): void {
@@ -21,6 +24,11 @@ export class HeaderComponent implements OnInit {
       this.cart();
       this.wish();
     }, 1000);
+    this.userservice.getuserdetails().subscribe((res)=>{
+this.username= res.data.name.split(" ")[0]
+    },err=>{
+
+    })
   }
   wish() {
     this.wishlistService.getwishlist().subscribe((res) => {

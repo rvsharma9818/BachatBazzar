@@ -1,1 +1,43 @@
-<p>user works!</p>
+<div class="container-fluid">
+  <div class="profile-header">
+    <div class="profile-img">
+      <img [src]=[userdetails.profile] width="200" alt="Profile Image">
+    </div>
+    <div class="profile-nav-info">
+      <h3 class="user-name">{{userdetails.name}}</h3>
+      <div class="address">
+        <p id="state" class="state">New York,</p>
+        <span id="country" class="country">USA.</span>
+      </div>
+
+    </div>
+    <div class="profile-option">
+    </div>
+  </div>
+
+  <div class="main-bd">
+    <div class="left-side">
+      <div class="profile-side">
+        <p class="mobile-no"><i class="fa fa-phone"></i>{{userdetails.mobile}}</p>
+        <p class="user-mail"><i class="fa fa-envelope"></i>{{userdetails.email}}</p>
+        <div class="user-bio">
+          <h3>Bio</h3>
+          <p class="bio">
+            Lorem ipsum dolor sit amet, hello how consectetur adipisicing elit. Sint consectetur provident magni yohoho consequuntur, voluptatibus ghdfff exercitationem at quis similique. Optio, amet!
+          </p>
+        </div>
+        <div class="profile-btn">
+          <button class="chatbtn" id="chatBtn" (click)="update()"><i class="fa fa-comment"></i>Add Bio</button>
+          <button class="createbtn" id="Create-post" (click)="update()"><i class="fa fa-plus"></i>Update</button>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="right-side">
+
+    <app-order></app-order>
+
+    </div>
+  </div>
+</div>

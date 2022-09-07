@@ -23,6 +23,8 @@ import { DefaultComponent } from '../components/default/default.component';
 import { TokenInterceptorService } from '../Services/token-interceptor.service';
 import { NgToastModule } from 'ng-angular-popup'
 import { DetaileproductComponent } from '../cart/detaileproduct/detaileproduct.component';
+import {MatMenuModule} from '@angular/material/menu';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -45,12 +47,11 @@ import { DetaileproductComponent } from '../cart/detaileproduct/detaileproduct.c
   imports: [
     CommonModule,
     HomeRoutingModule,
-    MatTabsModule,
-    MatToolbarModule,
     MatIconModule,
     SwiperModule,
     HttpClientModule,
-    NgToastModule
+    NgToastModule,
+    MatMenuModule
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
