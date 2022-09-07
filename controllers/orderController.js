@@ -94,6 +94,10 @@ const updateOrder = async function (req, res) {
         if (!order) {
             return res.status(404).send({ status: false, message: "Order not found for this userId" })
         }
+        
+        if (order.status=='cancelled') {
+            return res.status(404).send({ status: false, message: "Order Is Already Cancelled" })
+        }
 
 
         const orderCancelled = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled' } }, { new: true })
@@ -130,7 +134,7 @@ const updateOrder = async function (req, res) {
 const deleteOrder = async function (req, res) {
     try {
         const userId = req.params.userId
-        const { orderId } = req.body
+        const  orderId  = req.params.orderId
 
         if (!orderId || orderId == "") {
             return res.status(400).send({ status: false, message: "Order Id is required" })
@@ -145,14 +149,18 @@ const deleteOrder = async function (req, res) {
 
         const order = await orderModel.findOne({ _id: orderId, isDeleted: false })
 
+        if (order.status != 'cancelled') {
+            return res.status(404).send({ status: false, message: "Order Is Pending Status" })
+        }
+
         if (!order) {
             return res.status(404).send({ status: false, message: "Order not found for this userId" })
         }
 
 
-        const orderdelete = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled', isDeleted: true, deletedAt: Date.now().toString() } }, { new: true })
+        const orderdelete = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { isDeleted: true, deletedAt: Date.now().toString() } }, { new: true })
 
-        return res.status(200).send({ status: true, message: "Order is Deleted Succesfully ", data: orderdelete })
+        return res.status(200).send({ status: true, message: "Order is Deleted Succesfully " })
 
 
     } catch (error) {
