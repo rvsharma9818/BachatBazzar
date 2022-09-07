@@ -15,7 +15,7 @@ router.route("/users/:userId/getorderbyid").get(verifyTokenAndAuthorization, get
 
 router.route("/users/:userId/getorders").get(verifyTokenAndAdmin, getorder)
 
-router.route("/users/:userId/orders").delete(verifyTokenAndAdmin,deleteOrder )
+router.route("/users/:userId/orders/:orderId").delete(verifyTokenAndAdmin,deleteOrder )
 
 router.route("/users/:userId/orders").put(verifyTokenAndAuthorization, updateOrder)
 
