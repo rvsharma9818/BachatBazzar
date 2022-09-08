@@ -12,6 +12,8 @@ const Categoryroute = require("./routes/categoryRoute")
 
 const Cartroute = require("./routes/cartRoute")
 
+const contactRoute = require("./routes/contactRoute")
+
 const Orderroute = require("./routes/orderRoute")
 
 const Wishlist=require("./routes/WhislistRoute")
@@ -63,6 +65,8 @@ app.use("/bachatbazzar/order",Orderroute)
 app.use("/bachatbazzar/payement",payement)
 
 app.use("/bachatbazzar/wishlist",Wishlist)
+
+app.use("/bachatbazzar/contact",contactRoute)
 
 app.all("/**", function (req, res) {
   
