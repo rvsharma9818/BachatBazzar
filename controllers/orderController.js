@@ -1,43 +1,54 @@
 const userModel = require("../models/usermodel");
 
-const CartModel = require("../models/cartModel");
 
 const orderModel = require("../models/orderModel");
 
 
-// User feature to place order
-
-
-// Admin feature to see aorder list
 
 const getorder = (async (req, res) => {
+
     try {
+
         const order = await orderModel.find({ isDeleted: false });
 
+
         if (!order) {
+
             return res.status(404).send({ staus: false, msg: "No order list" })
+
         }
 
         return res.status(200).send({ status: true, data: order })
 
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message })
+        
+        return res.status(500).send({ status: false, msg: 'Something Went Wrong' })
+
     }
+
 })
-// getuser order list User Feature
+
 const getorderUser = (async (req, res) => {
+
     try {
+
         let userId = req.params.userId
+
         const order = await orderModel.find({ isDeleted: false, userId: userId });
 
+
         if (!order) {
+
             return res.status(404).send({ staus: false, msg: "No order list" })
+
         }
 
         return res.status(200).send({ status: true, data: order })
 
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message })
+       
+        return res.status(500).send({ status: false, msg: 'Something Went Wrong' })
+    
     }
 })
 
@@ -50,125 +61,176 @@ const getorderbyid = (async (req, res) => {
         const { orderId } = req.body
 
         if (!orderId || orderId == "") {
+
             return res.status(400).send({ status: false, message: "Order Id is required" })
+
         }
-
-
 
         const order = await orderModel.findOne({ isDeleted: false, _id: orderId });
 
         if (!order) {
+
             return res.status(404).send({ staus: false, msg: "No order list" })
+
         }
+
 
         return res.status(200).send({ status: true, data: order })
 
+
     } catch (error) {
-        return res.status(500).send({ status: false, msg: error.message })
+
+        return res.status(500).send({ status: false, msg: 'Something Went Wrong' })
+
     }
+
 })
 
 
 
 
-//User feature for cancelled the order
-
 const updateOrder = async function (req, res) {
+
     try {
+
         const userId = req.params.userId
+
         const { orderId } = req.body
 
+
         if (!orderId || orderId == "") {
+
             return res.status(400).send({ status: false, message: "Order Id is required" })
+
         }
+
         const searchUser = await userModel.findOne({ _id: userId });
 
+
         if (!searchUser) {
+        
             return res.status(404).send({ status: false, message: `user doesn't exist for ${userId}` });
+        
         }
-
-
 
         const order = await orderModel.findOne({ _id: orderId, isDeleted: false, userId: userId })
 
         if (!order) {
+
             return res.status(404).send({ status: false, message: "Order not found for this userId" })
+
         }
         
-        if (order.status=='cancelled') {
-            return res.status(404).send({ status: false, message: "Order Is Already Cancelled" })
-        }
 
+        if (order.status=='cancelled') {
+
+            return res.status(404).send({ status: false, message: "Order Is Already Cancelled" })
+
+        }
 
         const orderCancelled = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { status: 'cancelled' } }, { new: true })
 
         const sendMail = require('../Email-setup/emailservices');
+        
         sendMail({
-            to: "rvsharma2652@gmail.com",
+            to: orderCancelled.shipping.email,
+
+            
             subject: 'Order is Cancelled',
+            
             html: require('../Email-setup/emailTemplate')({
+            
                 title: "Order is Cancelled",
+            
                 name: orderCancelled.shipping.name,
+            
                 orderId: orderCancelled.orderId,
+            
                 total: orderCancelled.subtotal,
+            
                 status: "Cancelled",
+            
                 items: orderCancelled.total,
+            
                 transcation: orderCancelled.transactionId
+            
             })
         })
-            .then(() => {
-                return res.json({ success: true });
-            })
-            .catch(err => {
-                console.log(err)
-                return res.status(500).json({ error: 'Error in email sending.' });
-            });
+            
+        .then(() => {
+        
+            return res.json({ success: true });
+        
+        })
+        
+        .catch(err => {
+        
+        
+            return res.status(500).json({ error: 'Error in email sending.' });
+        
+        });
 
-    } catch (error) {
-        return res.status(500).send({ status: false, error: error.message })
+    } 
+    catch (error) {
+    
+        return res.status(500).send({ status: false, error: 'Something Went Wrong' })
+    
     }
+
 }
 
 //Admin feature for delete the order
 
 const deleteOrder = async function (req, res) {
     try {
+        
         const userId = req.params.userId
+        
         const  orderId  = req.params.orderId
 
+        
         if (!orderId || orderId == "") {
+        
             return res.status(400).send({ status: false, message: "Order Id is required" })
+        
         }
+        
         const searchUser = await userModel.findOne({ _id: userId });
 
         if (!searchUser) {
+        
             return res.status(404).send({ status: false, message: `user doesn't exist for ${userId}` });
+        
         }
-
-
 
         const order = await orderModel.findOne({ _id: orderId, isDeleted: false })
 
         if (order.status != 'cancelled') {
+
             return res.status(404).send({ status: false, message: "Order Is Pending Status" })
+
         }
 
         if (!order) {
+
             return res.status(404).send({ status: false, message: "Order not found for this userId" })
+
         }
 
 
-        const orderdelete = await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { isDeleted: true, deletedAt: Date.now().toString() } }, { new: true })
+        await orderModel.findOneAndUpdate({ _id: orderId }, { $set: { isDeleted: true, deletedAt: Date.now().toString() } }, { new: true })
 
         return res.status(200).send({ status: true, message: "Order is Deleted Succesfully " })
 
 
     } catch (error) {
-        return res.status(500).send({ status: false, error: error.message })
+
+        return res.status(500).send({ status: false, error:'Something Went Wrong' })
+
     }
+
 }
 
-//=======================================================================================
 
 module.exports = { updateOrder, getorder, getorderbyid, deleteOrder, getorderUser }
 

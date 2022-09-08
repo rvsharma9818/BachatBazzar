@@ -5,34 +5,32 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 
-//========================================== User Creation===============================================
 
 const createUser = async function (req, res) {
     try {
         let data = req.body;
 
         let file = req.file;
-        // ====================================== Destructuring the request Body =====================================
 
         let { name, mobile, email, password, } = data;
 
-        //==================================validations for inputs==========================================
-
-        // if (!file || typeof file == "string" || file == "") {
-        //     return res.status(400).send({ status: false, message: "Profile image is required..." });
-        // }
 
         const isRegisteredEmail = await userModel.findOne({ email });
 
         if (isRegisteredEmail) {
+
             return res.status(400).send({ status: false, message: "email id already registered..." });
+
         }
 
 
         const isRegisteredphone = await userModel.findOne({ mobile }).lean();
 
+
         if (isRegisteredphone) {
+
             return res.status(400).send({ status: false, message: "phoneNo number already registered..." });
+
         }
 
         const bcryptPassword = await bcrypt.hash(password, 6);
@@ -45,13 +43,15 @@ const createUser = async function (req, res) {
         const userCreated = await userModel.create(data);
 
         return res.status(201).send({ status: true, message: "Success", data: userCreated });
+
     } catch (error) {
 
-        return res.status(500).send({ status: false, error: error });
+        return res.status(500).send({ status: false, error: 'Something Went Wrong'});
+
     };
+
 }
 
-//====================================================Login API==================================================
 
 const loginUser = async (req, res) => {
     try {
@@ -66,7 +66,9 @@ const loginUser = async (req, res) => {
         const user = await userModel.findOne({ email });
 
         if (!user) {
+            
             return res.status(404).send({ status: false, message: "Email doesn't exist" });
+        
         }
 
         let hashedPassword = user.password;
@@ -75,7 +77,8 @@ const loginUser = async (req, res) => {
 
 
         if (!checkPassword)
-            return res.status(404).send({ status: false, message: "Invalid login credentials , Invalid password..." });
+
+        return res.status(404).send({ status: false, message: "Invalid password..." });
 
 
         const token = jwt.sign(
@@ -92,13 +95,14 @@ const loginUser = async (req, res) => {
         );
 
         return res.status(200).send({ status: true, messsge: "User Logged in Successfully", data: { userId: user._id, token: token } });
-    }
-    catch (error) {
-        res.status(500).send({ status: false, error: error.message });
+    
+    }catch (error) {
+
+        return res.status(500).send({ status: false, error:'Something Went Wrong'});
+    
     }
 };
 
-//=========================================== Api for Get details by User id =========================================
 
 let userProfile = async (req, res) => {
     try {
@@ -112,82 +116,88 @@ let userProfile = async (req, res) => {
         return res.status(200).send({ status: true, message: "User profile Details", data: user });
     }
     catch (error) {
-        return res.status(500).send({ status: false, error: error.message });
+        return res.status(500).send({ status: false, error:'Something Went Wrong'});
     }
 };
 
-//===================================Update User Detail Api===================================================================
 
 const updateUserDetails = async function (req, res) {
     try {
 
         const userId = req.params.userId;
+
         const file = req.file;
-
-        //==validating userId==//
-
 
         let findUserId = await userModel.findById({ _id: userId });
 
         if (!findUserId) return res.status(404).send({ status: false, message: "user doesn't exist" });
 
-        //==validating request body==//
 
         const { name, email, mobile, password } = req.body;
 
         const newbody = {}
 
         if (req.file) {
+
             let file = req.file
 
             if (!file || typeof file == "undefined" || file == "") {
+
                 return res.status(400).send({ status: false, message: "Profile image is required..." });
+
             }
+
             let x = req.file.location
+
             newbody["profile"] = x
+
         }
 
-        //==checking and validating fname==//
         if (name) {
 
             newbody["name"] = name
+
         }
 
 
         if (email) {
+
             let Exists = await userModel.findOne({ email });
+
             if (Exists)
-                return res.status(400).send({ status: false, message: "Phone Number Already Exists..." });
+
+            return res.status(400).send({ status: false, message: "Phone Number Already Exists..." });
 
             newbody["email"] = email
         }
-        //==checking and validating phone==//
+
         if (mobile) {
+
             let phoneExists = await userModel.findOne({ mobile });
+
             if (phoneExists)
-                return res.status(400).send({ status: false, message: "Phone Number Already Exists..." });
+
+            return res.status(400).send({ status: false, message: "Phone Number Already Exists..." });
+
         }
+
         newbody["mobile"] = mobile
 
-        //==checking and validating password==//
         if (password) {
+
             newbody["password"] = await bcrypt.hash(password, 10);
+
         }
-
-
-
-        //==updating user details==//
         const updateDetails = await userModel.findByIdAndUpdate({ _id: userId }, newbody, { new: true });
-        return res.status(200).send({ status: true, message: "User profile updated successfully", data: updateDetails });
-    }
-    catch (error) {
 
-        return res.status(500).json({ status: false, error: error.message });
+        return res.status(200).send({ status: true, message: "User profile updated successfully", data: updateDetails });
+
+    }catch (error) {
+
+        return res.status(500).json({ status: false, error: 'Something Went Wrong' });
 
     }
 };
-
-//===========================================================================================================
 
 module.exports = { loginUser, userProfile, createUser, updateUserDetails };
 

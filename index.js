@@ -30,6 +30,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require('dotenv').config()
 
+app.use(express.static('public'));
+
+app.set('views', path.join(__dirname, 'views'));
+
+app.set('view engine', 'ejs');
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true })
 
@@ -56,6 +61,12 @@ app.use("/bachatbazzar/order",Orderroute)
 app.use("/bachatbazzar/payement",payement)
 
 app.use("/bachatbazzar/wishlist",Wishlist)
+
+app.all("/**", function (req, res) {
+  
+    return res.render('error', { downloadLink: `${process.env.BASE_URL}` });
+
+})
 
 app.use(multererror)
 
