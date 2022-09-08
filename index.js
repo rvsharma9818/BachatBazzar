@@ -21,7 +21,7 @@ const payement = require("./routes/paymentRoute")
 const app = express();
 
 const path = require('path');
-s
+
 const {multererror } =require("./aws-setup/multer-err")
 
 const cors = require("cors")
