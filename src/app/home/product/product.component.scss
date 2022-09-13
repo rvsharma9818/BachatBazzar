@@ -151,9 +151,11 @@ border: none;
 }
 .purchase-info{
     margin: 1.5rem 0;
+    display: flex;
 }
 .purchase-info input,
 .purchase-info .btn{
+  width: fit-content;
     border: 1.5px solid #ddd;
     border-radius: 25px;
     text-align: center;

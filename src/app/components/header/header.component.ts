@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   items: number = 0;
   wishlist: number = 0;
   username:string="Profile"
+  profile:any
   constructor(
     public cartservice: CartService,
     public wishlistService: WishlistService,
@@ -25,7 +26,8 @@ export class HeaderComponent implements OnInit {
       this.wish();
     }, 1000);
     this.userservice.getuserdetails().subscribe((res)=>{
-this.username= res.data.name.split(" ")[0]
+this.username= res.data.name.split(" ")[0],
+this.profile = res.data.profile
     },err=>{
 
     })

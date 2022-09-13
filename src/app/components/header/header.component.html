@@ -1,6 +1,6 @@
 <div class="header">
   <div class="firstheader">
-    <img src="assets/images/logo.png" alt="" class="src" />
+    <img src="https://blogapi.s3.us-west-2.amazonaws.com/uploads/30e2027d-d366-4ae7-92a2-1f1c5bfb9e35-WhatsApp_Image_2022-08-20_at_21.09.33-removebg-preview.png" alt="" class="src" />
     <div class="search">
       <select name="cars" id="cars">
         <option value="volvo">Volvo</option>
@@ -24,7 +24,8 @@
       </li>
       <li class="mat">
         <button class="coustmize" mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>account_circle</mat-icon>
+
+          <mat-icon><img [src]=[profile] alt="" class="po"></mat-icon>
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>

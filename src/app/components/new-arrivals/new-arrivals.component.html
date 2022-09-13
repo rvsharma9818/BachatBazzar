@@ -11,7 +11,7 @@
   </div>
   <div class="crouselx">
 
-<img src="assets/images/newarrivals.jpg" alt="" class="srcss">
+<img src="https://blogapi.s3.us-west-2.amazonaws.com/uploads/7821fbc2-be4c-4d2e-a3a8-636fbb345d78-newarrivals.jpg" alt="" class="srcss">
 <swiper
       #swiperRef
       [slidesPerView]="4"
@@ -33,7 +33,7 @@
           <img [src]=[slide.productImage] alt="" class="img" >
          </div>            <ol>
               <li><a class="whishlist" (click)="addtowishlist(this.slide._id)"><i class="fa-solid fa-heart"></i></a></li>
-              <li><a class="whishlist" [routerLink]="['detailsproduct',this.slide._id]"><i class="fa-solid fa-handcuffs"></i></a></li>
+              <li><a class="whishlist" [routerLink]="['/detailsproduct',this.slide._id]"><i class="fa-solid fa-handcuffs"></i></a></li>
             </ol>
                         <a class="product-item__name">{{slide.title}}</a>
           <div class="product-item__description">

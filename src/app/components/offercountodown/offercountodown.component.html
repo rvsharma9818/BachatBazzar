@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <img src="assets/images/whatsapp.jpeg" alt="" class="src">
+  <img src="https://blogapi.s3.us-west-2.amazonaws.com/uploads/45288267-3d88-42dd-8a7c-21b10911f08e-whatsapp.jpeg" alt="" class="src">
   <a href="" class="shopnow">Shop Now - 429 &nbsp;&nbsp;&nbsp; <i class="fa-solid fa-arrow-right-long"></i> </a>
   <p class="deals">DEALS & OUTLETS</p>
   <h4>today's Deal and more</h4>
@@ -12,7 +12,7 @@
 
       <p class="price">$310.00 <span>Was $190.00</span></p>
 
-      <a href="" class="cli">
+      <a class="cli" routerLink="/product">
         Shop now <i class="fa-solid fa-arrow-right-long"></i></a>
       <app-countdown></app-countdown>
     </div>
@@ -28,7 +28,7 @@
 
       <p class="price">$310.00</p>
 
-      <a href="" class="cli">Sign in and save money <i class="fa-solid fa-arrow-right-long"></i></a>
+      <a  class="cli" [routerLink]="['/login']">Sign in and save money <i class="fa-solid fa-arrow-right-long"></i></a>
       <app-countdown></app-countdown>
     </div>
   </div>

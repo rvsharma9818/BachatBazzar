@@ -4,13 +4,13 @@ import { LoginguardGuard } from './Guard/loginguard.guard';
 
 const routes: Routes = [
   {
-    path:'home',
+    path:'',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     canActivate: [LoginguardGuard],
 
   },
   {
-    path: '',
+    path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
 
